@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class SignUpMainframe extends JFrame implements ActionListener {
+public class SignUpMainframe extends AccountDB implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private static JLabel userLabel;
@@ -30,7 +30,7 @@ public class SignUpMainframe extends JFrame implements ActionListener {
     public SignUpMainframe()  {
     	
 		frame.setResizable(false);
-		frame.setSize(280,250);
+		frame.setSize(280,280);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
 		
@@ -82,9 +82,9 @@ public class SignUpMainframe extends JFrame implements ActionListener {
 		panel.add(createAccountButton);
 		
 		success = new JLabel("");
-		success.setBounds(10,110,300,25);
+		success.setBounds(10,200,300,25);
 		panel.add(success);
-
+		
 		frame.setVisible(true);
     }
 
@@ -94,7 +94,24 @@ public class SignUpMainframe extends JFrame implements ActionListener {
 		String age = ageText.getText();
 		String sex = genderText.getText();
 		String weight = weightText.getText();
-
-
+		
+		Account a = new Account(age, sex, weight, user, pass);
+		
+		if(SearchSignUp(a.getUsername()))
+		{
+			success.setText("Username already used");
+		}
+		else
+		{
+			if(Search(a.getUsername(), a.getPassword()))
+			{
+				success.setText("Account creation failed");
+			}
+			else
+			{
+				success.setText("Account created");
+				create(a);
+			}
+		}
 	}
 }

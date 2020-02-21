@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginMainframe extends JFrame implements ActionListener {
+public class LoginMainframe extends AccountDB implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private static JLabel userLabel;
@@ -67,14 +67,12 @@ public class LoginMainframe extends JFrame implements ActionListener {
 		String user = userText.getText();
 		String pass = passText.getText();
 		
-		if (user.equals("Eduard") && pass.equals("Eduard")) {
+		boolean found = Search(user,pass);
+		if(found)
 			success.setText("Login Succesful");
-		}
-		else {
+		else
 			success.setText("Wrong Username or Password");
-		}
 		frame.dispose();
 		new SignUpMainframe();
-		
 	}
 }
