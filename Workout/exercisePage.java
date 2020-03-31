@@ -37,7 +37,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import sun.security.tools.keytool.Main;
 
-public class exerPage implements EventHandler<ActionEvent>{
+public class exercisePage implements EventHandler<ActionEvent>{
 	
 	private static Button cardio;
 	private static Button strength;
