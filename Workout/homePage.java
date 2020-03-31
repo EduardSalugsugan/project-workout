@@ -97,7 +97,7 @@ public class homePage implements EventHandler<ActionEvent> {
 		pane.add(exercisesButton, 1, 6);
 		exercisesButton.setOnAction(e -> {
 			window.close();
-			exerPage.display();
+			exercisePage.display();
 		});
 		
 		return pane; 
