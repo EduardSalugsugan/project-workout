@@ -38,18 +38,24 @@ import sun.security.tools.keytool.Main;
 
 public class workoutPage {
 	
+	private static Stage window = new Stage();
+	
 	public static void display() {
 		
-		Stage window = new Stage();
+		window.setOnCloseRequest(e -> closeWindow());
+		setWorkoutPage();
+		
+	}
+	
+	private static void setWorkoutPage() {
+		
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		GridPane layout = createWorkoutPage();
 		Scene page = new Scene(layout, 450, 450);
 		window.setScene(page);
 		window.show();
-		
 	}
-	
 	private static GridPane createWorkoutPage() {
 		GridPane workoutPage = new GridPane();
 		
@@ -64,9 +70,13 @@ public class workoutPage {
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
 		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
 		
-		
-		
 		return workoutPage;
+		
+	}
+	
+	private static void closeWindow() {
+		window.close();
+		homePage.display();
 		
 	}
 

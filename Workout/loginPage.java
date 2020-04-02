@@ -203,11 +203,11 @@ public class loginPage implements EventHandler<ActionEvent>{
 			@Override
 			public void handle(ActionEvent event) {
 				if(userName.getText().isEmpty()) {
-					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Error", "Please enter you name");
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Error", "Please enter your name");
 					return;
 				}
 				if(userWeight.getText().isEmpty()) {
-					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Error", "Please enter you weight");
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Error", "Please enter your weight");
 					return;
 				}
 				if(passwordField.getText().isEmpty()) {

@@ -65,40 +65,47 @@ public class homePage implements EventHandler<ActionEvent> {
 	private static GridPane createHomePage() {
 		
 		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.TOP_CENTER);
-		pane.setPadding(new Insets(0, 0, 30, 15));
+		pane.setAlignment(Pos.CENTER);
+		pane.setPadding(new Insets(20, 0, 20, 0));
 		pane.setVgap(25);
 		
 		//The loginButton will take the user to the login page
 		loginButton = new Button("Login");
-		pane.add(loginButton, 1, 2);
+		pane.add(loginButton, 0, 0);
 		loginButton.setOnAction(e -> {
 			window.close();
 			loginPage.display();
 		});
+		GridPane.setHalignment(loginButton, HPos.CENTER);
 		
 		accountButton = new Button("Account Information");
-		pane.add(accountButton, 1, 3);
+		pane.add(accountButton, 0, 1);
 		accountButton.setOnAction(e -> {
 			System.out.println("Placeholder for account page");
 		});
-		
+		GridPane.setHalignment(accountButton, HPos.CENTER);
+
 		beginButton = new Button("Start workout");
-		pane.add(beginButton, 1, 4);
+		pane.add(beginButton, 0, 2);
+		GridPane.setHalignment(beginButton, HPos.CENTER);
+
 		
 		workoutsButton = new Button("View workouts");
-		pane.add(workoutsButton, 1, 5);
+		pane.add(workoutsButton, 0, 3);
 		workoutsButton.setOnAction(e -> {
 			window.close();
 			workoutPage.display();
 		});
+		GridPane.setHalignment(workoutsButton, HPos.CENTER);
+		
 		
 		exercisesButton = new Button("View exercises");
-		pane.add(exercisesButton, 1, 6);
+		pane.add(exercisesButton, 0, 4);
 		exercisesButton.setOnAction(e -> {
 			window.close();
 			exercisePage.display();
 		});
+		GridPane.setHalignment(exercisesButton, HPos.CENTER);
 		
 		return pane; 
 		
