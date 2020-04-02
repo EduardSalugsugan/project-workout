@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -37,20 +38,15 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import sun.security.tools.keytool.Main;
 
-public class exercisePage implements EventHandler<ActionEvent>{
+public class exercisePage {
 	
-	private static Button cardio;
-	private static Button strength;
 	private static Button goBack;
 	private static GridPane layout;
 	private static Stage window = new Stage();
 	private static Scene page;
-	//private static Scene selectionPage;
-	//private static Scene cardioPage;
-	//private static Scene strengthPage;
 
 	public static void display() {
-		window.setOnCloseRequest(e -> closeWindow());
+		window.setOnCloseRequest(e -> window.close());
 		setMainWindow();
 		
 	}
@@ -91,26 +87,56 @@ public class exercisePage implements EventHandler<ActionEvent>{
 		
 	    GridPane gridPane = new GridPane();
 	    gridPane.setPadding(new Insets(40, 40, 40, 40));
-	    gridPane.setVgap(10);
+	    gridPane.setVgap(20);
 	    gridPane.setHgap(20);
+	    
+//		ColumnConstraints columnOneConstrains = new ColumnConstraints(100, 100, Double.MAX_VALUE);
+//		columnOneConstrains.setHalignment(HPos.RIGHT);
+//		ColumnConstraints columnTwoConstrains = new ColumnConstraints(200, 200, Double.MAX_VALUE);
+//		columnTwoConstrains.setHgrow(Priority.ALWAYS);
+//		
+		//gridPane.getColumnConstraints().addAll(columnOneConstrains, columnTwoConstrains);
+	    
 		Label headerLabel = new Label("Cardio or Weight Training Exercises?");
 		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+		gridPane.add(headerLabel, 0, 0);
+		GridPane.setHgrow(headerLabel, Priority.ALWAYS);
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
-		gridPane.add(headerLabel, 0, 0, 3, 2);
-		GridPane.setHalignment(headerLabel, HPos.CENTER);
+		GridPane.setValignment(headerLabel, VPos.TOP);
 		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
 		
 		
-		cardio = new Button("Cardio");
-		cardio.setTranslateX(60);
+		Button cardio = new Button("Cardio");
 		GridPane.setHalignment(cardio, HPos.CENTER);
-		gridPane.add(cardio, 1, 2);
+		GridPane.setMargin(cardio, new Insets(0, 175, 0, 0));
+		gridPane.add(cardio, 0, 1);
 		cardio.setOnAction(e -> setCardioWindow());
 		
-		strength = new Button("Strength");
+		Button strength = new Button("Strength");
 		GridPane.setHalignment(strength, HPos.CENTER);
-		gridPane.add(strength, 2, 2);
+		GridPane.setMargin(strength, new Insets(0, 0, 0, 175));
+		gridPane.add(strength, 0, 1);
 		strength.setOnAction(e -> setStrengthWindow());
+		
+		Button addNewCardio = new Button("Add new cardio exercise");
+		GridPane.setHalignment(addNewCardio, HPos.CENTER);
+		GridPane.setMargin(addNewCardio, new Insets(0, 200, 0, 0));
+		//GridPane.setValignment(addNewCardio, VPos.CENTER);
+		gridPane.add(addNewCardio, 0, 3);
+		addNewCardio.setOnAction(e -> {
+			window.close();
+			addCardioExerciseWindow.display();
+		});
+		
+		Button addNewStrength = new Button("Add new strength exercise");
+		GridPane.setHalignment(addNewStrength, HPos.CENTER);
+		GridPane.setMargin(addNewStrength, new Insets(0, 0, 0, 200));
+		//GridPane.setValignment(addNewStrength, VPos.CENTER);
+		gridPane.add(addNewStrength, 0, 3);
+		addNewStrength.setOnAction(e -> {
+			window.close();
+			addStrengthExerciseWindow.display();
+		});
 
 		return gridPane;
 	}
@@ -118,11 +144,13 @@ public class exercisePage implements EventHandler<ActionEvent>{
 	private static GridPane cardioExercise() {
 		
 		GridPane gridPane = new GridPane();
+		gridPane.setPadding(new Insets(0, 40, 40, 0));
+		gridPane.setVgap(10);
+		gridPane.setHgap(10);
 		
 		ListView<String> cardioList = new ListView<String>();
 		ObservableList<String> cardioExercises = FXCollections.observableArrayList();
-		cardioList.setPadding(new Insets(40, 40, 40, 40));
-		cardioList.setItems(cardioExercises);
+		
 		
 		goBack = new Button("Return");
 		goBack.setOnAction(e -> {
@@ -148,17 +176,6 @@ public class exercisePage implements EventHandler<ActionEvent>{
 		return gridPane;
 		
 	}
-	
-	public static void closeWindow() {
-		window.close();
-		homePage.display();
-	}
 
-
-	@Override
-	public void handle(ActionEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
