@@ -47,6 +47,9 @@ public class addCardioExerciseWindow {
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene page;
+	private static TextField name;
+	private static TextField type;
+	private static File exerciseFile = new File("cardioexercises.txt");
 	public static void display() {
 		
 		window.setOnCloseRequest(e ->{
@@ -69,7 +72,7 @@ public class addCardioExerciseWindow {
 	
 	public static GridPane createAddLayout() {
 		
-		GridPane gridPane = new GridPane();
+GridPane gridPane = new GridPane();
 		
 		//gridPane.setAlignment(Pos.CENTER);
 		
@@ -92,19 +95,112 @@ public class addCardioExerciseWindow {
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
 		GridPane.setMargin(headerLabel, new Insets( 20, 0, 20, 0));
 		
+		
 		Label nameLabel = new Label("Exercise Name: ");
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
 		gridPane.add(nameLabel, 0, 1);
 		
-		TextField name = new TextField();
+		name = new TextField();
 		gridPane.add(name, 1, 1);
 		
+		Label typeLabel = new Label("Upper or Lower Body : ");
+		GridPane.setHalignment(typeLabel, HPos.LEFT);
+		GridPane.setHgrow(typeLabel, Priority.ALWAYS );
+		gridPane.add(typeLabel, 0, 2);
 		
-
+		type = new TextField();
+		GridPane.setHalignment(type, HPos.RIGHT);
+		gridPane.add(type, 1, 2);
 		
+	
+		Button save = new Button("Save Exercise");
+		
+		//gridPane.add(save, 0, 3);
+		save.setOnAction(e -> {
+			try {
+				saveExercise();
+			}
+			catch(IOException i) {
+				System.out.println("Error");
+			}
+		});
+		
+		Button goBack = new Button("Cancel");
+		goBack.setOnAction(e -> {
+			window.close();
+			exercisePage.display();
+		});
+		
+		HBox buttonBox = new HBox();
+		buttonBox.getChildren().addAll(save, goBack);
+		buttonBox.setSpacing(20);
+		buttonBox.setAlignment(Pos.BASELINE_LEFT);
+		GridPane.setRowIndex(gridPane, 4);
+		GridPane.setRowSpan(gridPane, 2);
+		
+		gridPane.add(buttonBox, 1, 4);
 		return gridPane;
 		
 	}
+	
+
+	private static void saveExercise() throws IOException {
+		
+		
+		if(exerciseFile.exists()) {
+			System.out.println("File already exists");
+		
+		}
+		else {
+			System.out.println("File created: " + exerciseFile.getName());
+			exerciseFile.createNewFile();
+		}
+		String exerciseInfo = name.getText() + ", " + type.getText();
+	    
+		
+		//Check if the exercise already exists in the file
+	    BufferedReader reader = new BufferedReader(new FileReader(exerciseFile.getAbsoluteFile()));
+	    String line;
+	    
+//	    while((line = reader.readLine()) != null) {
+//	    	String [] cell = line.split(",");
+//	    	if(cell[0].equals(name.getText()));
+//	    		exists = true;
+//	    }
+		
+	   // reader.close();
+		
+		if(name.getText().isEmpty() || type.getText().isEmpty()) {
+			showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Error", "Enter all information");
+			return;
+		}
+		
+	//	if(exists == false) {
+			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
+					BufferedWriter writer = new BufferedWriter(fw)){
+			
+				writer.write(exerciseInfo + "\n");
+				writer.close();
+				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
+				
+				
+			} catch(IOException e) {
+				System.out.println("Error");
+				e.printStackTrace();
+			}
+		//}
+		//exists = false;
+	}
+	
+	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.show();
+	}
+	
 		
 
 }

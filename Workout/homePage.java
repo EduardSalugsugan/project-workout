@@ -68,7 +68,7 @@ public class homePage implements EventHandler<ActionEvent> {
 		pane.setAlignment(Pos.CENTER);
 		pane.setPadding(new Insets(20, 0, 20, 0));
 		pane.setVgap(25);
-		
+		//pane.setGridLinesVisible(true);
 		//The loginButton will take the user to the login page
 		loginButton = new Button("Login");
 		pane.add(loginButton, 0, 0);
