@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -49,6 +50,11 @@ public class addStrengthExerciseWindow {
 	private static Scene page;
 	private static TextField name;
 	private static TextField type;
+	private static boolean exists = false;
+	private static File exerciseFile = new File("strengthexercises.txt");
+	
+	
+
 	private static BufferedWriter writer;
 	
 	public static void display() {
@@ -124,6 +130,9 @@ public class addStrengthExerciseWindow {
 			catch(IOException i) {
 				System.out.println("Error");
 			}
+			exists = false;
+			name.setText("");
+			type.setText("");
 		});
 		
 		Button goBack = new Button("Cancel");
@@ -135,41 +144,60 @@ public class addStrengthExerciseWindow {
 		HBox buttonBox = new HBox();
 		buttonBox.getChildren().addAll(save, goBack);
 		buttonBox.setSpacing(20);
-		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setAlignment(Pos.BASELINE_LEFT);
 		GridPane.setRowIndex(gridPane, 4);
 		GridPane.setRowSpan(gridPane, 2);
 		
-		gridPane.add(buttonBox, 0, 4);
+		gridPane.add(buttonBox, 1, 4);
 		return gridPane;
 		
 	}
 	
 	private static void saveExercise() throws IOException {
 		
+		//exists = false;
+		
+		if(exerciseFile.exists()) {
+			System.out.println("File already exists");
+		
+		}
+		else {
+			System.out.println("File created: " + exerciseFile.getName());
+			exerciseFile.createNewFile();
+		}
+		
+		String exerciseInfo = name.getText() + ", " + type.getText();
+		
+		
+//	    BufferedReader reader = new BufferedReader(new FileReader(exerciseFile.getAbsoluteFile()));
+//	    String line;
+	    
+//	    while((line = reader.readLine()) != null) {
+//	    	String [] cell = line.split(",");
+//	    	if(cell[0].equals(name.getText()));
+//	    		exists = true;
+//	    }
+	    
+//	    reader.close();
+	    
 		if(name.getText().isEmpty() || type.getText().isEmpty()) {
 			showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Error", "Enter all information");
 			return;
 		}
 		
-		try {
-			String exerciseInfo = name.getText() + ", " + type.getText();
-			File exerciseFile = new File("Exercises.txt");
-			if(exerciseFile.createNewFile()) {
-				System.out.println("File created: " + exerciseFile.getName());
+			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
+					BufferedWriter writer = new BufferedWriter(fw)){
+		
+				writer.write(exerciseInfo + "\n");
+				writer.close();
+				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
+			
+			
+			} catch(IOException e) {
+				System.out.println("Error");
+				e.printStackTrace();
 			}
-			else
-				System.out.println("File already exists");
-			
-			writer = new BufferedWriter(new FileWriter(exerciseFile));
-			writer.write(exerciseInfo);
-			writer.close();
-			showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
-			
-			
-		} catch(IOException e) {
-			System.out.println("Error");
-			e.printStackTrace();
-		}
+		
 	}
 	
 	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
