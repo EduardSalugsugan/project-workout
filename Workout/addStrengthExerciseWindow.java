@@ -50,13 +50,12 @@ public class addStrengthExerciseWindow {
 	private static Scene page;
 	private static TextField name;
 	private static TextField type;
-	private static boolean exists = false;
+	private static Exercise newExercise;
+	private static String exerciseFileName = "strengthexercises.txt";
 	private static File exerciseFile = new File("strengthexercises.txt");
 	
 	
-
-	private static BufferedWriter writer;
-	
+	//The display method allows the GUI page to be called from other pages
 	public static void display() {
 		
 		window.setOnCloseRequest(e ->{
@@ -67,6 +66,7 @@ public class addStrengthExerciseWindow {
 		
 	}
 	
+	//This method will set the settings for the window 
 	public static void setAddWindow(){
 		
 		window.setTitle("Add new exercise");
@@ -77,24 +77,38 @@ public class addStrengthExerciseWindow {
 		window.show();
 	}
 	
+	//Create the layout for the add exercise window
 	public static GridPane createAddLayout() {
 		
 		GridPane gridPane = new GridPane();
 		
-		//gridPane.setAlignment(Pos.CENTER);
-		
+
+		//Set the style settings for the pane
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
-		
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
-		
 		ColumnConstraints columnOneConstrains = new ColumnConstraints(100, 100, Double.MAX_VALUE);
 		columnOneConstrains.setHalignment(HPos.RIGHT);
 		ColumnConstraints columnTwoConstrains = new ColumnConstraints(200, 200, Double.MAX_VALUE);
 		columnTwoConstrains.setHgrow(Priority.ALWAYS);
-		
 		gridPane.getColumnConstraints().addAll(columnOneConstrains, columnTwoConstrains);
 		
+		
+		//Add label, buttons, and controls for the pane
+		gridPane = addUIControls(gridPane);
+
+		return gridPane;
+		
+	}
+	
+	
+	private static GridPane addUIControls(GridPane pane) {
+		GridPane gridPane = pane;
+		
+		
+		///////////////////////////////////////////////////////
+		//////////////Create labels and text fields////////////
+		///////////////////////////////////////////////////////
 		Label headerLabel = new Label("Add new exercise");
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 		
@@ -118,11 +132,18 @@ public class addStrengthExerciseWindow {
 		type = new TextField();
 		GridPane.setHalignment(type, HPos.RIGHT);
 		gridPane.add(type, 1, 2);
+		///////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////
 		
-	
+		
+		
+		
+		
+		///////////////////////////////////////////////////////
+	    ////////////////Create Buttons////////////////////////
+		///////////////////////////////////////////////////////
 		Button save = new Button("Save Exercise");
-		
-		//gridPane.add(save, 0, 3);
 		save.setOnAction(e -> {
 			try {
 				saveExercise();
@@ -130,7 +151,6 @@ public class addStrengthExerciseWindow {
 			catch(IOException i) {
 				System.out.println("Error");
 			}
-			exists = false;
 			name.setText("");
 			type.setText("");
 		});
@@ -140,55 +160,67 @@ public class addStrengthExerciseWindow {
 			window.close();
 			exercisePage.display();
 		});
+		///////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////
 		
+		
+		
+		
+		
+		
+		///////////////////////////////////////////////////////
+		/////////////Add buttons to an HBox////////////////////
+		///////////////////////////////////////////////////////
 		HBox buttonBox = new HBox();
 		buttonBox.getChildren().addAll(save, goBack);
 		buttonBox.setSpacing(20);
 		buttonBox.setAlignment(Pos.BASELINE_LEFT);
 		GridPane.setRowIndex(gridPane, 4);
 		GridPane.setRowSpan(gridPane, 2);
-		
 		gridPane.add(buttonBox, 1, 4);
-		return gridPane;
+		///////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////
 		
+		return gridPane;
 	}
 	
+	//This method will save the entered exercise to the text file to be
+	// added to the exercise page
 	private static void saveExercise() throws IOException {
 		
-		//exists = false;
-		
+		//Check if the file already exists
 		if(exerciseFile.exists()) {
 			System.out.println("File already exists");
 		
 		}
+		//If the file does not already exist, create a new file to save the exercise on
 		else {
 			System.out.println("File created: " + exerciseFile.getName());
 			exerciseFile.createNewFile();
 		}
+
 		
-		String exerciseInfo = name.getText() + ", " + type.getText();
-		
-		
-//	    BufferedReader reader = new BufferedReader(new FileReader(exerciseFile.getAbsoluteFile()));
-//	    String line;
-	    
-//	    while((line = reader.readLine()) != null) {
-//	    	String [] cell = line.split(",");
-//	    	if(cell[0].equals(name.getText()));
-//	    		exists = true;
-//	    }
-	    
-//	    reader.close();
-	    
+	    //Verify that all necessary information is added
 		if(name.getText().isEmpty() || type.getText().isEmpty()) {
 			showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Error", "Enter all information");
 			return;
 		}
 		
+		newExercise = new Exercise(name.getText(), type.getText());
+		
+		if(checkDuplicates(newExercise) == true) {
+			showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Error", "Exercise already exists");
+			return;
+		}
+		
+
+
 			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 					BufferedWriter writer = new BufferedWriter(fw)){
 		
-				writer.write(exerciseInfo + "\n");
+				writer.write(newExercise.toString() + "\n");
 				writer.close();
 				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
 			
@@ -197,6 +229,29 @@ public class addStrengthExerciseWindow {
 				System.out.println("Error");
 				e.printStackTrace();
 			}
+
+		
+	}
+	
+	
+	
+	//This method will check that the exercise being added is not a duplicate that already exists in the file
+	private static boolean checkDuplicates(Exercise e) {
+		
+		//TO DO: Finish method and get it to correctly verify if the exercise exists
+		boolean exists = false;
+		int count = 0;
+		ArrayList <Exercise> allExercises = Exercise.getAllExercises(exerciseFileName);
+		
+		for(int i = 0; i < allExercises.size(); i++) {
+			if(allExercises.get(i).equals(e)) {
+				count++;
+			}
+		}
+		if(count > 0)
+			exists = true;
+	    
+	    return exists;
 		
 	}
 	

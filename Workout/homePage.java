@@ -47,7 +47,7 @@ public class homePage implements EventHandler<ActionEvent> {
 	private static Button exercisesButton;
 	private static Button accountButton;
 
-	
+	//The display method allows the GUI page to be called from other pages
 	public static void display() {
 		setHomeWindow();
 	}
@@ -110,6 +110,7 @@ public class homePage implements EventHandler<ActionEvent> {
 		return pane; 
 		
 	}
+	
 
 	@Override
 	public void handle(ActionEvent event) {
