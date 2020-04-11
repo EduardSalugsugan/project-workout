@@ -52,25 +52,30 @@ public class workoutPage {
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		GridPane layout = createWorkoutPage();
-		Scene page = new Scene(layout, 450, 450);
+		Scene page = new Scene(layout, 300, 250);
 		window.setScene(page);
 		window.show();
 	}
 	private static GridPane createWorkoutPage() {
-		GridPane workoutPage = new GridPane();
-		
-	    workoutPage.setPadding(new Insets(40, 40, 40, 40));
-	    workoutPage.setVgap(10);
-	    workoutPage.setHgap(20);
+		GridPane pane = new GridPane();
+		//pane.setGridLinesVisible(true);
+	    pane.setAlignment(Pos.BASELINE_CENTER);
+	    pane.setPadding(new Insets(20, 0, 20, 0));
+	    pane.setVgap(20);
 		Label headerLabel = new Label("Workouts");
 		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
-		workoutPage.add(headerLabel, 0, 0, 3, 2);
+		pane.add(headerLabel, 0, 0);
 		
-		GridPane.setHalignment(headerLabel, HPos.CENTER);
-		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
+		Button goBack = new Button("Return");
+		goBack.setOnAction(e -> {
+			window.close();
+			homePage.display();
+		});
+		pane.add(goBack, 0, 1);
 		
-		return workoutPage;
+		
+		return pane;
 		
 	}
 	
