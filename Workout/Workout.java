@@ -6,6 +6,7 @@ public class Workout {
 	private String workoutName;
 	
 	public Workout() {
+		workoutName = "";
 		workoutList = new ArrayList<Exercise>();
 	}
 	
