@@ -80,6 +80,7 @@ public class CardioExercise{
 				String [] cell = line.split(",");
 				currentExercise = new CardioExercise();
 				currentExercise.setName(cell[0]);;
+				currentExercise.setEquiptment(cell[1]);
 				
 				exerciseList.add(currentExercise);
 			}

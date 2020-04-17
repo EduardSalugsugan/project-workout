@@ -188,6 +188,11 @@ public class loginPage {
 		gridPane.add(loginButton, 1, 6, 2, 1);
 		GridPane.setHalignment(loginButton, HPos.LEFT);
 		GridPane.setMargin(loginButton, new Insets(20, 0, 20, 0));
+		loginButton.setOnAction(e -> {
+			logUIControls(logPane);
+			main.setScene(logScene);
+			main.show();
+		});
 
 		Button submitButton = new Button("Submit");
 		submitButton.setPrefHeight(40);
