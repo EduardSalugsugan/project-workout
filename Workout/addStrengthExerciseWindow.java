@@ -70,7 +70,7 @@ public class addStrengthExerciseWindow{
 	}
 
 	//This method will set the settings for the window 
-	public static void setAddWindow(){
+	private static void setAddWindow(){
 		
 		window.setTitle("Add new exercise");
 		window.centerOnScreen();
@@ -81,7 +81,7 @@ public class addStrengthExerciseWindow{
 	}
 	
 	//Create the layout for the add exercise window
-	public static GridPane createAddLayout() {
+	private static GridPane createAddLayout() {
 		
 		GridPane gridPane = new GridPane();
 		
@@ -165,7 +165,7 @@ public class addStrengthExerciseWindow{
 			if(weightTypeBox.getValue().equalsIgnoreCase("Machine Resistance"))
 				equiptmentBox.getItems().addAll("Chest Press Machine", "Chest Fly Machine", "Shoulder Press Machine", 
 						"Cable Machine", "Lat Pull Down Machine", "Leg Extension Machine", "Leg Curl Machine", "Smith Machine", 
-						"Leg Press Machine");
+						"Leg Press Machine", "Other");
 			
 		});
 
@@ -221,7 +221,10 @@ public class addStrengthExerciseWindow{
 				System.out.println("Error");
 			}
 			name.setText("");
-			//type.setText("");
+			muscleAreaBox.setValue("");
+			weightTypeBox.setValue("");
+			equiptmentBox.setValue("");
+			targetMuscleBox.setValue("");
 		});
 		
 		Button goBack = new Button("Back");
@@ -299,8 +302,8 @@ public class addStrengthExerciseWindow{
 		try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 			BufferedWriter writer = new BufferedWriter(fw)){
 		
-			writer.write(newExercise.getName() + ", " + newExercise.getTargetMuscleArea() + ", " +
-			newExercise.getMainTargetMuscle() + ", " + newExercise.getWeightType() + ", " + newExercise.getEquiptmentNeeded() + "\n");
+			writer.write(newExercise.getName() + "," + newExercise.getTargetMuscleArea() + "," +
+			newExercise.getMainTargetMuscle() + "," + newExercise.getWeightType() + "," + newExercise.getEquiptmentNeeded() + "\n");
 			writer.close();
 			showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
 			

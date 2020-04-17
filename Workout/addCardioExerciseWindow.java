@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -49,6 +50,7 @@ public class addCardioExerciseWindow{
 	private static Scene page;
 	private static TextField name;
 	private static CardioExercise newExercise;
+	private static ComboBox<String> equiptmentBox;
 	private static String exerciseFileName = "cardioexercises.txt";
 	private static File exerciseFile = new File(exerciseFileName);
 	
@@ -69,7 +71,7 @@ public class addCardioExerciseWindow{
 		window.setTitle("Add new exercise");
 		window.centerOnScreen();
 		layout = createAddLayout();
-	    page = new Scene(layout, 450, 300);
+	    page = new Scene(layout, 450, 350);
 		window.setScene(page);
 		window.show();
 	}
@@ -123,14 +125,16 @@ public class addCardioExerciseWindow{
 		name = new TextField();
 		gridPane.add(name, 1, 1);
 		
-//		Label typeLabel = new Label("Upper or Lower Body : ");
-//		GridPane.setHalignment(typeLabel, HPos.LEFT);
-//		GridPane.setHgrow(typeLabel, Priority.ALWAYS );
-//		gridPane.add(typeLabel, 0, 2);
+		Label equiptmentLabel = new Label("Equiptment Needed: ");
+		GridPane.setHalignment(equiptmentLabel, HPos.LEFT);
+		GridPane.setHgrow(equiptmentLabel, Priority.ALWAYS);
+		gridPane.add(equiptmentLabel, 0, 2);
 		
-//		type = new TextField();
-//		GridPane.setHalignment(type, HPos.RIGHT);
-//		gridPane.add(type, 1, 2);
+		equiptmentBox = new ComboBox<String>();
+		equiptmentBox.setPrefWidth(250);
+		equiptmentBox.getItems().addAll("None", "Treadmill", "Elliptical", "Stationary Bike", "Bicycle", 
+				"Rowing Machine", "Free weights", "Other");
+		gridPane.add(equiptmentBox, 1, 2);
 		///////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////
@@ -204,13 +208,14 @@ public class addCardioExerciseWindow{
 
 		
 		//Verify that all necessary information is added
-		if(name.getText().isEmpty()) {
+		if(name.getText().isEmpty() || equiptmentBox.getValue().isEmpty()) {
 			showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Error", "Enter all information");
 			return;
 		}
 		
 		newExercise = new CardioExercise();
 		newExercise.setName(name.getText());
+		newExercise.setEquiptment(equiptmentBox.getValue());
 		
 		//Use the check duplicates method to verify that the exercise being added does not currently exist in the file
 		if(checkDuplicates(newExercise) == true) {
@@ -222,7 +227,8 @@ public class addCardioExerciseWindow{
 			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 					BufferedWriter writer = new BufferedWriter(fw)){
 			
-				writer.write(newExercise.getName()+ "\n");
+				writer.write(newExercise.getName()+ "," + newExercise.getEquiptment() + "\n");
+				
 				writer.close();
 				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
 				

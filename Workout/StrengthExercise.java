@@ -101,6 +101,14 @@ public class StrengthExercise {
 		this.sets = sets;
 	}
 	
+	public boolean equals(StrengthExercise exercise) {
+		if(exercise.getName().equals(name))
+			return true;
+		
+		return false;
+			
+	}
+	
 	public static ArrayList<StrengthExercise> getAllExercises(String fileName) {
 		ArrayList<StrengthExercise> exerciseList = new ArrayList<StrengthExercise>();
 		StrengthExercise currentExercise;
@@ -117,7 +125,7 @@ public class StrengthExercise {
 				currentExercise.setTargetMuscleArea(cell[1]);
 				currentExercise.setMainTargetMuscle(cell[2]);
 				currentExercise.setWeightType(cell[3]);
-				
+				currentExercise.setEquiptmentNeeded(cell[4]);
 				exerciseList.add(currentExercise);
 			}
 			reader.close();

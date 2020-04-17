@@ -45,7 +45,7 @@ public class viewExercisePage {
 			layout = createViewStrengthPage();
 		else
 			layout = createViewCardioPage();
-		page = new Scene(layout, 250, 300);		
+		page = new Scene(layout, 350, 300);		
 		window.setScene(page);
 		window.show();
 		
@@ -53,18 +53,11 @@ public class viewExercisePage {
 	
 	private static GridPane createViewStrengthPage() {
 		GridPane pane = new GridPane();
-		pane.setGridLinesVisible(true);
+		//pane.setGridLinesVisible(true);
 		pane.setAlignment(Pos.TOP_CENTER);
 		//pane.setGridLinesVisible(true);
-		pane.setPadding(new Insets(20,10,20,10));
+		pane.setPadding(new Insets(40,10,20,10));
 		pane.setVgap(30);
-//		ColumnConstraints column0 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-//		ColumnConstraints column1 = new ColumnConstraints(10, 10, Double.MAX_VALUE);
-//		ColumnConstraints column2 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-	//	RowConstraints row0 = new RowConstraints(20, 20, Double.MAX_VALUE);
-		//pane.getRowConstraints().addAll(row0);
-	//	pane.getColumnConstraints().addAll(column0, column1, column2);
-		
 		
 		
 		
@@ -81,23 +74,33 @@ public class viewExercisePage {
 		///GridPane.setHalignment(typeLabel, HPos.CENTER);
 		//pane.add(typeLabel, 0, 1);
 		
-		Label muscle = new Label("Targets" + strengthExercise.getMainTargetMuscle());
+		Label muscle = new Label("Targets " + strengthExercise.getMainTargetMuscle() + " Muscles");
 		muscle.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		//muscle.setAlignment(Pos.BASELINE_CENTER);
 		//GridPane.setHalignment(type, HPos.RIGHT);
 		//pane.add(type, 1, 1);
+		Label weightType;
+		if(strengthExercise.getWeightType().equalsIgnoreCase("Body Weight")) {
+			weightType = new Label("Bodyweight exercise");
+			
+		}
+		else if(strengthExercise.getWeightType().equalsIgnoreCase("Free Weights")) {
+			weightType = new Label("Free weights required");
+		}
 		
-		Label weightType = new Label(strengthExercise.getWeightType());
+		else {
+			weightType = new Label("Uses weight machine");
+		}
 		
-		Label equiptment = new Label("Exercise uses " + strengthExercise.getWeightType() + " " + strengthExercise.getEquiptmentNeeded());
-		equiptment.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+		Label equiptment = new Label("Uses " + strengthExercise.getEquiptmentNeeded());
+		//equiptment.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		//equiptment.setAlignment(Pos.BASELINE_CENTER);
 		
 
 
 		VBox titleBox = new VBox();
 		titleBox.setAlignment(Pos.BASELINE_CENTER);
-		titleBox.getChildren().addAll(areaLabel, muscle,weightType, equiptment);
+		titleBox.getChildren().addAll(areaLabel, muscle, weightType, equiptment);
 		titleBox.setSpacing(10);
 		pane.add(titleBox, 0, 1, 1, 2);
 		
@@ -111,18 +114,11 @@ public class viewExercisePage {
 	
 	private static GridPane createViewCardioPage() {
 		GridPane pane = new GridPane();
-		pane.setGridLinesVisible(true);
-		pane.setAlignment(Pos.TOP_CENTER);
 		//pane.setGridLinesVisible(true);
+		pane.setAlignment(Pos.TOP_CENTER);
 		pane.setPadding(new Insets(40,40,40,40));
 		pane.setVgap(20);
-//		ColumnConstraints column0 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-//		ColumnConstraints column1 = new ColumnConstraints(10, 10, Double.MAX_VALUE);
-//		ColumnConstraints column2 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-	//	RowConstraints row0 = new RowConstraints(20, 20, Double.MAX_VALUE);
-		//pane.getRowConstraints().addAll(row0);
-	//	pane.getColumnConstraints().addAll(column0, column1, column2);
-		
+
 		
 		
 		
@@ -132,32 +128,17 @@ public class viewExercisePage {
 		GridPane.setHgrow(nameLabel, Priority.ALWAYS);
 		pane.add(nameLabel, 0, 0, 2, 1);
 		
-		
-		Label typeLabel = new Label("Type: ");
-		typeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		typeLabel.setAlignment(Pos.BASELINE_LEFT);
-		//GridPane.setHalignment(typeLabel, HPos.CENTER);
-		//pane.add(typeLabel, 0, 1);
-		
-		Label type = new Label("Info: ");
-		type.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		type.setAlignment(Pos.BASELINE_LEFT);
-		//GridPane.setHalignment(type, HPos.RIGHT);
-		//pane.add(type, 1, 1);
-		
-		Label muscleLabel = new Label("Muscle Group:");
-		muscleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		muscleLabel.setAlignment(Pos.BASELINE_LEFT);
-		
 
 		VBox titleBox = new VBox();
-		titleBox.getChildren().addAll(typeLabel, type, muscleLabel);
 		titleBox.setSpacing(10);
+		Label equiptmentLabel = new Label("Equiptment needed: ");
+		titleBox.getChildren().addAll(equiptmentLabel);
 		pane.add(titleBox, 0, 1, 1, 2);
 		
 		
 		VBox exerciseInfoBox = new VBox();
-		//exerciseInfoBox.getChildren().addAll(exerciseType);
+		Label equiptment = new Label(cardioExercise.getEquiptment());
+		exerciseInfoBox.getChildren().addAll(equiptment);
 		pane.add(exerciseInfoBox, 1, 1, 1, 2);
 		
 		return pane;

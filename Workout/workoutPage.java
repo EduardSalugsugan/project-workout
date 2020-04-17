@@ -94,9 +94,8 @@ public class workoutPage {
 		Button createWorkout = new Button("Create new workout");
 		GridPane.setHalignment(createWorkout, HPos.LEFT);
 		createWorkout.setOnAction(e -> {
-			//TO DO: Create ability to add new workout routine by selecting exercises from a list and adding them to the
-			// custom workout. User should also be able to name their workout routine so they can find it easily when starting
-			// a workout.
+			window.close();
+			addWorkoutPage.display();
 		});
 		
 		Button goBack = new Button("Back");
