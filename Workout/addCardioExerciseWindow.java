@@ -42,14 +42,13 @@ import javafx.stage.Window;
 import sun.security.tools.keytool.Main;
 
 
-public class addCardioExerciseWindow {
+public class addCardioExerciseWindow{
 	
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene page;
 	private static TextField name;
-	private static TextField type;
-	private static Exercise newExercise;
+	private static CardioExercise newExercise;
 	private static String exerciseFileName = "cardioexercises.txt";
 	private static File exerciseFile = new File(exerciseFileName);
 	
@@ -124,14 +123,14 @@ public class addCardioExerciseWindow {
 		name = new TextField();
 		gridPane.add(name, 1, 1);
 		
-		Label typeLabel = new Label("Upper or Lower Body : ");
-		GridPane.setHalignment(typeLabel, HPos.LEFT);
-		GridPane.setHgrow(typeLabel, Priority.ALWAYS );
-		gridPane.add(typeLabel, 0, 2);
+//		Label typeLabel = new Label("Upper or Lower Body : ");
+//		GridPane.setHalignment(typeLabel, HPos.LEFT);
+//		GridPane.setHgrow(typeLabel, Priority.ALWAYS );
+//		gridPane.add(typeLabel, 0, 2);
 		
-		type = new TextField();
-		GridPane.setHalignment(type, HPos.RIGHT);
-		gridPane.add(type, 1, 2);
+//		type = new TextField();
+//		GridPane.setHalignment(type, HPos.RIGHT);
+//		gridPane.add(type, 1, 2);
 		///////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////
@@ -152,10 +151,10 @@ public class addCardioExerciseWindow {
 				System.out.println("Error");
 			}
 			name.setText("");
-			type.setText("");
+			//type.setText("");
 		});
 		
-		Button goBack = new Button("Cancel");
+		Button goBack = new Button("Back");
 		goBack.setOnAction(e -> {
 			window.close();
 			exercisePage.display();
@@ -187,7 +186,7 @@ public class addCardioExerciseWindow {
 		return gridPane;
 		
 	}
-
+	
 	//This method will save the entered exercise to the text file to be
 	// added to the exercise page
 	private static void saveExercise() throws IOException {
@@ -205,12 +204,13 @@ public class addCardioExerciseWindow {
 
 		
 		//Verify that all necessary information is added
-		if(name.getText().isEmpty() || type.getText().isEmpty()) {
+		if(name.getText().isEmpty()) {
 			showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Error", "Enter all information");
 			return;
 		}
 		
-		newExercise = new Exercise(name.getText(), type.getText());
+		newExercise = new CardioExercise();
+		newExercise.setName(name.getText());
 		
 		//Use the check duplicates method to verify that the exercise being added does not currently exist in the file
 		if(checkDuplicates(newExercise) == true) {
@@ -222,7 +222,7 @@ public class addCardioExerciseWindow {
 			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 					BufferedWriter writer = new BufferedWriter(fw)){
 			
-				writer.write(newExercise.toString() + "\n");
+				writer.write(newExercise.getName()+ "\n");
 				writer.close();
 				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
 				
@@ -235,12 +235,12 @@ public class addCardioExerciseWindow {
 	}
 	
 	//This method will check that the exercise being added is not a duplicate that already exists in the file
-	private static boolean checkDuplicates(Exercise e) {
+	private static boolean checkDuplicates(CardioExercise e) {
 		
 		//TO DO: Finish method and get it to correctly verify if the exercise exists
 		boolean exists = false;
 		int count = 0;
-		ArrayList <Exercise> allExercises = Exercise.getAllExercises(exerciseFileName);
+		ArrayList <CardioExercise> allExercises = CardioExercise.getAllExercises(exerciseFileName);
 		
 		for(int i = 0; i < allExercises.size(); i++) {
 			if(allExercises.get(i).equals(e)) {
@@ -253,6 +253,11 @@ public class addCardioExerciseWindow {
 	    return exists;
 		
 	}
+
+
+
+
+	
 	
 	//This method will show an alert box to produce confirmation or error messages.
 	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
