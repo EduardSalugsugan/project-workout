@@ -2,33 +2,53 @@ import java.util.ArrayList;
 
 public class Workout {
 	
-	private ArrayList<Exercise> workoutList;
+	private ArrayList<StrengthExercise> strengthWorkoutList;
+	private ArrayList<CardioExercise> cardioWorkoutList;
 	private String workoutName;
+	private String type;
 	
-	public Workout() {
+	public Workout(String workoutType) {
 		workoutName = "";
-		workoutList = new ArrayList<Exercise>();
+		if(workoutType.equalsIgnoreCase("Strength")) {
+			type = "Strength";
+			strengthWorkoutList = new ArrayList<StrengthExercise>();
+		}
+		
+		else {
+			type = "Cardio";
+			cardioWorkoutList = new ArrayList<CardioExercise>();
+		}
 	}
-	
-	public Workout(String name) {
-		setWorkoutName(name);
-		workoutList = new ArrayList<Exercise>();
-	}
-	
 	
 	public void setWorkoutName(String name) {
 		this.workoutName = name; 
 	}
 	
-	public boolean addExercise(Exercise e) {
-		
-		workoutList.add(e);
-		return true;
+	public String getWorkoutName() {
+		return workoutName;
+	}
+	
+	public void addStrengthExercise(StrengthExercise e) {
+		strengthWorkoutList.add(e);
+	}
+	
+	public void addCardioExericse(CardioExercise e) {
+		cardioWorkoutList.add(e);
 	}
 	
 	public void removeExercise(Object e) {
-		if(e instanceof Exercise)
-		workoutList.remove(e);
+		if(e instanceof StrengthExercise)
+			strengthWorkoutList.remove(e);
 	}
+	
+	public int size() {
+		if(type.equalsIgnoreCase("Strength")) {
+			return strengthWorkoutList.size();
+		}
+		
+		else
+			return cardioWorkoutList.size();
+	}
+	
 
 }

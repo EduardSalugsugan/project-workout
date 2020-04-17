@@ -36,7 +36,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class homePage implements EventHandler<ActionEvent> {
+public class homePage  {
 
 	private static Stage window = new Stage();
 	private static GridPane layout;
@@ -62,8 +62,8 @@ public class homePage implements EventHandler<ActionEvent> {
 		window.show();
 		
 	}
+	
 	private static GridPane createHomePage() {
-		
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.CENTER);
 		pane.setPadding(new Insets(20, 0, 20, 0));
@@ -81,13 +81,15 @@ public class homePage implements EventHandler<ActionEvent> {
 		accountButton = new Button("Account Information");
 		pane.add(accountButton, 0, 1);
 		accountButton.setOnAction(e -> {
-			System.out.println("Placeholder for account page");
+			window.close();
+			accountPage.display();
 		});
 		GridPane.setHalignment(accountButton, HPos.CENTER);
 
 		beginButton = new Button("Start workout");
 		pane.add(beginButton, 0, 2);
 		GridPane.setHalignment(beginButton, HPos.CENTER);
+		beginButton.setOnAction(e -> startWorkoutPage.display());
 
 		
 		workoutsButton = new Button("View workouts");
@@ -111,12 +113,7 @@ public class homePage implements EventHandler<ActionEvent> {
 		
 	}
 	
-
-	@Override
-	public void handle(ActionEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 }

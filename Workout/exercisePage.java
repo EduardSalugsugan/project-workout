@@ -49,14 +49,18 @@ public class exercisePage {
 	private static Scene page;
 	private static String strengthFileName = "strengthexercises.txt";
 	private static String cardioFileName = "cardioexercises.txt";
-	private static ArrayList<Exercise> cardioExerciseList = new ArrayList<Exercise>();
-	private static ArrayList<Exercise> strengthExerciseList = new ArrayList<Exercise>();
+	private static ArrayList<StrengthExercise> strengthExerciseList;
+	private static ArrayList<CardioExercise> cardioExerciseList;
+	private static ObservableList<String> observableExercises;
+	private static StrengthExercise strength;
+	private static CardioExercise cardio;
+//	private static ArrayList<Exercise> cardioExerciseList = Exercise.getAllExercises(cardioFileName);
+//	private static ArrayList<Exercise> strengthExerciseList = Exercise.getAllExercises(strengthFileName);
 	
 	//The display method allows the GUI page to be called from other pages
 	public static void display() {
 		window.setOnCloseRequest(e -> window.close());
 		setMainWindow();
-		
 	}
 	
 	//Window settings for the main page of the exercise page
@@ -71,29 +75,18 @@ public class exercisePage {
 			
 	}
 	
-	//Window settings for the cardio section of the exercise page
-	private static void setCardioWindow() {
+	
+	private static void setExerciseWindow(String exerciseType) {
 		
-		
-		window.setTitle("Cardio exercises");
+		window.setTitle(exerciseType + " exercises");
 		window.centerOnScreen();
-		layout = cardioExercise();
+		layout = createExercisePage(exerciseType);
 		page = new Scene(layout, 450, 300);
 		window.setScene(page);
 		window.show();
 		
 	}
 	
-	//Window settings for the strength section of the exercise page
-	private static void setStrengthWindow() {
-		
-		window.setTitle("Strength exercises");
-		window.centerOnScreen();
-		layout = strengthExercise();
-		page = new Scene(layout, 450, 300);
-		window.setScene(page);
-		window.show();
-	}
 	
 	//GridPane and UI controls for the exercise home page
 	private static GridPane createExerciseHomePage() {
@@ -123,14 +116,16 @@ public class exercisePage {
 		GridPane.setValignment(cardio, VPos.TOP);
 		GridPane.setHalignment(cardio, HPos.CENTER);
 		gridPane.add(cardio, 0, 1);
-		cardio.setOnAction(e -> setCardioWindow());
+		//cardio.setOnAction(e -> setCardioWindow());
+		cardio.setOnAction(e -> setExerciseWindow("Cardio"));
+		
 		
 		Button strength = new Button("Strength exercises");
 		GridPane.setValignment(strength, VPos.TOP);
 		GridPane.setHalignment(strength, HPos.CENTER);
 		//GridPane.setMargin(strength, new Insets(0, 0, 0, 175));
 		gridPane.add(strength, 0, 2);
-		strength.setOnAction(e -> setStrengthWindow());
+		strength.setOnAction(e -> setExerciseWindow("Strength"));
 		
 		goBack = new Button("Return");
 		GridPane.setValignment(goBack, VPos.TOP);
@@ -146,94 +141,72 @@ public class exercisePage {
 	}
 	
 	
-	//GridPane and UI controls for the cardio page 
-	private static GridPane cardioExercise() {
-		
-		//Set gridpane settings
-		GridPane gridPane = new GridPane();
-		gridPane.setPadding(new Insets(40, 40, 40, 40));
-		gridPane.setVgap(10);
-		gridPane.setHgap(10);
-		
-		//Create and fill the list of exercises that can be viewed 
-		ListView<String> cardioList = new ListView<String>();
-		ObservableList<String> cardioExercises = loadExercises(cardioFileName);
-		cardioList.setItems(cardioExercises);
-		
-		
-		//Settings for the listview style
-		GridPane.setHalignment(cardioList, HPos.RIGHT);
-		gridPane.add(cardioList, 0, 0);
-		ColumnConstraints column0 = new ColumnConstraints(370);
-		RowConstraints row0 = new RowConstraints(200);
-		row0.setValignment(VPos.CENTER);
-		column0.setHalignment(HPos.CENTER);
-		gridPane.getColumnConstraints().add(column0);
-		gridPane.getRowConstraints().add(row0);
-
-
-		//This button will eventually open a new page showing more information about the selected exercise
-		Button select = new Button("View Exercise Info");
-		
-		//Button to add new cardio exercise
-		Button addNewCardio = new Button("Add new cardio exercise");
-		addNewCardio.setOnAction(e -> {
-			window.close();
-			addCardioExerciseWindow.display();
-		});
-
-		
-		//Button to go back to previous screen
-		goBack = new Button("Back");
-		goBack.setOnAction(e -> {
-			window.close();
-			setMainWindow();
-		});
-		
-		
-		//Add buttons to HBox for better style
-		HBox buttonBox = new HBox();
-		buttonBox.getChildren().addAll(select, addNewCardio, goBack);
-		buttonBox.setSpacing(20);
-		buttonBox.setAlignment(Pos.BASELINE_CENTER);
-		gridPane.add(buttonBox, 0, 1);
-		
-		
-		return gridPane;
-		
-	}
-	
 	//Gridpane and UI controls for the strength page
-	private static GridPane strengthExercise() {
+	private static GridPane createExercisePage(String type) {
+		String fileName;
+		
+		//Fill the ArrayList with the correct exercises
+		if(type.equalsIgnoreCase("strength")) {
+			fileName = strengthFileName;
+			strengthExerciseList = StrengthExercise.getAllExercises(fileName);
+			observableExercises = StrengthExercise.loadExercises(fileName);
+		}
+		
+		else {
+			fileName = cardioFileName;
+			cardioExerciseList = CardioExercise.getAllExercises(fileName);
+			observableExercises = CardioExercise.loadExercises(fileName);
+		}
 		
 		//Set gridpane settings
+		
+		
 		GridPane gridPane = new GridPane();
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
 		gridPane.setVgap(10);
 		gridPane.setHgap(10);
 		
 		//Create and fill the list of exercises that can be viewed
-		ListView<String> strengthList = new ListView<String>();
-		ObservableList<String> strengthExercises = loadExercises(strengthFileName);
-		strengthList.setItems(strengthExercises);
+		ListView<String> exerciseListView = new ListView<String>();
+		//ObservableList<String> observableExercises = StrengthExercise.loadExercises(fileName);
+		exerciseListView.setItems(observableExercises);
 		
 		//Settings for the listview style
-		GridPane.setHalignment(strengthList, HPos.CENTER);
-		gridPane.add(strengthList, 0, 0);
+		GridPane.setHalignment(exerciseListView, HPos.CENTER);
+		gridPane.add(exerciseListView, 0, 0);
 		ColumnConstraints column0 = new ColumnConstraints(370);
 		RowConstraints row0 = new RowConstraints(200); 
 		column0.setHalignment(HPos.CENTER);
 		gridPane.getColumnConstraints().add(column0);
 		gridPane.getRowConstraints().add(row0);
+		
+		
 
 		//Placeholder, will eventually open new dialog box with exercise information
 		Button select = new Button("View Exercise Info");
+		select.setOnAction(e -> {
+			if(type.equalsIgnoreCase("Strength")) {
+				strength = strengthExerciseList.get(exerciseListView.getSelectionModel().getSelectedIndex());
+				viewExercisePage.displayStrength(strength);
+			}
+			
 		
-		Button addNewStrength = new Button("Add new strength exercise");
-		GridPane.setHalignment(addNewStrength, HPos.LEFT);
-		addNewStrength.setOnAction(e -> {
+			else { 
+				cardio = cardioExerciseList.get(exerciseListView.getSelectionModel().getSelectedIndex());
+				viewExercisePage.displayCardio(cardio);
+			}
+	
+			//viewExercisePage.display(selectedExercise);
+		});
+		
+		Button addNew = new Button("Add new exercise");
+		GridPane.setHalignment(addNew, HPos.LEFT);
+		addNew.setOnAction(e -> {
 			window.close();
-			addStrengthExerciseWindow.display();
+			if(type.equalsIgnoreCase("strength"))
+				addStrengthExerciseWindow.display();
+			else 
+				addCardioExerciseWindow.display();
 		});
 		
 		goBack = new Button("Back");
@@ -245,7 +218,7 @@ public class exercisePage {
 		
 		//Add buttons to an HBox for style purposes 
 		HBox buttonBox = new HBox();
-		buttonBox.getChildren().addAll(select, addNewStrength, goBack);
+		buttonBox.getChildren().addAll(select, addNew, goBack);
 		buttonBox.setSpacing(20);
 		buttonBox.setAlignment(Pos.BASELINE_CENTER);
 		gridPane.add(buttonBox, 0, 1);
@@ -254,19 +227,6 @@ public class exercisePage {
 		
 	}
 	
-
-	//Load all of the exercises in the given file into an Observable list to be displayed 
-	private static ObservableList<String> loadExercises(String fileName) {
-		ObservableList<String> viewList = FXCollections.observableArrayList();
-		Exercise currentExercise;
-		ArrayList<Exercise> list = Exercise.getAllExercises(fileName);
-		for(int i = 0; i < list.size(); i++) {
-			currentExercise = (Exercise)list.get(i);
-			viewList.add(currentExercise.getName());
-		}
-		return viewList;
-		
-	} //End of load exercises
 	
 
 }
