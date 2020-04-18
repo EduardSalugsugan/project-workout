@@ -46,7 +46,6 @@ public class homePage  {
 	private static Button workoutsButton;
 	private static Button exercisesButton;
 	private static Button accountButton;
-	private static Button foodPlanButton;
 
 	//The display method allows the GUI page to be called from other pages
 	public static void display() {
@@ -109,14 +108,7 @@ public class homePage  {
 			exercisePage.display();
 		});
 		GridPane.setHalignment(exercisesButton, HPos.CENTER);
-
-		foodPlanButton = new Button("Food Plans");
-		pane.add(foodPlanButton, 0, 5);
-		foodPlanButton.setOnAction(e -> {
-			window.close();
-			foodPlanPage.display();
-		});
-		GridPane.setHalignment(foodPlanButton, HPos.CENTER);
+		
 		return pane; 
 		
 	}
