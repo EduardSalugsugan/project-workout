@@ -114,7 +114,7 @@ public class homePage  {
 		pane.add(foodPlanButton, 0, 5);
 		foodPlanButton.setOnAction(e -> {
 			window.close();
-			foodPlanPage.display();
+			mealPlanPage.display();
 		});
 		GridPane.setHalignment(foodPlanButton, HPos.CENTER);
 

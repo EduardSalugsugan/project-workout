@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class foodPlanPage{
+public class mealPlanPage{
 	
 	private static Stage window = new Stage();
 	private static GridPane layout;

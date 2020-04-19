@@ -59,7 +59,7 @@ public class muscleGain{
         Button back = new Button("Back");
         back.setOnAction(e-> {
             window.close();
-            foodPlanPage.display();
+            mealPlanPage.display();
 		});
         muscle.getChildren().addAll(breakfast,snack,lunch,snack2,dinner,snack3,back);
         pane.add(muscle, 0 , 1);
