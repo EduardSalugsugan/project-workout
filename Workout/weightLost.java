@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class muscleGain{
+public class weightLost{
 	
 	private static Stage window = new Stage();
 	private static GridPane layout;
@@ -39,7 +39,7 @@ public class muscleGain{
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
-		Label nameLabel = new Label("Food Plan For Muscle Gain");
+		Label nameLabel = new Label("Food Plan For Weight Lost");
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
@@ -50,18 +50,18 @@ public class muscleGain{
         muscle.setAlignment(Pos.CENTER_LEFT);
         muscle.setSpacing(25);
 
-        Text breakfast = new Text("Breakfast (Meal One): 6am\n1 grapefruit\nPlain oatmeal sweetened with cinnamon and stevia\nEgg-white omelet with chicken and veggies");
-        Text snack = new Text("Snack (Meal Two): 9am\nSimple smoothie: 1 cup almond milk (or skim milk) + 1 scoop protein powder\nHandful of almonds");
-        Text lunch = new Text("Lunch (Meal Three): 12pm\n1 piece fresh fruit\n1-2 grilled chicken breasts\n2 handful-sized servings of brown rice\n1 serving green veggies of choice (green beans, broccoli, asparagus, etc.)");
-        Text snack2 = new Text("Snack (Meal Four): 3pm\n1 cup Greek yogurt\nHandful of berries");
-        Text dinner = new Text("Dinner (Meal Five): 6pm\nLarge salad with mixed veggies\n1 baked regular or sweet potato\nBaked salmon filet or 1 grilled steak\n1 serving pineapple");
-        Text snack3 = new Text("Late-Night/Before Bed Meal (Meal Six): 9pm\nSimple smoothie: 1 cup almond milk (or skim milk) + 1 scoop protein powder\nSalmon filet or 1 grilled steak\n1-2 plain rice cakes with natural peanut butter");
+        Text breakfast = new Text("Breakfast (Meal One): 6am\ngreen smoothie (made with ½ banana + ½ cup frozen mango 1 cup\nkale + ½ cup plain, low-fat Greek yogurt ½ small avocado + ½ cup nonfat milk)");
+        Text snack = new Text("Snack (Meal Two): 9am\n1 apple\n1 oz nuts");
+        Text lunch = new Text("Lunch (Meal Three): 12pm\n2 cups Veggie Soup");
+        Text snack2 = new Text("Snack (Meal Four): 3pm\n1 cup baby carrots\nsugar snap peas\n2 tablespoons hummus");
+        Text dinner = new Text("Dinner (Meal Five): 6pm\n4 oz salmon\n\n1 cup steamed carrots\n1 cup steamed broccoli\n2 tablespoons teriyaki sauce\n1 teaspoon sesame seeds");
+        Text note = new Text("Notes:\nBake the salmon at 400°F (200°C) until firm to the touch, 10 to 15 minutes, depending\non the thickness. Chop the carrots and broccoli and steam until tender-crisp,\nabout 5 minutes for the carrots, 3 minutes for the broccoli. Drizzle everything\nwith the teriyaki sauce and sprinkle with the sesame seeds.");
         Button back = new Button("Back");
         back.setOnAction(e-> {
             window.close();
             mealPlanPage.display();
 		});
-        muscle.getChildren().addAll(breakfast,snack,lunch,snack2,dinner,snack3,back);
+        muscle.getChildren().addAll(breakfast,snack,lunch,snack2,dinner,note,back);
         pane.add(muscle, 0 , 1);
 		return pane;
 	}

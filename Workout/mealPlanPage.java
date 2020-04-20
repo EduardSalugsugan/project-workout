@@ -60,6 +60,7 @@ public class mealPlanPage{
         Lost.setPrefSize(150, 20);
         Lost.setOnAction(e -> {
 			window.close();
+			weightLost.display();
 			
 		});
 		Button goBack = new Button("Back");
