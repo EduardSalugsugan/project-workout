@@ -27,7 +27,7 @@ public class mealPlanPage{
 		window.setTitle("Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
-		foodplan = new Scene(layout, 400, 400); 
+		foodplan = new Scene(layout, 300, 500); 
 		window.setScene(foodplan);
 		window.show();
 		window.setResizable(false);
@@ -71,6 +71,13 @@ public class mealPlanPage{
 			veganGains.display();	
 		});
 
+		Button MyPlan = new Button("My Plan");
+        MyPlan.setPrefSize(150, 20);
+       	MyPlan.setOnAction(e -> {
+		//	window.close();
+			myMealPlan.display();	
+		});
+
 		Button goBack = new Button("Back");
 		goBack.setPrefSize(150, 20);
 		goBack.setOnAction(e -> {
@@ -78,7 +85,7 @@ public class mealPlanPage{
 			homePage.display();
 		});
 
-		foodplan.getChildren().addAll(Gain, Lost, Vegan, goBack);
+		foodplan.getChildren().addAll(Gain, Lost, Vegan, MyPlan, goBack);
 		
 		pane.add(foodplan, 0 , 1);
 		

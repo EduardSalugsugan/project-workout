@@ -13,12 +13,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class veganGains{
+public class myMealPlan{
 	
 	private static Stage window = new Stage();
 	private static GridPane layout;
     private static Scene page;
-	
+    private static Account account = Account.getCurrentAccount();
+    
 	public static void display() {
 		setFoodPlanWindow();
 	}
@@ -39,7 +40,7 @@ public class veganGains{
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
-		Label nameLabel = new Label("Meal Plan For Vegan");
+		Label nameLabel = new Label(account.getUsername() + " Meal Plan");
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
@@ -50,21 +51,21 @@ public class veganGains{
         muscle.setAlignment(Pos.CENTER_LEFT);
         muscle.setSpacing(25);
 
-        Text breakfast = new Text("Breakfast (Meal One): 6am\n(281 calories, 11 g protein)\n1 whole-wheat English muffin\n1 1/2 Tbsp. almond butter");
-        Text snack = new Text("Snack (Meal Two): 9am\n(154 calories, 5 g protein)\n20 unsalted dry-roasted almonds");
-        Text lunch = new Text("Lunch (Meal Three): 12pm\n(325 calories, 18 g protein)\n1 serving Green Salad with Edamame & Beets");
-        Text snack2 = new Text("Snack (Meal Four): 3pm\n(32 calories, 1 g protein)\n1/2 cup raspberries");
-        Text dinner = new Text("Dinner (Meal Five): 6pm\n(428 calories, 16 g protein)\n1 serving Thai Tofu & Vegetable Curry with Zucchini Noodles");
-        Text daily = new Text("Daily Totals:\n1,220 calories, 51 g protein, 87 g carbohydrate, 31 g fiber,\n81 g fat, 25 g saturated fat, 1,496 mg sodium");
-        Text tmi = new Text("To make it 1,500 calories:\nAdd 1 medium apple to breakfast, increase to 1/3 cup almonds\nat A.M. snack, and add 5 walnut halves to P.M. snack.");
-        Text tmi2 = new Text("To make it 2,000 calories:\nAdd 1 medium apple to breakfast, increase to 1/3 cup almonds at \nA.M. snack and add 1 large pear, add White Bean & Avocado Toast\nto lunch, and add 1/3 cup walnut halves to P.M. snack.");
+        Text breakfast = new Text("Hello");
+        Text snack1 = new Text("Hello");
+        Text lunch = new Text("Hello");
+        Text snack2 = new Text("Hello");
+        Text dinner = new Text("Hello");
+        Text snack3 = new Text("Hello");
+        Text notes = new Text("Hello");
         
         Button back = new Button("Back");
         back.setOnAction(e-> {
             window.close();
             mealPlanPage.display();
-		});
-        muscle.getChildren().addAll(breakfast, snack, lunch, snack2, dinner, daily, tmi, tmi2, back);
+        });
+        
+        muscle.getChildren().addAll(breakfast, snack1, lunch, snack2, dinner, snack3, notes, back);
         pane.add(muscle, 0 , 1);
 		return pane;
 	}

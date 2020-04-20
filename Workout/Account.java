@@ -78,17 +78,15 @@ public class Account {
 				currentAccount.setWeight(Integer.parseInt(cell[4]));
 				accountList.add(currentAccount);
 			}
-			reader.close();
-			
-		}catch(FileNotFoundException f) {
+			reader.close();	
+		}
+		catch(FileNotFoundException f) {
 			System.out.println("File not found");
 		}
 		catch(IOException i) {
 			System.out.println("IO exception");
-		}
-		
-		return accountList;
-		
+		}		
+		return accountList;	
 	}
 	
 	
@@ -104,11 +102,12 @@ public class Account {
 			currentAccount.setAge(Integer.parseInt(cell[2]));
 			currentAccount.setGender(cell[3]);
 			currentAccount.setWeight(Integer.parseInt(cell[4]));
-			reader.close();
-			
-		}catch(FileNotFoundException f) {
+			reader.close();			
+		}
+		catch(FileNotFoundException f) {
 			System.out.println("File not found");
-		}catch(IOException e) {
+		}
+		catch(IOException e) {
 			System.out.println("IO exception");
 		}
 		return currentAccount;
