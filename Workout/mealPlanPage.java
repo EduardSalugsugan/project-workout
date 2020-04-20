@@ -30,7 +30,7 @@ public class mealPlanPage{
 		foodplan = new Scene(layout, 400, 400); 
 		window.setScene(foodplan);
 		window.show();
-		
+		window.setResizable(false);
     }
     
 	private static GridPane createFoodPlanPage() {
@@ -50,26 +50,35 @@ public class mealPlanPage{
 		foodplan.setAlignment(Pos.CENTER);
 		foodplan.setSpacing(25);
 
-		Button Gain = new Button("Muscle Gain");
+		Button Gain = new Button("Muscle Gains");
         Gain.setPrefSize(150, 20);
         Gain.setOnAction(e -> {
             window.close();
             muscleGain.display();
 		});
+
 		Button Lost = new Button("Weight Lost");
         Lost.setPrefSize(150, 20);
         Lost.setOnAction(e -> {
 			window.close();
-			weightLost.display();
-			
+			weightLost.display();	
 		});
+
+		Button Vegan = new Button("Vegan Diet");
+        Vegan.setPrefSize(150, 20);
+        Vegan.setOnAction(e -> {
+			window.close();
+			veganGains.display();	
+		});
+
 		Button goBack = new Button("Back");
 		goBack.setPrefSize(150, 20);
 		goBack.setOnAction(e -> {
 			window.close();
 			homePage.display();
 		});
-		foodplan.getChildren().addAll(Gain, Lost, goBack);
+
+		foodplan.getChildren().addAll(Gain, Lost, Vegan, goBack);
 		
 		pane.add(foodplan, 0 , 1);
 		

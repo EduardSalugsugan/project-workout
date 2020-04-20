@@ -30,7 +30,7 @@ public class weightLost{
 		page = new Scene(layout, 500, 700); 
 		window.setScene(page);
 		window.show();
-		
+		window.setResizable(false);
     }
     
 	private static GridPane createFoodPlanPage() {
@@ -54,7 +54,7 @@ public class weightLost{
         Text snack = new Text("Snack (Meal Two): 9am\n1 apple\n1 oz nuts");
         Text lunch = new Text("Lunch (Meal Three): 12pm\n2 cups Veggie Soup");
         Text snack2 = new Text("Snack (Meal Four): 3pm\n1 cup baby carrots\nsugar snap peas\n2 tablespoons hummus");
-        Text dinner = new Text("Dinner (Meal Five): 6pm\n4 oz salmon\n\n1 cup steamed carrots\n1 cup steamed broccoli\n2 tablespoons teriyaki sauce\n1 teaspoon sesame seeds");
+        Text dinner = new Text("Dinner (Meal Five): 6pm\n4 oz salmon\n1 cup steamed carrots\n1 cup steamed broccoli\n2 tablespoons teriyaki sauce\n1 teaspoon sesame seeds");
         Text note = new Text("Notes:\nBake the salmon at 400°F (200°C) until firm to the touch, 10 to 15 minutes, depending\non the thickness. Chop the carrots and broccoli and steam until tender-crisp,\nabout 5 minutes for the carrots, 3 minutes for the broccoli. Drizzle everything\nwith the teriyaki sauce and sprinkle with the sesame seeds.");
         Button back = new Button("Back");
         back.setOnAction(e-> {

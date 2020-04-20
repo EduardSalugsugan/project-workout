@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class muscleGain{
+public class veganGains{
 	
 	private static Stage window = new Stage();
 	private static GridPane layout;
@@ -27,7 +27,7 @@ public class muscleGain{
 		window.setTitle("Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
-		page = new Scene(layout, 500, 700); 
+		page = new Scene(layout, 500, 800); 
 		window.setScene(page);
 		window.show();
 		window.setResizable(false);
@@ -39,7 +39,7 @@ public class muscleGain{
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
-		Label nameLabel = new Label("Meal Plan For Muscle Gain");
+		Label nameLabel = new Label("Meal Plan For Vegan");
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
@@ -50,18 +50,21 @@ public class muscleGain{
         muscle.setAlignment(Pos.CENTER_LEFT);
         muscle.setSpacing(25);
 
-        Text breakfast = new Text("Breakfast (Meal One): 6am\n1 grapefruit\nPlain oatmeal sweetened with cinnamon and stevia\nEgg-white omelet with chicken and veggies");
-        Text snack = new Text("Snack (Meal Two): 9am\nSimple smoothie: 1 cup almond milk (or skim milk) + 1 scoop protein powder\nHandful of almonds");
-        Text lunch = new Text("Lunch (Meal Three): 12pm\n1 piece fresh fruit\n1-2 grilled chicken breasts\n2 handful-sized servings of brown rice\n1 serving green veggies of choice (green beans, broccoli, asparagus, etc.)");
-        Text snack2 = new Text("Snack (Meal Four): 3pm\n1 cup Greek yogurt\nHandful of berries");
-        Text dinner = new Text("Dinner (Meal Five): 6pm\nLarge salad with mixed veggies\n1 baked regular or sweet potato\nBaked salmon filet or 1 grilled steak\n1 serving pineapple");
-        Text snack3 = new Text("Late-Night/Before Bed Meal (Meal Six): 9pm\nSimple smoothie: 1 cup almond milk (or skim milk) + 1 scoop protein powder\nSalmon filet or 1 grilled steak\n1-2 plain rice cakes with natural peanut butter");
+        Text breakfast = new Text("Breakfast (Meal One): 6am\n(281 calories, 11 g protein)\n1 whole-wheat English muffin\n1 1/2 Tbsp. almond butter");
+        Text snack = new Text("Snack (Meal Two): 9am\n(154 calories, 5 g protein)\n20 unsalted dry-roasted almonds");
+        Text lunch = new Text("Lunch (Meal Three): 12pm\n(325 calories, 18 g protein)\n1 serving Green Salad with Edamame & Beets");
+        Text snack2 = new Text("Snack (Meal Four): 3pm\n(32 calories, 1 g protein)\n1/2 cup raspberries");
+        Text dinner = new Text("Dinner (Meal Five): 6pm\n(428 calories, 16 g protein)\n1 serving Thai Tofu & Vegetable Curry with Zucchini Noodles");
+        Text daily = new Text("Daily Totals:\n1,220 calories, 51 g protein, 87 g carbohydrate, 31 g fiber,\n81 g fat, 25 g saturated fat, 1,496 mg sodium");
+        Text tmi = new Text("To make it 1,500 calories:\nAdd 1 medium apple to breakfast, increase to 1/3 cup almonds\nat A.M. snack, and add 5 walnut halves to P.M. snack.");
+        Text tmi2 = new Text("To make it 2,000 calories:\nAdd 1 medium apple to breakfast, increase to 1/3 cup almonds at \nA.M. snack and add 1 large pear, add White Bean & Avocado Toast\nto lunch, and add 1/3 cup walnut halves to P.M. snack.");
+        
         Button back = new Button("Back");
         back.setOnAction(e-> {
             window.close();
             mealPlanPage.display();
 		});
-        muscle.getChildren().addAll(breakfast,snack,lunch,snack2,dinner,snack3,back);
+        muscle.getChildren().addAll(breakfast, snack, lunch, snack2, dinner, daily, tmi, tmi2, back);
         pane.add(muscle, 0 , 1);
 		return pane;
 	}
