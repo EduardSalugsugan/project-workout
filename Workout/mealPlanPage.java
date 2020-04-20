@@ -24,7 +24,7 @@ public class mealPlanPage{
 	
 	
 	private static void setFoodPlanWindow() {
-		window.setTitle("Food Plan");
+		window.setTitle("Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
 		foodplan = new Scene(layout, 400, 400); 
@@ -39,7 +39,7 @@ public class mealPlanPage{
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
-		Label nameLabel = new Label("Food Plan Suggestions");
+		Label nameLabel = new Label("Meal Plan Suggestions");
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.CENTER);

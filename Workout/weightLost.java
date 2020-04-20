@@ -24,7 +24,7 @@ public class weightLost{
 	}
 	
 	private static void setFoodPlanWindow() {
-		window.setTitle("Food Plan");
+		window.setTitle("Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
 		page = new Scene(layout, 500, 700); 
@@ -39,7 +39,7 @@ public class weightLost{
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
-		Label nameLabel = new Label("Food Plan For Weight Lost");
+		Label nameLabel = new Label("Meal Plan For Weight Lost");
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);

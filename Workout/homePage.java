@@ -110,7 +110,7 @@ public class homePage  {
 		});
 		GridPane.setHalignment(exercisesButton, HPos.CENTER);
 
-		foodPlanButton = new Button("Food Plans");
+		foodPlanButton = new Button("Meal Plans");
 		pane.add(foodPlanButton, 0, 5);
 		foodPlanButton.setOnAction(e -> {
 			window.close();
