@@ -1,5 +1,5 @@
 
-public class myPlan {
+public class myMeal{
     String breakfast;
     String snack1;
     String lunch;
@@ -8,7 +8,7 @@ public class myPlan {
     String snack3;
     String notes;
 
-    public myPlan(){
+    public myMeal(){
         breakfast = "";
         snack1 = "";
         lunch = "";
