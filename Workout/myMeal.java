@@ -1,5 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class myMeal{
+public class myMeal {
     String breakfast;
     String snack1;
     String lunch;
@@ -9,13 +14,13 @@ public class myMeal{
     String notes;
 
     public myMeal(){
-        breakfast = "";
-        snack1 = "";
-        lunch = "";
-        snack2 = "";
-        dinner = "";
-        snack3 = "";
-        notes = "";
+        breakfast = null;
+        snack1 = null;
+        lunch = null;
+        snack2 = null;
+        dinner = null;
+        snack3 = null;
+        notes = null;
     }
 
     public String getBreakfast(){
@@ -73,5 +78,32 @@ public class myMeal{
     public void setNotes(String a){
         notes = a;
     }
+
+    public static myMeal getCurrentMealPlan() {
+        myMeal mealplan = new myMeal();
+		try {
+			FileReader fr = new FileReader("mealPlan.txt");
+			BufferedReader reader = new BufferedReader(fr);
+			String line = reader.readLine();
+			String[] cell = line.split(",");
+			mealplan.setBreakfast(cell[0]);
+			mealplan.setSnack1(cell[1]);
+			mealplan.setLunch(cell[2]);
+			mealplan.setSnack2(cell[3]);
+            mealplan.setDinner(cell[4]);
+            mealplan.setSnack3(cell[5]);
+            mealplan.setNotes(cell[6]);
+			reader.close();			
+		}
+		catch(FileNotFoundException f) {
+			System.out.println("File not found");
+		}
+		catch(IOException e) {
+			System.out.println("IO exception");
+		}
+		return mealplan;
+	
+	}
+
 
 }

@@ -113,7 +113,6 @@ public class workoutPage {
 		gridPane.add(buttonBox, 0, 1);
 		
 		return gridPane;
-		
 	}
 	
 	private static void closeWindow() {

@@ -74,8 +74,8 @@ public class mealPlanPage{
 		Button MyPlan = new Button("My Plan");
         MyPlan.setPrefSize(150, 20);
        	MyPlan.setOnAction(e -> {
-		//	window.close();
-			myMealPlan.display();	
+			window.close();
+			createMealPlan.display();	
 		});
 
 		Button goBack = new Button("Back");
@@ -91,7 +91,5 @@ public class mealPlanPage{
 		
 		return pane;
 	}
-	
-	
 
 }

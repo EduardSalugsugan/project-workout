@@ -155,9 +155,6 @@ public class loginPage {
 		passwordField.setPrefHeight(40);
 		gridPane.add(passwordField, 1, 2);
 		
-		
-		
-		
 		Label genderLabel = new Label("Gender: ");
 		gridPane.add(genderLabel, 0, 3);
 		
@@ -250,7 +247,6 @@ public class loginPage {
 		return false;
 		
 	}
-	
 	
 	private static void saveAccount() throws IOException {
 		
