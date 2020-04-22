@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class createMealPlan{
 	
@@ -91,8 +92,11 @@ public class createMealPlan{
         submitButton.setPrefSize(80,20);
         
         Button back = new Button("Back");
-        back.setPrefSize(80,20);
-
+		back.setPrefSize(80,20);
+		back.setOnAction(e -> {
+			window.close();
+			mealPlanPage.display();
+		});
 
 		create.getChildren().addAll(breakfast,breakfastTextField,snack1,snack1TextField,lunch,lunchTextField,snack2,snack2TextField,dinner,dinnerTextField,snack3,snack3TextField,notes,notesTextField,submitButton,back);
 		
@@ -105,20 +109,19 @@ public class createMealPlan{
 			meal.setLunch(lunchTextField.getText());
 			meal.setSnack2(snack2TextField.getText());
             meal.setDinner(dinnerTextField.getText());
-            meal.setSnack3(snack3.getText());
+            meal.setSnack3(snack3TextField.getText());
             meal.setNotes(notesTextField.getText());
 			try {
-                saveAccount();
+				saveAccount();
 			}
 			catch(IOException i) {
 				System.out.println("Error");
-			}
-			
+			}	
 		});
 		
 		return pane;
-    }
-    
+	}
+	
     private static void saveAccount() throws IOException {
 		
 		String mealInfo = "";
@@ -128,19 +131,63 @@ public class createMealPlan{
 			System.out.println("File created: " + mealFile.getName());
 		}
 
+		if(meal.getBreakfast().isEmpty()||meal.getSnack1().isEmpty()||meal.getLunch().isEmpty()||meal.getSnack2().isEmpty()||meal.getDinner().isEmpty()||meal.getSnack3().isEmpty()||meal.getNotes().isEmpty()) {
+			showAlert();
+			return;
+		}
+
 		try(FileWriter fw = new FileWriter(mealFile, true)) {
 			BufferedWriter writer = new BufferedWriter(fw);
-			mealInfo = meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() +
-					"," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
+			mealInfo = meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
 			
 			writer.write(mealInfo);
 			writer.close();
-		
 		}catch(IOException e) {
 			System.out.println("Error");
 		}	
-
-		
 	}
+
+	private static void showAlert() {
+		Stage wind = new Stage();
+		GridPane lay;
+		Scene create;
+
+		wind.setTitle("Error");
+		wind.centerOnScreen();
+		lay = alertBox();
+		create = new Scene(layout, 200, 200); 
+		wind.setScene(create);
+		wind.show();
+		wind.setResizable(false);	
+	}
+
+	private static GridPane alertBox()
+	{
+		GridPane pane = new GridPane();
+		pane.setAlignment(Pos.TOP_CENTER);
+		pane.setPadding(new Insets(50, 20, 20, 20));
+		pane.setVgap(25);
+		
+		Label nameLabel = new Label("Please enter all information");
+		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+		pane.add(nameLabel, 0, 0);
+		GridPane.setHalignment(nameLabel, HPos.CENTER);
+		GridPane.setValignment(nameLabel, VPos.TOP);
+		GridPane.setHgrow(nameLabel, Priority.ALWAYS);
+		return pane;
+	}
+
+	// private static void showLoggedInAlert(Alert.AlertType alertType, Window win, String title, String message) {
+	// 	Alert alert = new Alert(alertType);
+	// 	alert.setTitle(title);
+	// 	alert.setHeaderText(null);
+	// 	alert.setContentText(message);
+	// 	alert.initOwner(win);
+	// 	alert.setOnCloseRequest(e ->{
+	// 		main.close();
+	// 		homePage.display();
+	// 	});
+	// 	alert.show();
+	// }
 
 }

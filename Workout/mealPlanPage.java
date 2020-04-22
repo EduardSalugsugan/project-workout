@@ -75,6 +75,13 @@ public class mealPlanPage{
         MyPlan.setPrefSize(150, 20);
        	MyPlan.setOnAction(e -> {
 			window.close();
+			myMealPlan.display();	
+		});
+
+		Button Create = new Button("Create my meal plan");
+        Create.setPrefSize(150, 20);
+       	Create.setOnAction(e -> {
+			window.close();
 			createMealPlan.display();	
 		});
 
@@ -85,7 +92,7 @@ public class mealPlanPage{
 			homePage.display();
 		});
 
-		foodplan.getChildren().addAll(Gain, Lost, Vegan, MyPlan, goBack);
+		foodplan.getChildren().addAll(Gain, Lost, Vegan, MyPlan, Create, goBack);
 		
 		pane.add(foodplan, 0 , 1);
 		

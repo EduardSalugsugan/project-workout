@@ -18,7 +18,8 @@ public class myMealPlan{
 	private static Stage window = new Stage();
 	private static GridPane layout;
     private static Scene page;
-    private static Account account = Account.getCurrentAccount();
+	private static myMeal meal = myMeal.getCurrentMealPlan();
+	private static Account account = Account.getCurrentAccount();
     
 	public static void display() {
 		setFoodPlanWindow();
@@ -51,13 +52,13 @@ public class myMealPlan{
         muscle.setAlignment(Pos.CENTER_LEFT);
         muscle.setSpacing(25);
 
-        Text breakfast = new Text("Hello");
-        Text snack1 = new Text("Hello");
-        Text lunch = new Text("Hello");
-        Text snack2 = new Text("Hello");
-        Text dinner = new Text("Hello");
-        Text snack3 = new Text("Hello");
-        Text notes = new Text("Hello");
+        Text breakfast = new Text(meal.getBreakfast());
+        Text snack1 = new Text(meal.getSnack1());
+        Text lunch = new Text(meal.getLunch());
+        Text snack2 = new Text(meal.getSnack2());
+        Text dinner = new Text(meal.getDinner());
+        Text snack3 = new Text(meal.getSnack3());
+        Text notes = new Text(meal.getNotes());
         
         Button back = new Button("Back");
         back.setOnAction(e-> {
