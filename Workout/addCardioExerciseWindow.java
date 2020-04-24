@@ -51,8 +51,7 @@ public class addCardioExerciseWindow{
 	private static TextField name;
 	private static CardioExercise newExercise;
 	private static ComboBox<String> equiptmentBox;
-	private static String exerciseFileName = "cardioexercises.txt";
-	private static File exerciseFile = new File(exerciseFileName);
+	private static File exerciseFile = new File("cardioexercises.txt");
 	
 	
 	//The display method allows the GUI page to be called from other pages
@@ -215,7 +214,7 @@ public class addCardioExerciseWindow{
 		
 		newExercise = new CardioExercise();
 		newExercise.setName(name.getText());
-		newExercise.setEquiptment(equiptmentBox.getValue());
+		newExercise.setEquiptmentNeeded(equiptmentBox.getValue());
 		
 		//Use the check duplicates method to verify that the exercise being added does not currently exist in the file
 		if(checkDuplicates(newExercise) == true) {
@@ -227,7 +226,7 @@ public class addCardioExerciseWindow{
 			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 					BufferedWriter writer = new BufferedWriter(fw)){
 			
-				writer.write(newExercise.getName()+ "," + newExercise.getEquiptment() + "\n");
+				writer.write(newExercise.getName()+ "," + newExercise.getEquiptmentNeeded() + "\n");
 				
 				writer.close();
 				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
@@ -246,7 +245,7 @@ public class addCardioExerciseWindow{
 		//TO DO: Finish method and get it to correctly verify if the exercise exists
 		boolean exists = false;
 		int count = 0;
-		ArrayList <CardioExercise> allExercises = CardioExercise.getAllExercises(exerciseFileName);
+		ArrayList <CardioExercise> allExercises = CardioExercise.getAllExercises();
 		
 		for(int i = 0; i < allExercises.size(); i++) {
 			if(allExercises.get(i).equals(e)) {

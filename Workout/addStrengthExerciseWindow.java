@@ -54,7 +54,6 @@ public class addStrengthExerciseWindow{
 	private static ComboBox<String> weightTypeBox;
 	private static ComboBox<String> equiptmentBox;
 	private static ComboBox<String> targetMuscleBox;
-	private static String exerciseFileName = "strengthexercises.txt";
 	private static File exerciseFile = new File("strengthexercises.txt");
 	
 	
@@ -325,7 +324,7 @@ public class addStrengthExerciseWindow{
 		boolean exists = false;
 		int count = 0;
 		//Fill an array list with exercises from the strength exercise file
-		ArrayList <StrengthExercise> allExercises = StrengthExercise.getAllExercises(exerciseFileName);
+		ArrayList <StrengthExercise> allExercises = StrengthExercise.getAllExercises();
 		
 		//Check if the new exercise is already listed 
 		for(int i = 0; i < allExercises.size(); i++) {

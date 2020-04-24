@@ -1,23 +1,29 @@
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Workout {
 	
-	private ArrayList<StrengthExercise> strengthWorkoutList;
-	private ArrayList<CardioExercise> cardioWorkoutList;
+	private ArrayList<Exercise> workoutList;
 	private String workoutName;
 	private String type;
 	
-	public Workout(String workoutType) {
+	public Workout() {
 		workoutName = "";
-		if(workoutType.equalsIgnoreCase("Strength")) {
-			type = "Strength";
-			strengthWorkoutList = new ArrayList<StrengthExercise>();
-		}
-		
-		else {
-			type = "Cardio";
-			cardioWorkoutList = new ArrayList<CardioExercise>();
-		}
+		workoutList = new ArrayList<Exercise>();
+	}
+	
+	public int length() {
+		return workoutList.size();
+	}
+	
+	public void remove(int i) {
+		workoutList.remove(i);
+	}
+	
+	public Exercise get(int i) {
+		return workoutList.get(i);
 	}
 	
 	public void setWorkoutName(String name) {
@@ -28,27 +34,21 @@ public class Workout {
 		return workoutName;
 	}
 	
-	public void addStrengthExercise(StrengthExercise e) {
-		strengthWorkoutList.add(e);
+	public void addExercise(Exercise e) {
+		workoutList.add(e);
 	}
 	
-	public void addCardioExericse(CardioExercise e) {
-		cardioWorkoutList.add(e);
-	}
-	
-	public void removeExercise(Object e) {
-		if(e instanceof StrengthExercise)
-			strengthWorkoutList.remove(e);
-	}
-	
-	public int size() {
-		if(type.equalsIgnoreCase("Strength")) {
-			return strengthWorkoutList.size();
-		}
+	public ObservableList<String> loadExercises() {
+		ObservableList<String> viewList = FXCollections.observableArrayList();
+		Exercise currentExercise;
 		
-		else
-			return cardioWorkoutList.size();
-	}
+		for(int i = 0; i < workoutList.size(); i++) {
+			currentExercise = (Exercise)workoutList.get(i);
+			viewList.add(currentExercise.getName());
+		}
+		return viewList;
+		
+	} //End of load exercises
 	
 
 }
