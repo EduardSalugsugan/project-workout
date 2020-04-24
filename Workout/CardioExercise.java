@@ -8,32 +8,33 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class CardioExercise{
+public class CardioExercise extends Exercise{
 	
-	private String name;
-	private String equiptment;
+	//private String name;
+	//private String equiptment;
 	private int resistanceLevel;
 	private int laps;
 	private double lapTime;
-	private int timeToComplete;
+	private static String fileName = "cardioexercises.txt";
+	//private int timeToComplete;
 	
 	public CardioExercise() {
 		name = "";
 		resistanceLevel = 0;
-		equiptment = "";
+		equiptmentNeeded = "";
 		laps = 0;
 		lapTime = 0;
 		timeToComplete = 0;
 		
 	}
 
-	public void setName(String n) {
-		name = n;
-	}
-	
-	public String getName() {
-		return name;
-	}
+//	public void setName(String n) {
+//		name = n;
+//	}
+//	
+//	public String getName() {
+//		return name;
+//	}
 	
 	public int getResistanceLevel() {
 		return resistanceLevel;
@@ -59,15 +60,15 @@ public class CardioExercise{
 		this.lapTime = lapTime;
 	}
 
-	public String getEquiptment() {
-		return equiptment;
-	}
-
-	public void setEquiptment(String e) {
-		equiptment = e;
-	}
+//	public String getEquiptmentNeeded() {
+//		return equiptment;
+//	}
+//
+//	public void setEquiptment(String e) {
+//		equiptment = e;
+//	}
 	
-	public static ArrayList<CardioExercise> getAllExercises(String fileName) {
+	public static ArrayList<CardioExercise> getAllExercises() {
 		ArrayList<CardioExercise> exerciseList = new ArrayList<CardioExercise>();
 		CardioExercise currentExercise;
 		
@@ -80,7 +81,7 @@ public class CardioExercise{
 				String [] cell = line.split(",");
 				currentExercise = new CardioExercise();
 				currentExercise.setName(cell[0]);;
-				currentExercise.setEquiptment(cell[1]);
+				currentExercise.setEquiptmentNeeded(cell[1]);
 				
 				exerciseList.add(currentExercise);
 			}
@@ -101,10 +102,10 @@ public class CardioExercise{
 	
 	
 	
-	public static ObservableList<String> loadExercises(String fileName) {
+	public static ObservableList<String> loadExercises() {
 		ObservableList<String> viewList = FXCollections.observableArrayList();
 		CardioExercise currentExercise;
-		ArrayList<CardioExercise> list = getAllExercises(fileName);
+		ArrayList<CardioExercise> list = getAllExercises();
 		for(int i = 0; i < list.size(); i++) {
 			currentExercise = (CardioExercise)list.get(i);
 			viewList.add(currentExercise.getName());

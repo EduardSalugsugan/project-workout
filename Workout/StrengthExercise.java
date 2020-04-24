@@ -7,16 +7,17 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class StrengthExercise {
+public class StrengthExercise extends Exercise {
 	
 	public final static String [] upperMuscleGroups = {"Shoulders", "Chest", "Biceps", "Triceps", "Forearms", "Abs", "Upper Back"};
 	public final static String [] lowerMuscleGroups = {"Quadriceps" , "Glutes" , "Hamstrings", "Calves", "Lower Back"};
-	private String name;
+	//private String name;
 	private String targetMuscleArea;
 	private String mainTargetMuscle;
-	private String equiptmentNeeded;
+	//private String equiptmentNeeded;
 	private String weightType;
-	private int timeToComplete;
+	private static String fileName = "strengthexercises.txt";
+	//private int timeToComplete;
 	
 	//Instance variables to be set during actual workout
 	private int weightUsed;
@@ -35,14 +36,14 @@ public class StrengthExercise {
 		sets = 0;
 	}
 	
-	public void setName(String n) {
-		name =n;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
+//	public void setName(String n) {
+//		name =n;
+//	}
+//	
+//	public String getName() {
+//		return name;
+//	}
+//	
 	public void setMainTargetMuscle(String targetMuscle) {
 		
 		mainTargetMuscle = targetMuscle;
@@ -53,13 +54,13 @@ public class StrengthExercise {
 		return mainTargetMuscle;
 	}
 	
-	public String getEquiptmentNeeded() {
-		return equiptmentNeeded;
-	}
-
-	public void setEquiptmentNeeded(String equiptment) {
-		equiptmentNeeded = equiptment;
-	}
+//	public String getEquiptmentNeeded() {
+//		return equiptmentNeeded;
+//	}
+//
+//	public void setEquiptmentNeeded(String equiptment) {
+//		equiptmentNeeded = equiptment;
+//	}
 
 	public String getTargetMuscleArea() {
 		return targetMuscleArea;
@@ -109,7 +110,7 @@ public class StrengthExercise {
 			
 	}
 	
-	public static ArrayList<StrengthExercise> getAllExercises(String fileName) {
+	public static ArrayList<StrengthExercise> getAllExercises() {
 		ArrayList<StrengthExercise> exerciseList = new ArrayList<StrengthExercise>();
 		StrengthExercise currentExercise;
 		
@@ -143,10 +144,10 @@ public class StrengthExercise {
 	}
 	
 	//Load all of the exercises in the given file into an Observable list to be displayed 
-	public static ObservableList<String> loadExercises(String fileName) {
+	public static ObservableList<String> loadExercises() {
 		ObservableList<String> viewList = FXCollections.observableArrayList();
 		StrengthExercise currentExercise;
-		ArrayList<StrengthExercise> list = getAllExercises(fileName);
+		ArrayList<StrengthExercise> list = getAllExercises();
 		for(int i = 0; i < list.size(); i++) {
 			currentExercise = (StrengthExercise)list.get(i);
 			viewList.add(currentExercise.getName());
