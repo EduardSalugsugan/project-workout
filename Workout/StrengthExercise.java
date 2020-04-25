@@ -17,6 +17,7 @@ public class StrengthExercise extends Exercise {
 	//private String equiptmentNeeded;
 	private String weightType;
 	private static String fileName = "strengthexercises.txt";
+	public final String type = "Strength";
 	//private int timeToComplete;
 	
 	//Instance variables to be set during actual workout
@@ -34,6 +35,17 @@ public class StrengthExercise extends Exercise {
 		weightUsed = 0;
 		repitions = 0;
 		sets = 0;
+	}
+	
+	public StrengthExercise(String n,  String area, String muscle, String e, String wType) {
+		
+		name = n;
+		targetMuscleArea = area;
+		mainTargetMuscle = muscle;
+		equiptmentNeeded = e;
+		weightType = wType;
+		
+		
 	}
 	
 //	public void setName(String n) {
@@ -102,12 +114,13 @@ public class StrengthExercise extends Exercise {
 		this.sets = sets;
 	}
 	
-	public boolean equals(StrengthExercise exercise) {
-		if(exercise.getName().equals(name))
-			return true;
-		
-		return false;
-			
+	public String getType() {
+		return type;
+	}
+	
+	public String toString() {
+		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.weightType +
+				"," + this.equiptmentNeeded;
 	}
 	
 	public static ArrayList<StrengthExercise> getAllExercises() {
@@ -143,6 +156,7 @@ public class StrengthExercise extends Exercise {
 		return exerciseList;
 	}
 	
+
 	//Load all of the exercises in the given file into an Observable list to be displayed 
 	public static ObservableList<String> loadExercises() {
 		ObservableList<String> viewList = FXCollections.observableArrayList();

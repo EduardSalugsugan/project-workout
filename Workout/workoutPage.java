@@ -37,18 +37,19 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import sun.security.tools.keytool.Main;
 
-public class workoutPage {
+public class workoutPage{
 	
 	private static Stage window = new Stage();
+	private static ObservableList<String> viewableWorkouts;
 	
-	public static void display() {
+	public static void display(){
 		
 		window.setOnCloseRequest(e -> closeWindow());
 		setWorkoutPage();
 		
 	}
 	
-	private static void setWorkoutPage() {
+	private static void setWorkoutPage(){
 		
 		window.setTitle("Workouts");
 		window.centerOnScreen();
@@ -73,6 +74,8 @@ public class workoutPage {
 		
 		//Create and fill the list of exercises that can be viewed
 		ListView<String> workoutListView = new ListView<String>();
+		viewableWorkouts = Workout.loadWorkouts();
+		workoutListView.setItems(viewableWorkouts);
 
 		
 		

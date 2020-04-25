@@ -30,5 +30,15 @@ public abstract class Exercise {
 		equiptmentNeeded = equiptment;
 	}
 	
+	public boolean equals(Exercise exercise) {
+		if(exercise.getName().equals(name))
+			return true;
+		
+		return false;
+			
+	}
+	
+	public abstract String getType();
+	
 
 }
