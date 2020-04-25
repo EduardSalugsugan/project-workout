@@ -33,9 +33,7 @@ public class accountPage {
 		page = new Scene(layout, 300, 350); 
 		window.setScene(page);
 		window.show();
-		
 	}
-	
 	
 	private static GridPane createAccountMainPage() {
 		GridPane pane = new GridPane();
@@ -71,9 +69,7 @@ public class accountPage {
 		accountOptionsBox.getChildren().addAll(changeAccountName, changePass, updateAge, updateWeight, goBack);
 		
 		pane.add(accountOptionsBox, 0 , 1);
-		
-		
-		
+
 		return pane;
 	}
 	

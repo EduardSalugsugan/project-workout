@@ -10,12 +10,11 @@ import javafx.collections.ObservableList;
 
 public class CardioExercise extends Exercise{
 	
-	//private String name;
-	//private String equiptment;
 	private int resistanceLevel;
 	private int laps;
 	private double lapTime;
 	private static String fileName = "cardioexercises.txt";
+	public final String type = "Cardio";
 	//private int timeToComplete;
 	
 	public CardioExercise() {
@@ -27,14 +26,12 @@ public class CardioExercise extends Exercise{
 		timeToComplete = 0;
 		
 	}
+	
+	public CardioExercise(String n, String equiptment) {
+		name = n;
+		equiptmentNeeded = equiptment;
+	}
 
-//	public void setName(String n) {
-//		name = n;
-//	}
-//	
-//	public String getName() {
-//		return name;
-//	}
 	
 	public int getResistanceLevel() {
 		return resistanceLevel;
@@ -59,14 +56,14 @@ public class CardioExercise extends Exercise{
 	public void setLapTime(double lapTime) {
 		this.lapTime = lapTime;
 	}
-
-//	public String getEquiptmentNeeded() {
-//		return equiptment;
-//	}
-//
-//	public void setEquiptment(String e) {
-//		equiptment = e;
-//	}
+	
+	public String getType() {
+		return type;
+	}
+	
+	public String toString() {
+		return this.type + "," + this.name + "," + this.equiptmentNeeded;
+	}
 	
 	public static ArrayList<CardioExercise> getAllExercises() {
 		ArrayList<CardioExercise> exerciseList = new ArrayList<CardioExercise>();

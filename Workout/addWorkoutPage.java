@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -20,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class addWorkoutPage {
 	
@@ -131,22 +134,6 @@ public class addWorkoutPage {
 		
 		ListView<String> selectedExercises = new ListView<String>();
 		selectedExercises.setPrefHeight(100);
-
-		
-		Button goBack = new Button("Back");
-		goBack.setOnAction(e -> {
-			window.close();
-			workoutPage.display();
-		});
-		
-		Button saveWorkout = new Button("Save workout");
-		saveWorkout.setOnAction(e -> {
-			for(int i = 0; i < thisWorkout.length(); i++) {
-				System.out.println(thisWorkout.get(i).getName());
-			}
-		});
-		
-
 		
 		Button addExercise = new Button("Add exercise");
 		addExercise.setOnAction(e -> {
@@ -172,6 +159,36 @@ public class addWorkoutPage {
 		});
 		//Set button sizes
 
+		Button goBack = new Button("Back");
+		goBack.setOnAction(e -> {
+			window.close();
+			workoutPage.display();
+		});
+		
+		Button saveWorkout = new Button("Save workout");
+		saveWorkout.setOnAction(e -> {
+			if(nameField.getText().isEmpty()) {
+				showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Name Missing" , "Please enter a name.");
+				return;
+			}
+			if(thisWorkout.isEmpty()) {
+				showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "No exercises added", "Add at leat one exercise to create a workout");
+				return;
+			}
+			thisWorkout.setWorkoutName(nameField.getText());
+				
+			try {
+				thisWorkout.saveRoutine();
+				thisWorkout = new Workout();
+			}catch(IOException i) {
+				System.out.println("IO Exception");
+			}
+//			for(int i = 0; i < thisWorkout.length(); i++) {
+//				System.out.println(thisWorkout.get(i).getName());
+		//	}
+		});
+		
+		
 		removeExercise.setPrefWidth(150);
 		goBack.setPrefWidth(150);
 		saveWorkout.setPrefWidth(150);
@@ -201,6 +218,15 @@ public class addWorkoutPage {
 		
 		
 		return pane;
+	}
+	
+	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.show();
 	}
 	
 
