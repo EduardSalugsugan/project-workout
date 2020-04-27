@@ -55,7 +55,7 @@ public class workoutPage{
 		window.centerOnScreen();
 		GridPane layout = createWorkoutPage();
 		Scene page = new Scene(layout, 450, 300);
-		window.setScene(page);
+		window.setScene(page);  
 		window.show();
 	}
 	

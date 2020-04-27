@@ -207,7 +207,7 @@ public class exercisePage {
 				addStrengthExerciseWindow.display();
 			else 
 				addCardioExerciseWindow.display();
-		});
+		}); 
 		
 		goBack = new Button("Back");
 		goBack.setOnAction(e -> {
