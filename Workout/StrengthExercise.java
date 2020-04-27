@@ -37,25 +37,17 @@ public class StrengthExercise extends Exercise {
 		sets = 0;
 	}
 	
-	public StrengthExercise(String n,  String area, String muscle, String e, String wType) {
+	public StrengthExercise(String n,  String area, String muscle, String wType, String e) {
 		
 		name = n;
 		targetMuscleArea = area;
 		mainTargetMuscle = muscle;
-		equiptmentNeeded = e;
 		weightType = wType;
-		
+		equiptmentNeeded = e;
 		
 	}
 	
-//	public void setName(String n) {
-//		name =n;
-//	}
-//	
-//	public String getName() {
-//		return name;
-//	}
-//	
+
 	public void setMainTargetMuscle(String targetMuscle) {
 		
 		mainTargetMuscle = targetMuscle;
@@ -65,14 +57,6 @@ public class StrengthExercise extends Exercise {
 	public String getMainTargetMuscle() {
 		return mainTargetMuscle;
 	}
-	
-//	public String getEquiptmentNeeded() {
-//		return equiptmentNeeded;
-//	}
-//
-//	public void setEquiptmentNeeded(String equiptment) {
-//		equiptmentNeeded = equiptment;
-//	}
 
 	public String getTargetMuscleArea() {
 		return targetMuscleArea;
@@ -119,8 +103,8 @@ public class StrengthExercise extends Exercise {
 	}
 	
 	public String toString() {
-		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.weightType +
-				"," + this.equiptmentNeeded;
+		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.equiptmentNeeded +
+				"," + this.weightType;
 	} 
 	
 	public static ArrayList<StrengthExercise> getAllExercises() {
@@ -138,8 +122,8 @@ public class StrengthExercise extends Exercise {
 				currentExercise.setName(cell[0]);
 				currentExercise.setTargetMuscleArea(cell[1]);
 				currentExercise.setMainTargetMuscle(cell[2]);
-				currentExercise.setWeightType(cell[3]);
-				currentExercise.setEquiptmentNeeded(cell[4]);
+				currentExercise.setEquiptmentNeeded(cell[3]);
+				currentExercise.setWeightType(cell[4]);
 				exerciseList.add(currentExercise);
 			}
 			reader.close();

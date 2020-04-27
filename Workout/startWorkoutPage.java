@@ -50,6 +50,7 @@ public class startWorkoutPage {
 	private static ObservableList<String> workouts;
 	private static ArrayList<Workout> allWorkouts = Workout.getAllWorkouts();
 	private static Workout selectedWorkout;
+
 	
 	//The display method allows the GUI page to be called from other pages
 	public static void display() {
