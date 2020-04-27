@@ -24,8 +24,11 @@ import javafx.stage.Window;
 public class createMealPlan{
 	
 	private static Stage window = new Stage();
+	private static Stage alert = new Stage();
 	private static GridPane layout;
-    private static Scene createMyPlan;
+	private static GridPane alertlayout;
+	private static Scene createMyPlan;
+	private static Scene alertScene;
     private static myMeal meal;
     private static File mealFile = new File("mealPlan.txt");
 	
@@ -41,8 +44,46 @@ public class createMealPlan{
 		window.setScene(createMyPlan);
 		window.show();
 		window.setResizable(false);
-    }
-    
+	}
+	
+	private static void setAlertWindow(){
+		alert.setTitle("Meal Plan Created");
+		alert.centerOnScreen();
+		alertlayout = alertlayout();
+		alertScene = new Scene(alertlayout, 400, 800); 
+		alert.setScene(alertScene);
+		alert.show();
+		alert.setResizable(false);
+	}
+	
+	private static GridPane alertlayout() {
+		GridPane pane = new GridPane();
+		pane.setAlignment(Pos.TOP_CENTER);
+		pane.setPadding(new Insets(50, 20, 20, 20));
+		pane.setVgap(25);
+		
+		Label nameLabel = new Label("Meal Plan Created");
+		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+		pane.add(nameLabel, 0, 0);
+		GridPane.setHalignment(nameLabel, HPos.CENTER);
+		GridPane.setValignment(nameLabel, VPos.TOP);
+		GridPane.setHgrow(nameLabel, Priority.ALWAYS);
+
+		VBox create = new VBox();
+		create.setAlignment(Pos.CENTER);
+		create.setSpacing(15);
+        
+        Button okButton = new Button("Ok");
+		okButton.setPrefSize(80,20);
+		okButton.setOnAction(e -> {
+			alert.close();
+
+		});
+
+		create.getChildren().addAll(okButton);
+		pane.add(create, 0 , 1);
+		return pane;
+	}
 	private static GridPane createFoodPlanPage() {
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.TOP_CENTER);
@@ -110,7 +151,7 @@ public class createMealPlan{
 			meal.setSnack2(snack2TextField.getText());
             meal.setDinner(dinnerTextField.getText());
             meal.setSnack3(snack3TextField.getText());
-            meal.setNotes(notesTextField.getText());
+			meal.setNotes(notesTextField.getText());
 			try {
 				saveAccount();
 			}
@@ -123,7 +164,7 @@ public class createMealPlan{
 	}
 	
     private static void saveAccount() throws IOException {
-		
+
 		String mealInfo = "";
 
 		if(!mealFile.exists()) {
@@ -132,62 +173,18 @@ public class createMealPlan{
 		}
 
 		if(meal.getBreakfast().isEmpty()||meal.getSnack1().isEmpty()||meal.getLunch().isEmpty()||meal.getSnack2().isEmpty()||meal.getDinner().isEmpty()||meal.getSnack3().isEmpty()||meal.getNotes().isEmpty()) {
-			showAlert();
+			setAlertWindow();
 			return;
 		}
 
 		try(FileWriter fw = new FileWriter(mealFile, true)) {
 			BufferedWriter writer = new BufferedWriter(fw);
 			mealInfo = meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
-			
 			writer.write(mealInfo);
 			writer.close();
 		}catch(IOException e) {
 			System.out.println("Error");
 		}	
 	}
-
-	private static void showAlert() {
-		Stage wind = new Stage();
-		GridPane lay;
-		Scene create;
-
-		wind.setTitle("Error");
-		wind.centerOnScreen();
-		lay = alertBox();
-		create = new Scene(layout, 200, 200); 
-		wind.setScene(create);
-		wind.show();
-		wind.setResizable(false);	
-	}
-
-	private static GridPane alertBox()
-	{
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.TOP_CENTER);
-		pane.setPadding(new Insets(50, 20, 20, 20));
-		pane.setVgap(25);
-		
-		Label nameLabel = new Label("Please enter all information");
-		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-		pane.add(nameLabel, 0, 0);
-		GridPane.setHalignment(nameLabel, HPos.CENTER);
-		GridPane.setValignment(nameLabel, VPos.TOP);
-		GridPane.setHgrow(nameLabel, Priority.ALWAYS);
-		return pane;
-	}
-
-	// private static void showLoggedInAlert(Alert.AlertType alertType, Window win, String title, String message) {
-	// 	Alert alert = new Alert(alertType);
-	// 	alert.setTitle(title);
-	// 	alert.setHeaderText(null);
-	// 	alert.setContentText(message);
-	// 	alert.initOwner(win);
-	// 	alert.setOnCloseRequest(e ->{
-	// 		main.close();
-	// 		homePage.display();
-	// 	});
-	// 	alert.show();
-	// }
 
 }
