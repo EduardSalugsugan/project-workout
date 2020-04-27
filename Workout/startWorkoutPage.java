@@ -47,9 +47,9 @@ public class startWorkoutPage {
 	private static GridPane layout;
 	private static Stage window = new Stage();
 	private static Scene page;
-	
-//	private static ArrayList<Exercise> cardioExerciseList = Exercise.getAllExercises(cardioFileName);
-//	private static ArrayList<Exercise> strengthExerciseList = Exercise.getAllExercises(strengthFileName);
+	private static ObservableList<String> workouts;
+	private static ArrayList<Workout> allWorkouts = Workout.getAllWorkouts();
+	private static Workout selectedWorkout;
 	
 	//The display method allows the GUI page to be called from other pages
 	public static void display() {
@@ -64,7 +64,7 @@ public class startWorkoutPage {
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		layout = createStartWorkoutPage();
-		page = new Scene(layout, 450, 300);
+		page = new Scene(layout, 500, 300);
 		window.setScene(page);
 		window.show();
 		
@@ -76,7 +76,7 @@ public class startWorkoutPage {
 		//Set gridpane settings
 		
 		
-		GridPane gridPane = new GridPane();
+		GridPane gridPane = new GridPane(); 
 		//gridPane.setGridLinesVisible(true);
 		gridPane.setPadding(new Insets(20, 40, 40, 40));
 		gridPane.setVgap(10);
@@ -85,7 +85,7 @@ public class startWorkoutPage {
 		Label headerLabel = new Label("Select a workout routine to start");
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 		
-		ColumnConstraints column0 = new ColumnConstraints(370);
+		ColumnConstraints column0 = new ColumnConstraints(420);
 		RowConstraints row0 = new RowConstraints(40); 
 		column0.setHalignment(HPos.CENTER);
 		gridPane.getColumnConstraints().add(column0);
@@ -95,8 +95,9 @@ public class startWorkoutPage {
 		
 		//Create and fill the list of exercises that can be viewed
 		ListView<String> workoutListView = new ListView<String>();
-		//ObservableList<String> observableExercises;
-		//exerciseListView.setItems(observableExercises);
+		workouts = Workout.loadWorkouts();
+		workoutListView.setItems(workouts);
+		
 		
 		//Settings for the listview style
 		GridPane.setHalignment(workoutListView, HPos.CENTER);
@@ -105,32 +106,32 @@ public class startWorkoutPage {
 
 		gridPane.getRowConstraints().add(row1);
 		
-		
+		Button view = new Button("View Selected Workout");
+		view.setOnAction(e ->{
+			//selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
+		});
 
 		//Placeholder, will eventually open new dialog box with exercise information
-		Button select = new Button("Start selected workout");
+		Button select = new Button("Start Selected Workout");
 		select.setOnAction(e -> {
-			//Exercise selectedExercise = exerciseList.get(exerciseListView.getSelectionModel().getSelectedIndex());
-			//viewExercisePage.display(selectedExercise);
+			if(workouts.size() > allWorkouts.size()) {
+				allWorkouts = Workout.getAllWorkouts();
+			}
+			selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
+			workoutTrackingPage.display(selectedWorkout);
 		});
 		
-//		Button addNew = new Button("Add new exercise");
-//		GridPane.setHalignment(addNew, HPos.LEFT);
-//		addNew.setOnAction(e -> {
-//			window.close();
-//			addStrengthExerciseWindow.display();
-//		});
 		
 		goBack = new Button("Back");
 		goBack.setOnAction(e -> {
 			window.close();
-			//setMainWindow();
+			homePage.display();
 		});
 		
 		
 		//Add buttons to an HBox for style purposes 
 		HBox buttonBox = new HBox();
-		buttonBox.getChildren().addAll(select, goBack);
+		buttonBox.getChildren().addAll(view, select, goBack);
 		buttonBox.setSpacing(20);
 		buttonBox.setAlignment(Pos.BASELINE_CENTER);
 		gridPane.add(buttonBox, 0, 2);

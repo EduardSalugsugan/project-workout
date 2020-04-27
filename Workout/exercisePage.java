@@ -143,19 +143,19 @@ public class exercisePage {
 	
 	//Gridpane and UI controls for the strength page
 	private static GridPane createExercisePage(String type) {
-		String fileName;
+
 		
 		//Fill the ArrayList with the correct exercises
 		if(type.equalsIgnoreCase("strength")) {
-			fileName = strengthFileName;
-			strengthExerciseList = StrengthExercise.getAllExercises(fileName);
-			observableExercises = StrengthExercise.loadExercises(fileName);
+			//fileName = strengthFileName;
+			strengthExerciseList = StrengthExercise.getAllExercises();
+			observableExercises = StrengthExercise.loadExercises();
 		}
 		
 		else {
-			fileName = cardioFileName;
-			cardioExerciseList = CardioExercise.getAllExercises(fileName);
-			observableExercises = CardioExercise.loadExercises(fileName);
+			//fileName = cardioFileName;
+			cardioExerciseList = CardioExercise.getAllExercises();
+			observableExercises = CardioExercise.loadExercises();
 		}
 		
 		//Set gridpane settings
@@ -207,7 +207,7 @@ public class exercisePage {
 				addStrengthExerciseWindow.display();
 			else 
 				addCardioExerciseWindow.display();
-		});
+		}); 
 		
 		goBack = new Button("Back");
 		goBack.setOnAction(e -> {

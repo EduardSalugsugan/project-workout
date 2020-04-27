@@ -39,7 +39,7 @@ public class viewExercisePage {
 	
 	private static void setViewWindow(String type) {
 		
-		window.setTitle("");
+		window.setTitle(""); 
 		window.centerOnScreen();
 		if(type.equalsIgnoreCase("Strength"))
 			layout = createViewStrengthPage();
@@ -137,7 +137,7 @@ public class viewExercisePage {
 		
 		
 		VBox exerciseInfoBox = new VBox();
-		Label equiptment = new Label(cardioExercise.getEquiptment());
+		Label equiptment = new Label(cardioExercise.getEquiptmentNeeded());
 		exerciseInfoBox.getChildren().addAll(equiptment);
 		pane.add(exerciseInfoBox, 1, 1, 1, 2);
 		
