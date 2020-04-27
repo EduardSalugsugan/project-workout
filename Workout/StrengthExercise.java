@@ -121,7 +121,7 @@ public class StrengthExercise extends Exercise {
 	public String toString() {
 		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.weightType +
 				"," + this.equiptmentNeeded;
-	}
+	} 
 	
 	public static ArrayList<StrengthExercise> getAllExercises() {
 		ArrayList<StrengthExercise> exerciseList = new ArrayList<StrengthExercise>();

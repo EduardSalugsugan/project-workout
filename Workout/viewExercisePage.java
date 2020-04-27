@@ -39,7 +39,7 @@ public class viewExercisePage {
 	
 	private static void setViewWindow(String type) {
 		
-		window.setTitle("");
+		window.setTitle(""); 
 		window.centerOnScreen();
 		if(type.equalsIgnoreCase("Strength"))
 			layout = createViewStrengthPage();

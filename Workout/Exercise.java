@@ -22,7 +22,7 @@ public abstract class Exercise {
 		this.timeToComplete = timeToComplete;
 	}
 
-	public String getEquiptmentNeeded() {
+	public String getEquiptmentNeeded() { 
 		return equiptmentNeeded;
 	}
 

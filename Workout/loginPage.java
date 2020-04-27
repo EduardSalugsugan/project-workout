@@ -83,7 +83,7 @@ public class loginPage {
 		
 		TextField userName = new TextField();
 		userName.setPrefHeight(40);
-		gridPane.add(userName, 1, 1);
+		gridPane.add(userName, 1, 1); 
 		
 		Label passwordLabel = new Label("Password: ");
 		gridPane.add(passwordLabel, 0, 2);

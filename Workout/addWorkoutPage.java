@@ -161,6 +161,7 @@ public class addWorkoutPage {
 
 		Button goBack = new Button("Back");
 		goBack.setOnAction(e -> {
+			thisWorkout = new Workout();
 			window.close();
 			workoutPage.display();
 		});

@@ -84,7 +84,7 @@ public class CardioExercise extends Exercise{
 			}
 			reader.close();
 		
-		}catch(FileNotFoundException f) {
+		}catch(FileNotFoundException f) { 
 			System.out.println("File not found");
 		}//End of catch
 		

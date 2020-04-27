@@ -34,7 +34,7 @@ public class Workout {
 		workoutList.remove(i);
 	}
 	
-	public Exercise get(int i) {
+	public Exercise getExercise(int i) {
 		return workoutList.get(i);
 	}
 	
@@ -104,8 +104,7 @@ public class Workout {
 			
 			while((line = reader.readLine()) != null) {
 				String cell [] = line.split(",");
-				System.out.println(cell[0]);
-				
+
 				if(cell[0].equalsIgnoreCase("end")) {
 					workoutList.add(currentWorkout);
 					currentWorkout = new Workout();
@@ -128,7 +127,7 @@ public class Workout {
 			}
 			reader.close();
 			
-		}catch(FileNotFoundException f) {
+		}catch(FileNotFoundException f) { 
 			System.out.println("File not found");
 		}catch(IOException e) {
 			System.out.println("IO Exception");
