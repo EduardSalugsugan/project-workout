@@ -24,11 +24,11 @@ import javafx.stage.Window;
 public class createMealPlan{
 	
 	private static Stage window = new Stage();
-	private static Stage alert = new Stage();
+	// private static Stage alert = new Stage();
 	private static GridPane layout;
-	private static GridPane alertlayout;
+	// private static GridPane alertlayout;
 	private static Scene createMyPlan;
-	private static Scene alertScene;
+	// private static Scene alertScene;
     private static myMeal meal;
     private static File mealFile = new File("mealPlan.txt");
 	
@@ -46,44 +46,45 @@ public class createMealPlan{
 		window.setResizable(false);
 	}
 	
-	private static void setAlertWindow(){
-		alert.setTitle("Meal Plan Created");
-		alert.centerOnScreen();
-		alertlayout = alertlayout();
-		alertScene = new Scene(alertlayout, 400, 800); 
-		alert.setScene(alertScene);
-		alert.show();
-		alert.setResizable(false);
-	}
+	// private static void setAlertWindow(){
+	// 	alert.setTitle("Meal Plan Created");
+	// 	alert.centerOnScreen();
+	// 	alertlayout = alertlayout();
+	// 	alertScene = new Scene(alertlayout, 400, 800); 
+	// 	alert.setScene(alertScene);
+	// 	alert.show();
+	// 	alert.setResizable(false);
+	// }
 	
-	private static GridPane alertlayout() {
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.TOP_CENTER);
-		pane.setPadding(new Insets(50, 20, 20, 20));
-		pane.setVgap(25);
+	// private static GridPane alertlayout() {
+	// 	GridPane pane = new GridPane();
+	// 	pane.setAlignment(Pos.TOP_CENTER);
+	// 	pane.setPadding(new Insets(50, 20, 20, 20));
+	// 	pane.setVgap(25);
 		
-		Label nameLabel = new Label("Meal Plan Created");
-		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-		pane.add(nameLabel, 0, 0);
-		GridPane.setHalignment(nameLabel, HPos.CENTER);
-		GridPane.setValignment(nameLabel, VPos.TOP);
-		GridPane.setHgrow(nameLabel, Priority.ALWAYS);
+	// 	Label nameLabel = new Label("Meal Plan Created");
+	// 	nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+	// 	pane.add(nameLabel, 0, 0);
+	// 	GridPane.setHalignment(nameLabel, HPos.CENTER);
+	// 	GridPane.setValignment(nameLabel, VPos.TOP);
+	// 	GridPane.setHgrow(nameLabel, Priority.ALWAYS);
 
-		VBox create = new VBox();
-		create.setAlignment(Pos.CENTER);
-		create.setSpacing(15);
+	// 	VBox create = new VBox();
+	// 	create.setAlignment(Pos.CENTER);
+	// 	create.setSpacing(15);
         
-        Button okButton = new Button("Ok");
-		okButton.setPrefSize(80,20);
-		okButton.setOnAction(e -> {
-			alert.close();
+    //     Button okButton = new Button("Ok");
+	// 	okButton.setPrefSize(80,20);
+	// 	okButton.setOnAction(e -> {
+	// 		alert.close();
 
-		});
+	// 	});
 
-		create.getChildren().addAll(okButton);
-		pane.add(create, 0 , 1);
-		return pane;
-	}
+	// 	create.getChildren().addAll(okButton);
+	// 	pane.add(create, 0 , 1);
+	// 	return pane;
+	// }
+
 	private static GridPane createFoodPlanPage() {
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.TOP_CENTER);
@@ -153,7 +154,14 @@ public class createMealPlan{
             meal.setSnack3(snack3TextField.getText());
 			meal.setNotes(notesTextField.getText());
 			try {
-				saveAccount();
+				if(breakfastTextField.getText().isEmpty()||snack1TextField.getText().isEmpty()||lunchTextField.getText().isEmpty()||snack2TextField.getText().isEmpty()||dinnerTextField.getText().isEmpty()||snack3TextField.getText().isEmpty()||notesTextField.getText().isEmpty()){
+					showAlert(Alert.AlertType.ERROR, window.getScene().getWindow(), "Error", "Please enter all information");
+					return;
+				}
+				else {
+					showOkAlert(Alert.AlertType.CONFIRMATION, window.getScene().getWindow(), "Success", "Your meal plan has been made");
+					saveAccount();
+				}
 			}
 			catch(IOException i) {
 				System.out.println("Error");
@@ -161,6 +169,7 @@ public class createMealPlan{
 		});
 		
 		return pane;
+			
 	}
 	
     private static void saveAccount() throws IOException {
@@ -172,10 +181,6 @@ public class createMealPlan{
 			System.out.println("File created: " + mealFile.getName());
 		}
 
-		if(meal.getBreakfast().isEmpty()||meal.getSnack1().isEmpty()||meal.getLunch().isEmpty()||meal.getSnack2().isEmpty()||meal.getDinner().isEmpty()||meal.getSnack3().isEmpty()||meal.getNotes().isEmpty()) {
-			setAlertWindow();
-			return;
-		}
 
 		try(FileWriter fw = new FileWriter(mealFile, true)) {
 			BufferedWriter writer = new BufferedWriter(fw);
@@ -185,6 +190,28 @@ public class createMealPlan{
 		}catch(IOException e) {
 			System.out.println("Error");
 		}	
+	}
+
+	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.show();
+	}
+	
+	private static void showOkAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.setOnCloseRequest(e ->{
+			window.close();
+			mealPlanPage.display();
+		});
+		alert.show();
 	}
 
 }
