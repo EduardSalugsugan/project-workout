@@ -1,8 +1,10 @@
+import java.io.File;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -11,12 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class mealPlanPage{
 	
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene foodplan;
+	private static File mealFile = new File("mealPlan.txt");
 	
 	public static void display() {
 		setFoodPlanWindow();
@@ -74,8 +78,14 @@ public class mealPlanPage{
 		Button MyPlan = new Button("My Plan");
         MyPlan.setPrefSize(150, 20);
        	MyPlan.setOnAction(e -> {
-			window.close();
-			myMealPlan.display();	
+			if(!mealFile.exists()) {
+				showAlert(Alert.AlertType.ERROR, window.getScene().getWindow(), "Error", "Create a My Plan first");
+				System.out.println("File doesn't exist");
+			}
+			else {
+				window.close();
+				createMealPlan.display();	
+			}
 		});
 
 		Button Create = new Button("Create my meal plan");
@@ -97,6 +107,15 @@ public class mealPlanPage{
 		pane.add(foodplan, 0 , 1);
 		
 		return pane;
+	}
+
+	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.show();
 	}
 
 }

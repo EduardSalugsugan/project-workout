@@ -45,45 +45,6 @@ public class createMealPlan{
 		window.show();
 		window.setResizable(false);
 	}
-	
-	// private static void setAlertWindow(){
-	// 	alert.setTitle("Meal Plan Created");
-	// 	alert.centerOnScreen();
-	// 	alertlayout = alertlayout();
-	// 	alertScene = new Scene(alertlayout, 400, 800); 
-	// 	alert.setScene(alertScene);
-	// 	alert.show();
-	// 	alert.setResizable(false);
-	// }
-	
-	// private static GridPane alertlayout() {
-	// 	GridPane pane = new GridPane();
-	// 	pane.setAlignment(Pos.TOP_CENTER);
-	// 	pane.setPadding(new Insets(50, 20, 20, 20));
-	// 	pane.setVgap(25);
-		
-	// 	Label nameLabel = new Label("Meal Plan Created");
-	// 	nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-	// 	pane.add(nameLabel, 0, 0);
-	// 	GridPane.setHalignment(nameLabel, HPos.CENTER);
-	// 	GridPane.setValignment(nameLabel, VPos.TOP);
-	// 	GridPane.setHgrow(nameLabel, Priority.ALWAYS);
-
-	// 	VBox create = new VBox();
-	// 	create.setAlignment(Pos.CENTER);
-	// 	create.setSpacing(15);
-        
-    //     Button okButton = new Button("Ok");
-	// 	okButton.setPrefSize(80,20);
-	// 	okButton.setOnAction(e -> {
-	// 		alert.close();
-
-	// 	});
-
-	// 	create.getChildren().addAll(okButton);
-	// 	pane.add(create, 0 , 1);
-	// 	return pane;
-	// }
 
 	private static GridPane createFoodPlanPage() {
 		GridPane pane = new GridPane();
