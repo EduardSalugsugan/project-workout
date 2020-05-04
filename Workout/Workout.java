@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,6 +54,12 @@ public class Workout {
 		workoutList.add(e);
 	}
 	
+	public boolean equals(Workout w) {
+		if(this.workoutName.equalsIgnoreCase(w.workoutName))
+			return true;
+		return false;
+	}
+	
 	
 	
 	public ObservableList<String> loadExercises() {
@@ -66,7 +74,7 @@ public class Workout {
 		
 	} //End of load exercises
 	
-	public void saveRoutine() throws IOException{
+	public boolean saveRoutine() throws IOException{
 		
 		if(!workoutFile.exists()) {
 			System.out.println("New file created");
@@ -74,6 +82,9 @@ public class Workout {
 		}
 		String line = "Name," + this.workoutName;
 		
+		if(Workout.checkDuplicates(this) == true) {
+			return false;
+		}
 		try {
 				
 			FileWriter fr = new FileWriter(workoutFile.getAbsoluteFile(), true);
@@ -90,6 +101,7 @@ public class Workout {
 		}catch(IOException e) {
 			System.out.println("I/O Exception");
 		}
+		return true;
 		
 	}
 	
@@ -154,12 +166,15 @@ public class Workout {
 	
 	public void saveCompletedWorkout() throws IOException {
 		
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
+	    Date date = new Date();  
+	    
 		if(!completedWorkoutFile.exists()) {
 			System.out.println("New file created");
 			completedWorkoutFile.createNewFile();
 		}
 		
-		String line = "Name," + this.workoutName;
+		String line = "Name," + this.workoutName + " - Completed:  " + formatter.format(date);
 		
 		try {
 				
@@ -183,11 +198,11 @@ public class Workout {
 	public static ArrayList<Workout> getCompletedWorkouts() {
 		
 		ArrayList<Workout> completedWorkoutList = new ArrayList<Workout>();
-		Exercise newExercise;
+	//	Exercise newExercise;
 		Workout currentWorkout = new Workout();
 		
 		try {
-			FileReader fr = new FileReader(workoutFile.getAbsoluteFile());
+			FileReader fr = new FileReader(completedWorkoutFile.getAbsoluteFile());
 			BufferedReader reader = new BufferedReader(fr);
 			String line;
 			
@@ -205,12 +220,22 @@ public class Workout {
 				}	
 					
 				else if(cell[0].equalsIgnoreCase("Strength")) {
-					newExercise = new StrengthExercise(cell[1], cell[2], cell[3], cell[4], cell[5]);
-					currentWorkout.addExercise(newExercise);
+					StrengthExercise newStrength = new StrengthExercise(cell[1], cell[2], cell[3], cell[4], cell[5]);
+					if(!cell[6].equalsIgnoreCase("nan")) 
+						newStrength.setWeightUsed(Integer.parseInt(cell[6]));
+					newStrength.setRepitions(Integer.parseInt(cell[7]));
+					newStrength.setSets(Integer.parseInt(cell[8]));
+					currentWorkout.addExercise(newStrength);
 				}
 				else if(cell[0].equalsIgnoreCase("Cardio")){
-					newExercise = new CardioExercise(cell[1], cell[2]);
-					currentWorkout.addExercise(newExercise);
+					CardioExercise newCardio = new CardioExercise(cell[1], cell[2]);
+					if(!cell[3].equalsIgnoreCase("nan"))
+						newCardio.setLaps(Integer.parseInt(cell[3]));
+					if(!cell[4].equalsIgnoreCase("nan"))
+						newCardio.setResistanceLevel(Integer.parseInt(cell[4]));
+					if(!cell[5].equalsIgnoreCase("nan"))
+						newCardio.setDistance(Double.parseDouble(cell[5]));
+					currentWorkout.addExercise(newCardio);
 				}
 				
 			}
@@ -224,6 +249,40 @@ public class Workout {
 		
 		
 		return completedWorkoutList;
+	}
+	
+	public static ObservableList<String> loadCompletedWorkouts() {
+		ObservableList<String> viewList = FXCollections.observableArrayList();
+		Workout currentWorkout;
+		ArrayList<Workout> list = getCompletedWorkouts();
+		for(int i = 0; i < list.size(); i++) {
+			currentWorkout = list.get(i);
+			viewList.add(currentWorkout.getWorkoutName());
+		}
+
+		return viewList;
+		
+	} //End of load exercises
+	
+	private static boolean checkDuplicates(Workout w) {
+		
+		//TO DO: Finish method and get it to correctly verify if the exercise exists
+		boolean exists = false;
+		int count = 0;
+		//Fill an array list with exercises from the strength exercise file
+		ArrayList <Workout> allWorkouts = Workout.getAllWorkouts();
+		
+		//Check if the new exercise is already listed 
+		for(int i = 0; i < allWorkouts.size(); i++) {
+			if(allWorkouts.get(i).equals(w)) {
+				count++;
+			}
+		}
+		if(count > 0)
+			exists = true;
+	    
+	    return exists;
+		
 	}
 	
 

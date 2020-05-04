@@ -30,7 +30,7 @@ public abstract class Exercise {
 	}
 	
 	public boolean equals(Exercise exercise) {
-		if(exercise.getName().equals(name))
+		if(exercise.getName().equalsIgnoreCase(name))
 			return true;
 		
 		return false;

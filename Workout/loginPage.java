@@ -16,9 +16,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -58,52 +61,73 @@ public class loginPage {
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		
-		ColumnConstraints columnOneConstrains = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-		columnOneConstrains.setHalignment(HPos.RIGHT);
-		ColumnConstraints columnTwoConstrains = new ColumnConstraints(200, 200, Double.MAX_VALUE);
-		columnTwoConstrains.setHgrow(Priority.ALWAYS);
-		
-		gridPane.getColumnConstraints().addAll(columnOneConstrains, columnTwoConstrains);
-		
 		return gridPane;
 	}
 	
 	private static void logUIControls(GridPane gridPane) {
 		Label headerLabel = new Label("Login Form");
 		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-		gridPane.add(headerLabel, 0, 0, 2, 1);
+		gridPane.add(headerLabel, 0, 0);
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
 		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
-		
+	//	gridPane.setGridLinesVisible(true);
 		Label userNameLabel = new Label("Username: ");
-		gridPane.add(userNameLabel, 0, 1);
+		userNameLabel.setPrefWidth(70);
+
 		
 		TextField userName = new TextField();
-		userName.setPrefHeight(40);
-		gridPane.add(userName, 1, 1); 
+		userName.setPrefHeight(25);
+		userName.setPrefWidth(200);
+		
+		HBox userNameBox = new HBox();
+		userNameBox.getChildren().addAll(userNameLabel, userName);
+		userNameBox.setAlignment(Pos.CENTER);
+		userNameBox.setSpacing(30);
+	//	gridPane.add(userNameBox, 0, 1);
 		
 		Label passwordLabel = new Label("Password: ");
-		gridPane.add(passwordLabel, 0, 2);
+		passwordLabel.setPrefWidth(70);
+		passwordLabel.setPrefHeight(25);
+	//	gridPane.add(passwordLabel, 0, 2);
 		
 		PasswordField passwordField = new PasswordField();
-		passwordField.setPrefHeight(40);
-		gridPane.add(passwordField, 1, 2);
+		passwordField.setPrefHeight(25);
+		passwordField.setPrefWidth(200);
+	//	gridPane.add(passwordField, 1, 2);
+		
+		HBox passwordBox = new HBox();
+		passwordBox.getChildren().addAll(passwordLabel, passwordField);
+		passwordBox.setAlignment(Pos.CENTER);
+		passwordBox.setSpacing(30);
+		//gridPane.add(passwordBox, 0, 2);
+		
+		VBox fields = new VBox();
+		fields.getChildren().addAll(userNameBox, passwordBox);
+		fields.setSpacing(10);
+		gridPane.add(fields, 0, 1);
+		
 
 		Button signUpButton = new Button("Sign Up");
 		signUpButton.setPrefHeight(20);
 		signUpButton.setDefaultButton(true);
 		signUpButton.setPrefWidth(80);
-		gridPane.add(signUpButton, 1, 3, 2, 1);
-		GridPane.setHalignment(signUpButton, HPos.LEFT);
-		GridPane.setMargin(signUpButton, new Insets(20, 0, 20, 0));
+		//gridPane.add(signUpButton, 1, 3, 2, 1);
+		//GridPane.setHalignment(signUpButton, HPos.LEFT);
+		//GridPane.setMargin(signUpButton, new Insets(20, 0, 20, 0));
 
 		Button loginButton = new Button("Login");
 		loginButton.setPrefHeight(20);
 		loginButton.setDefaultButton(true);
 		loginButton.setPrefWidth(80);
-		gridPane.add(loginButton, 0, 3, 2, 1);
+		
+		HBox buttonBox = new HBox();
+		buttonBox.getChildren().addAll(signUpButton, loginButton);
+		buttonBox.setSpacing(20);
+		buttonBox.setAlignment(Pos.CENTER);
+		gridPane.add(buttonBox, 0, 4);
+		//gridPane.add(loginButton, 0, 3, 2, 1);
 	//	GridPane.setHalignment(loginButton, HPos.CENTER);
-		GridPane.setMargin(loginButton, new Insets(20, 0, 20, 0));
+	//	GridPane.setMargin(loginButton, new Insets(20, 0, 20, 0));
 		
 		loginButton.setOnAction(e -> {
 			try {
@@ -175,14 +199,14 @@ public class loginPage {
 		userWeight.setPrefHeight(40);
 		gridPane.add(userWeight, 1, 5);
 		
-		Button loginButton = new Button("Login");
-		loginButton.setPrefHeight(40);
-		loginButton.setDefaultButton(true);
-		loginButton.setPrefWidth(100);
-		gridPane.add(loginButton, 1, 6, 2, 1);
-		GridPane.setHalignment(loginButton, HPos.LEFT);
-		GridPane.setMargin(loginButton, new Insets(20, 0, 20, 0));
-		loginButton.setOnAction(e -> {
+		Button backButton = new Button("Back");
+		backButton.setPrefHeight(40);
+		backButton.setDefaultButton(true);
+		backButton.setPrefWidth(100);
+		//gridPane.add(backButton, 1, 6, 2, 1);
+		//GridPane.setHalignment(backButton, HPos.LEFT);
+		//GridPane.setMargin(backButton, new Insets(20, 0, 20, 0));
+		backButton.setOnAction(e -> {
 			logUIControls(logPane);
 			main.setScene(logScene);
 			main.show();
@@ -192,9 +216,14 @@ public class loginPage {
 		submitButton.setPrefHeight(40);
 		submitButton.setDefaultButton(true);
 		submitButton.setPrefWidth(100);
-		gridPane.add(submitButton, 0, 6, 2, 1);
-		GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
+		//gridPane.add(submitButton, 0, 6, 2, 1);
+		//GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
 		
+		HBox signUpButtonBox = new HBox();
+		signUpButtonBox.getChildren().addAll(submitButton, backButton);
+		signUpButtonBox.setAlignment(Pos.CENTER);
+		signUpButtonBox.setSpacing(30);
+		gridPane.add(signUpButtonBox, 0, 6, 2, 1);
 		
 		submitButton.setOnAction(e -> {
 			account = new Account();
@@ -217,7 +246,7 @@ public class loginPage {
 	
 	private static boolean signIn(String userName, String passWord) throws IOException{
 		
-		ArrayList<Account> accounts = Account.getAllAccounts(accountFile.getName());
+		ArrayList<Account> accounts = Account.getAllAccounts();
 		BufferedWriter writer;
 		
 		for(int i = 0; i < accounts.size(); i++) {
@@ -262,6 +291,11 @@ public class loginPage {
 			return;
 		}
 		
+		if(Account.checkDuplicates(account) == true) {
+			showDuplicateAlert(AlertType.ERROR, signPane.getScene().getWindow(), "Duplicate Account", "This username already exists, please pick a new username");
+			return;
+		}
+		
 		try(FileWriter fw = new FileWriter(accountFile, true)) {
 			BufferedWriter writer = new BufferedWriter(fw);
 			accountInfo = account.getUsername() + "," + account.getPassword() + "," + account.getAge() +
@@ -297,6 +331,15 @@ public class loginPage {
 			main.close();
 			homePage.display();
 		});
+		alert.show();
+	}
+	
+	private static void showDuplicateAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
 		alert.show();
 	}
 

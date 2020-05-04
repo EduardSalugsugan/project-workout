@@ -1,8 +1,12 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javafx.scene.control.Alert;
+import javafx.stage.Window;
 
 public class Account {
 	private String username;
@@ -10,6 +14,7 @@ public class Account {
 	private int age;
 	private String gender;
 	private int weight;
+	private static File accountFile = new File("Accounts.txt");
 
 
 	public Account() {
@@ -60,11 +65,18 @@ public class Account {
 		password = p;
 	}
 	
-	public static ArrayList<Account> getAllAccounts(String fileName){
+	public boolean equals(Account a) {
+		if(this.username.equalsIgnoreCase(a.getUsername()))
+			return true;
+		
+		return false;
+	}
+	
+	public static ArrayList<Account> getAllAccounts(){
 		ArrayList <Account> accountList = new ArrayList<Account>();
 		Account currentAccount;
 		try {
-			FileReader fr = new FileReader(fileName);
+			FileReader fr = new FileReader(accountFile);
 			BufferedReader reader = new BufferedReader(fr);
 			String line;
 			
@@ -113,4 +125,27 @@ public class Account {
 		return currentAccount;
 	
 	}
+	
+	public static boolean checkDuplicates(Account a) {
+		
+		//TO DO: Finish method and get it to correctly verify if the exercise exists
+		boolean exists = false;
+		int count = 0;
+		//Fill an array list with exercises from the strength exercise file
+		ArrayList <Account> allAccounts = Account.getAllAccounts();
+		
+		//Check if the new exercise is already listed 
+		for(int i = 0; i < allAccounts.size(); i++) {
+			if(allAccounts.get(i).equals(a)) {
+				count++;
+			}
+		}
+		if(count > 0)
+			exists = true;
+	    
+	    return exists;
+		
+	}
+	
+	
 } 

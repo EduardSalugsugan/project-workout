@@ -104,6 +104,7 @@ public class startWorkoutPage {
 				allWorkouts = Workout.getAllWorkouts();
 			}
 			selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
+			window.close();
 			workoutTrackingPage.display(selectedWorkout);
 		});
 
