@@ -1,10 +1,9 @@
-import javafx.collections.ObservableList;
-
 public abstract class Exercise {
 	
+
 	protected String name;
 	protected String equiptmentNeeded;
-	protected int timeToComplete;
+	protected double timeToComplete;
 	
 	public String getName() {
 		return name;
@@ -14,11 +13,11 @@ public abstract class Exercise {
 		this.name = name;
 	}
 
-	public int getTimeToComplete() {
+	public double getTimeToComplete() {
 		return timeToComplete;
 	}
 
-	public void setTimeToComplete(int timeToComplete) {
+	public void setTimeToComplete(double timeToComplete) {
 		this.timeToComplete = timeToComplete;
 	}
 
@@ -40,5 +39,6 @@ public abstract class Exercise {
 	
 	public abstract String getType();
 	
+	public abstract String completedToString();
 
 }

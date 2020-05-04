@@ -39,7 +39,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import sun.security.tools.keytool.Main;
 
 public class exercisePage {
 	
@@ -54,8 +53,7 @@ public class exercisePage {
 	private static ObservableList<String> observableExercises;
 	private static StrengthExercise strength;
 	private static CardioExercise cardio;
-//	private static ArrayList<Exercise> cardioExerciseList = Exercise.getAllExercises(cardioFileName);
-//	private static ArrayList<Exercise> strengthExerciseList = Exercise.getAllExercises(strengthFileName);
+
 	
 	//The display method allows the GUI page to be called from other pages
 	public static void display() {
@@ -168,7 +166,6 @@ public class exercisePage {
 		
 		//Create and fill the list of exercises that can be viewed
 		ListView<String> exerciseListView = new ListView<String>();
-		//ObservableList<String> observableExercises = StrengthExercise.loadExercises(fileName);
 		exerciseListView.setItems(observableExercises);
 		
 		//Settings for the listview style
