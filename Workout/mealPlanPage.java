@@ -84,7 +84,7 @@ public class mealPlanPage{
 			}
 			else {
 				window.close();
-				createMealPlan.display();	
+				myMealPlan.display();	
 			}
 		});
 
