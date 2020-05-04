@@ -14,10 +14,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -181,6 +179,8 @@ public class addWorkoutPage {
 			try {
 				thisWorkout.saveRoutine();
 				thisWorkout = new Workout();
+				showCreatedAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Workout Added", "Workout successfully added");
+				
 			}catch(IOException i) {
 				System.out.println("IO Exception");
 			}
@@ -227,6 +227,19 @@ public class addWorkoutPage {
 		alert.setHeaderText(null);
 		alert.setContentText(message);
 		alert.initOwner(win);
+		alert.show();
+	}
+	
+	private static void showCreatedAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.setOnCloseRequest(e ->{
+			window.close();
+			startWorkoutPage.display();
+		});
 		alert.show();
 	}
 	

@@ -1,46 +1,23 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EventListener;
-
-import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import sun.security.tools.keytool.Main;
+
 
 public class workoutPage{
 	
 	private static Stage window = new Stage();
 	private static ObservableList<String> viewableWorkouts;
+	private static ArrayList<Workout> completedWorkouts;
 	
 	public static void display(){
 		
@@ -107,6 +84,7 @@ public class workoutPage{
 			homePage.display();
 		});
 		
+
 		
 		//Add buttons to an HBox for style purposes 
 		HBox buttonBox = new HBox();
@@ -117,6 +95,7 @@ public class workoutPage{
 		
 		return gridPane;
 	}
+	
 	
 	private static void closeWindow() {
 		window.close();

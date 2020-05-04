@@ -18,7 +18,7 @@ public class accountPage {
 	private static GridPane layout;
 	private static Scene page;
 	private static Account account;
-	private static Account changedAccount;
+//	private static Account changedAccount;
 	
 	public static void display() {
 		account = Account.getCurrentAccount();

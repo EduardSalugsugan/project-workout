@@ -1,45 +1,20 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.Set;
-
-import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import sun.security.tools.keytool.Main;
 
 public class startWorkoutPage {
 	
@@ -65,7 +40,7 @@ public class startWorkoutPage {
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		layout = createStartWorkoutPage();
-		page = new Scene(layout, 500, 300);
+		page = new Scene(layout, 500, 340);
 		window.setScene(page);
 		window.show();
 		
@@ -107,13 +82,23 @@ public class startWorkoutPage {
 
 		gridPane.getRowConstraints().add(row1);
 		
+		Button createWorkout = new Button("Create new workout");
+		createWorkout.setPrefWidth(200);
+		GridPane.setHalignment(createWorkout, HPos.LEFT);
+		createWorkout.setOnAction(e -> {
+			window.close();
+			addWorkoutPage.display();
+		});
+		
 		Button view = new Button("View Selected Workout");
+		view.setPrefWidth(200);
 		view.setOnAction(e ->{
 			//selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
 		});
 
 		//Placeholder, will eventually open new dialog box with exercise information
 		Button select = new Button("Start Selected Workout");
+		select.setPrefWidth(200);
 		select.setOnAction(e -> {
 			if(workouts.size() > allWorkouts.size()) {
 				allWorkouts = Workout.getAllWorkouts();
@@ -121,18 +106,25 @@ public class startWorkoutPage {
 			selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
 			workoutTrackingPage.display(selectedWorkout);
 		});
-		
-		
+
 		goBack = new Button("Back");
+		goBack.setPrefWidth(200);
 		goBack.setOnAction(e -> {
 			window.close();
 			homePage.display();
 		});
 		
+		VBox firstButtons = new VBox();
+		firstButtons.setSpacing(10);
+		firstButtons.getChildren().addAll(createWorkout, view);
+		
+		VBox secondButtons = new VBox();
+		secondButtons.setSpacing(10);
+		secondButtons.getChildren().addAll(select, goBack);
 		
 		//Add buttons to an HBox for style purposes 
 		HBox buttonBox = new HBox();
-		buttonBox.getChildren().addAll(view, select, goBack);
+		buttonBox.getChildren().addAll(firstButtons, secondButtons);
 		buttonBox.setSpacing(20);
 		buttonBox.setAlignment(Pos.BASELINE_CENTER);
 		gridPane.add(buttonBox, 0, 2);

@@ -14,7 +14,9 @@ public class Workout {
 	
 	private ArrayList<Exercise> workoutList;
 	private String workoutName;
+	private static ArrayList<Workout> completedWorkoutList;
 	private static File workoutFile = new File("workouts.txt");
+	private static File completedWorkoutFile = new File("completedworkouts.txt");
 	
 	
 	public Workout() {
@@ -150,6 +152,79 @@ public class Workout {
 		
 	} //End of load exercises
 	
+	public void saveCompletedWorkout() throws IOException {
+		
+		if(!completedWorkoutFile.exists()) {
+			System.out.println("New file created");
+			completedWorkoutFile.createNewFile();
+		}
+		
+		String line = "Name," + this.workoutName;
+		
+		try {
+				
+			FileWriter fr = new FileWriter(completedWorkoutFile.getAbsoluteFile(), true);
+			BufferedWriter writer = new BufferedWriter(fr);
+			writer.write(line + "\n");
+			
+			for(int i = 0; i < this.length(); i++) {
+				Exercise currentExercise = this.getExercise(i);
+				writer.write(currentExercise.completedToString() + "\n");
+				
+			}
+			writer.write("end\n");
+			writer.close();
+		}catch(IOException e) {
+			System.out.println("I/O Exception");
+		}
+		
+	}
+	
+	public static ArrayList<Workout> getCompletedWorkouts() {
+		
+		ArrayList<Workout> completedWorkoutList = new ArrayList<Workout>();
+		Exercise newExercise;
+		Workout currentWorkout = new Workout();
+		
+		try {
+			FileReader fr = new FileReader(workoutFile.getAbsoluteFile());
+			BufferedReader reader = new BufferedReader(fr);
+			String line;
+			
+			while((line = reader.readLine()) != null) {
+				String cell [] = line.split(",");
+
+				if(cell[0].equalsIgnoreCase("end")) {
+					completedWorkoutList.add(currentWorkout);
+					currentWorkout = new Workout();
+				}
+				
+				else if(cell[0].equalsIgnoreCase("Name")) {
+					currentWorkout = new Workout();
+					currentWorkout.setWorkoutName(cell[1]);
+				}	
+					
+				else if(cell[0].equalsIgnoreCase("Strength")) {
+					newExercise = new StrengthExercise(cell[1], cell[2], cell[3], cell[4], cell[5]);
+					currentWorkout.addExercise(newExercise);
+				}
+				else if(cell[0].equalsIgnoreCase("Cardio")){
+					newExercise = new CardioExercise(cell[1], cell[2]);
+					currentWorkout.addExercise(newExercise);
+				}
+				
+			}
+			reader.close();
+			
+		}catch(FileNotFoundException f) { 
+			System.out.println("File not found");
+		}catch(IOException e) {
+			System.out.println("IO Exception");
+		}
+		
+		
+		return completedWorkoutList;
+	}
 	
 
 }

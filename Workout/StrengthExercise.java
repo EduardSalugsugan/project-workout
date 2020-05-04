@@ -9,18 +9,16 @@ import javafx.collections.ObservableList;
 
 public class StrengthExercise extends Exercise {
 	
+
 	public final static String [] upperMuscleGroups = {"Shoulders", "Chest", "Biceps", "Triceps", "Forearms", "Abs", "Upper Back"};
 	public final static String [] lowerMuscleGroups = {"Quadriceps" , "Glutes" , "Hamstrings", "Calves", "Lower Back"};
-	//private String name;
 	private String targetMuscleArea;
 	private String mainTargetMuscle;
-	//private String equiptmentNeeded;
 	private String weightType;
 	private static String fileName = "strengthexercises.txt";
 	public final String type = "Strength";
-	//private int timeToComplete;
 	
-	//Instance variables to be set during actual workout
+	//Instance variables to be set during actual work out
 	private int weightUsed;
 	private int repitions;
 	private int sets;
@@ -106,6 +104,19 @@ public class StrengthExercise extends Exercise {
 		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.equiptmentNeeded +
 				"," + this.weightType;
 	} 
+	
+	public String completedToString() {
+		String completedString = this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.equiptmentNeeded +
+				"," + this.weightType;
+		if(this.weightType.equalsIgnoreCase("Free Weights") || this.weightType.equalsIgnoreCase("Machine Resistance"))
+			completedString += "," + this.weightUsed;
+		else
+			completedString += ",nan";
+		
+	    completedString += "," + this.repitions + "," + this.sets;
+		
+		return completedString; 
+	}
 	
 	public static ArrayList<StrengthExercise> getAllExercises() {
 		ArrayList<StrengthExercise> exerciseList = new ArrayList<StrengthExercise>();
