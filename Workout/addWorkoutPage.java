@@ -177,9 +177,12 @@ public class addWorkoutPage {
 			thisWorkout.setWorkoutName(nameField.getText());
 				
 			try {
-				thisWorkout.saveRoutine();
-				thisWorkout = new Workout();
-				showCreatedAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Workout Added", "Workout successfully added");
+				if(thisWorkout.saveRoutine() == true) {
+					thisWorkout = new Workout();
+					showCreatedAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Workout Added", "Workout successfully added");
+				}
+				else
+					showDuplicateAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Workout exists", "Workout exists with this name, please choose a different name");
 				
 			}catch(IOException i) {
 				System.out.println("IO Exception");
@@ -240,6 +243,15 @@ public class addWorkoutPage {
 			window.close();
 			startWorkoutPage.display();
 		});
+		alert.show();
+	}
+	
+	private static void showDuplicateAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
 		alert.show();
 	}
 	

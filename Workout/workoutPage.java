@@ -51,7 +51,7 @@ public class workoutPage{
 		
 		//Create and fill the list of exercises that can be viewed
 		ListView<String> workoutListView = new ListView<String>();
-		viewableWorkouts = Workout.loadWorkouts();
+		viewableWorkouts = Workout.loadCompletedWorkouts();
 		workoutListView.setItems(viewableWorkouts);
 
 		

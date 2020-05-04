@@ -1,10 +1,14 @@
+import java.io.File;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class homePage  {
 
@@ -54,8 +58,15 @@ public class homePage  {
 		accountButton.setPrefSize(200, 70);
 		pane.add(accountButton, 0, 1);
 		accountButton.setOnAction(e -> {
-			window.close();
-			accountPage.display();
+			File accountLoggedIn = new File("currentAccount.txt");
+			if(accountLoggedIn.length() == 0) {
+				showAlert(Alert.AlertType.ERROR, window, "Not logged in", "Please log into an account to view this page");
+				return;
+			}
+			else {	
+				window.close();
+				accountPage.display();
+			}
 		});
 		GridPane.setHalignment(accountButton, HPos.CENTER);
 
@@ -96,6 +107,15 @@ public class homePage  {
 
 		return pane; 
 		
+	}
+	
+	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.show();
 	}
 	
 }

@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -104,6 +105,8 @@ public class workoutTrackingPage {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+				window.close();
+				workoutPage.display();
 			});
 			
 			GridPane.setHalignment(finishWorkout, HPos.CENTER);
