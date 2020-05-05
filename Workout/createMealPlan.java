@@ -29,7 +29,8 @@ public class createMealPlan{
 	private static Scene createMyPlan;
 	// private static Scene alertScene;
     private static myMeal meal;
-    private static File mealFile = new File("mealPlan.txt");
+	private static File mealFile = new File("mealPlan.txt");
+	private static Account account = Account.getCurrentAccount();
 	
 	public static void display() {
 		setCreatePlanWindow();
@@ -135,16 +136,14 @@ public class createMealPlan{
     private static void saveAccount() throws IOException {
 
 		String mealInfo = "";
-
 		if(!mealFile.exists()) {
 			mealFile.createNewFile();
 			System.out.println("File created: " + mealFile.getName());
 		}
 
-
 		try(FileWriter fw = new FileWriter(mealFile, true)) {
 			BufferedWriter writer = new BufferedWriter(fw);
-			mealInfo = meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
+			mealInfo = account.getUsername() + "," + meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
 			writer.write(mealInfo);
 			writer.close();
 		}catch(IOException e) {

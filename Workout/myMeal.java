@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class myMeal {
     String breakfast;
@@ -12,7 +14,9 @@ public class myMeal {
     String dinner;
     String snack3;
     String notes;
-
+    private static Account account = Account.getCurrentAccount();
+    private static String temp1;
+    private static boolean bool;
     public myMeal(){
         breakfast = null;
         snack1 = null;
@@ -80,20 +84,38 @@ public class myMeal {
     }
 
     public static myMeal getCurrentMealPlan() {
+
         myMeal mealplan = new myMeal();
 		try {
-			FileReader fr = new FileReader("mealPlan.txt");
-			BufferedReader reader = new BufferedReader(fr);
-			String line = reader.readLine();
-			String[] cell = line.split(",");
-			mealplan.setBreakfast(cell[0]);
-			mealplan.setSnack1(cell[1]);
-			mealplan.setLunch(cell[2]);
-			mealplan.setSnack2(cell[3]);
-            mealplan.setDinner(cell[4]);
-            mealplan.setSnack3(cell[5]);
-            mealplan.setNotes(cell[6]);
-			reader.close();			
+            File file = new File("mealPlan.txt");
+            Scanner scan = new Scanner(file);
+            String found = account.getUsername();
+            String a[];
+            String temp;
+            while(scan.hasNextLine()) {
+                temp = scan.nextLine();
+                a = temp.split(",");
+                if (a[0].equals(found)){
+                    temp1 = temp;
+                    bool = true;
+                    break;
+                }
+            }
+
+			// FileReader fr = new FileReader("mealPlan.txt");
+			// BufferedReader reader = new BufferedReader(fr);
+            // String line = reader.readLine();
+            if(bool){
+                String[] cell = temp1.split(",");
+                mealplan.setBreakfast(cell[1]);
+                mealplan.setSnack1(cell[2]);
+                mealplan.setLunch(cell[3]);
+                mealplan.setSnack2(cell[4]);
+                mealplan.setDinner(cell[5]);
+                mealplan.setSnack3(cell[6]);
+                mealplan.setNotes(cell[7]);
+                scan.close();	
+            }		
 		}
 		catch(FileNotFoundException f) {
 			System.out.println("File not found");
@@ -102,7 +124,6 @@ public class myMeal {
 			System.out.println("IO exception");
 		}
 		return mealplan;
-	
 	}
 
 
