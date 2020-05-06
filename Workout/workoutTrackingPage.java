@@ -1,11 +1,9 @@
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -15,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class workoutTrackingPage {
 
@@ -27,23 +26,18 @@ public class workoutTrackingPage {
 	private static StrengthExercise currentStrength;
 	private static CardioExercise currentCardio;
 	private static int numberOfExercisesInWorkout;
-	private static boolean finalButton = false;
 	private static Button exerciseComplete;
 	private static CheckBox hasLaps;
 	private static CheckBox hasResistance;
 	private static CheckBox hasDistance;
 	private static int index;
 	private static Label nameLabel;
-
-	private static Label weightLabel;
 	private static Label lapLabel;
 	private static TextField lapLog;
 	private static Label resistanceLabel;
 	private static TextField resistanceLog;
 	private static Label distanceLabel;
 	private static TextField distanceLog;
-	private static ArrayList<Workout> completedWorkoutList;
-	private static File completedWorkoutFile = new File("completedWorkouts.txt");
 	
 	
 	public static void display(Workout w) {
@@ -59,7 +53,7 @@ public class workoutTrackingPage {
 		window.setTitle(thisWorkout.getWorkoutName());
 		window.centerOnScreen();
 		layout = createWorkoutTrackerPage();
-		page = new Scene(layout, 1000, 600);
+		page = new Scene(layout, 400, 500);
 		window.setScene(page);
 		window.sizeToScene();
 		window.show();
@@ -68,21 +62,48 @@ public class workoutTrackingPage {
 	
 	public static GridPane createWorkoutTrackerPage() {
 		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		//pane.setGridLinesVisible(true);
-		pane.setVgap(20);
+		
+		pane.setPadding(new Insets(40,0,40,0));
+		pane.setAlignment(Pos.TOP_CENTER);
+		
+		pane.setGridLinesVisible(true);
+		pane.setVgap(40);
 		pane.setHgap(10);
 		completedWorkout = new Workout();
 		completedWorkout.setWorkoutName(thisWorkout.getWorkoutName());
-
+		Label workoutName = new Label(thisWorkout.getWorkoutName());
+		workoutName.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 32));
+		workoutName.setAlignment(Pos.TOP_CENTER);
+		GridPane.setHalignment(workoutName, HPos.CENTER);
+		pane.add(workoutName, 0, 0);
+		Label description = new Label("Exercises to complete:");
+		description.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+		VBox exerciseNameBox = new VBox();
+		exerciseNameBox.setAlignment(Pos.CENTER);
+		exerciseNameBox.setSpacing(10);
+		exerciseNameBox.getChildren().add(description);
+		for(int i = 0; i < thisWorkout.length(); i++) {
+			Label exerciseName = new Label( i + 1 + ": " +thisWorkout.getExercise(i).getName());
+			exerciseName.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+			exerciseNameBox.getChildren().add(exerciseName);
+		}
 		Button beginWorkout = new Button("Begin Workout");
+		//exerciseNameBox.getChildren().add(beginWorkout);
+		pane.add(exerciseNameBox, 0, 1);
+		beginWorkout.setAlignment(Pos.BOTTOM_CENTER);
+		GridPane.setHalignment(beginWorkout, HPos.CENTER);
+		pane.add(beginWorkout, 0, 3);
+
+		
 		beginWorkout.setOnAction(e -> {
 			index = 0;
 			pane.getChildren().remove(beginWorkout);
+			pane.getChildren().remove(exerciseNameBox);
+			pane.getChildren().remove(workoutName);
 			logExercises(index, pane);	
 			
 		});
-		pane.add(beginWorkout, 0, 0);
+	//	pane.add(beginWorkout, 0, 2);
 
 		
 		return pane;
@@ -92,6 +113,9 @@ public class workoutTrackingPage {
 		
 
 		//final long start = System.currentTimeMillis();
+		window.setWidth(1000);
+		window.setHeight(600);
+		window.centerOnScreen();
 		pane.setAlignment(Pos.TOP_CENTER);
 		Label name = new Label("Exercise name");
 		name.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
@@ -119,6 +143,12 @@ public class workoutTrackingPage {
 		nameLabel = new Label(currentExercise.getName());
 		nameLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 		
+		
+		
+		
+		/////////////////////////////////////////////////////////////
+		////////////////Strength Exercises///////////////////////////
+		/////////////////////////////////////////////////////////////
 		if(currentExercise.getType().equalsIgnoreCase("Strength")) {
 			
 			currentStrength = (StrengthExercise) currentExercise;
@@ -154,9 +184,15 @@ public class workoutTrackingPage {
 				
 				
 				exerciseComplete.setOnAction(e ->{
-					currentStrength.setWeightUsed(Integer.parseInt(resistanceLog.getText()));
-					currentStrength.setRepitions(Integer.parseInt(repLog.getText()));
-					currentStrength.setRepitions(Integer.parseInt(setField.getText()));
+					try {
+						currentStrength.setWeightUsed(Integer.parseInt(resistanceLog.getText()));
+						currentStrength.setRepitions(Integer.parseInt(repLog.getText()));
+						currentStrength.setRepitions(Integer.parseInt(setField.getText()));
+					}
+					catch(NumberFormatException n) {
+						showAlert(Alert.AlertType.ERROR, window, "Invalid input", "Invalid input, please enter numeric values only");
+						return;
+					}
 					completedWorkout.addExercise(currentStrength);
 					resistanceLog.setDisable(true);
 					repLog.setDisable(true);
@@ -189,8 +225,14 @@ public class workoutTrackingPage {
 				pane.add(exerciseComplete, 7, index + 1);
 				
 				exerciseComplete.setOnAction(e ->{
-					currentStrength.setRepitions(Integer.parseInt(repLog.getText()));
-					currentStrength.setSets(Integer.parseInt(setField.getText()));
+					try {
+						currentStrength.setRepitions(Integer.parseInt(repLog.getText()));
+						currentStrength.setSets(Integer.parseInt(setField.getText()));
+					}
+					catch(NumberFormatException n) {
+						showAlert(Alert.AlertType.ERROR, window, "Invalid input", "Invalid input, please enter numeric values only");
+						return;
+					}
 					completedWorkout.addExercise(currentStrength);
 					repLog.setDisable(true);
 					setField.setDisable(true);
@@ -269,14 +311,26 @@ public class workoutTrackingPage {
 				
 				if(hasLaps.isSelected()) {
 					currentCardio.setHasLaps(true);
-					currentCardio.setLaps(Integer.parseInt(lapLog.getText()));
+					try {
+						currentCardio.setLaps(Integer.parseInt(lapLog.getText()));
+					}
+					catch(NumberFormatException n) {
+						showAlert(Alert.AlertType.ERROR, window, "Invalid input", "Please enter numeric only values");
+						return;
+					}
 					hasLaps.setDisable(true);
 					lapLog.setDisable(true);
 				}
 				
 				if(hasResistance.isSelected()) {
 					currentCardio.setHasResistance(true);
-					currentCardio.setResistanceLevel(Integer.parseInt(resistanceLog.getText()));
+					try {
+						currentCardio.setResistanceLevel(Integer.parseInt(resistanceLog.getText()));
+					}
+					catch(NumberFormatException n) {
+						showAlert(Alert.AlertType.ERROR, window, "Invalid input", "Please enter numeric only values");
+						return;
+					}
 					hasResistance.setDisable(true);
 					resistanceLog.setDisable(true);
 
@@ -284,7 +338,13 @@ public class workoutTrackingPage {
 				
 				if(hasDistance.isSelected()) {
 					currentCardio.setHasDistance(true);
-					currentCardio.setDistance(Double.parseDouble(distanceLog.getText()));
+					try {
+						currentCardio.setDistance(Double.parseDouble(distanceLog.getText()));
+					}
+					catch(NumberFormatException n) {
+						showAlert(Alert.AlertType.ERROR, window, "Invalid input", "Please enter numeric only values");
+						return;
+					}
 					distanceLog.setDisable(true);
 					hasDistance.setDisable(true);
 				}
@@ -298,6 +358,14 @@ public class workoutTrackingPage {
 		}
 		
 		
+	}
+	private static void showAlert(Alert.AlertType alertType, Window win, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(win);
+		alert.show();
 	}
 	
 }

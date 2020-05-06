@@ -206,7 +206,7 @@ public class addCardioExerciseWindow{
 			try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 					BufferedWriter writer = new BufferedWriter(fw)){
 			
-				writer.write(newExercise.getName()+ "," + newExercise.getEquiptmentNeeded() + "\n");
+				writer.write(Account.getCurrentUserName() + "," + newExercise.getName()+ "," + newExercise.getEquiptmentNeeded() + "\n");
 				
 				writer.close();
 				showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");

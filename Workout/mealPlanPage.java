@@ -43,7 +43,7 @@ public class mealPlanPage{
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
-		Label nameLabel = new Label("Meal Plan Suggestions");
+		Label nameLabel = new Label("Meal Plans");
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.CENTER);
@@ -52,31 +52,31 @@ public class mealPlanPage{
 		
 		VBox foodplan = new VBox();
 		foodplan.setAlignment(Pos.CENTER);
-		foodplan.setSpacing(25);
+		foodplan.setSpacing(5);
 
 		Button Gain = new Button("Muscle Gains");
-        Gain.setPrefSize(150, 20);
+        Gain.setPrefSize(200, 70);
         Gain.setOnAction(e -> {
             window.close();
             muscleGain.display();
 		});
 
 		Button Lost = new Button("Weight Lost");
-        Lost.setPrefSize(150, 20);
+        Lost.setPrefSize(200, 70);
         Lost.setOnAction(e -> {
 			window.close();
 			weightLost.display();	
 		});
 
 		Button Vegan = new Button("Vegan Diet");
-        Vegan.setPrefSize(150, 20);
+        Vegan.setPrefSize(200, 70);
         Vegan.setOnAction(e -> {
 			window.close();
 			veganGains.display();	
 		});
 
 		Button MyPlan = new Button("My Plan");
-        MyPlan.setPrefSize(150, 20);
+        MyPlan.setPrefSize(200, 70);
        	MyPlan.setOnAction(e -> {
 			if(!mealFile.exists()) {
 				showAlert(Alert.AlertType.ERROR, window.getScene().getWindow(), "Error", "Create a My Plan first");
@@ -89,14 +89,14 @@ public class mealPlanPage{
 		});
 
 		Button Create = new Button("Create my meal plan");
-        Create.setPrefSize(150, 20);
+        Create.setPrefSize(200, 70);
        	Create.setOnAction(e -> {
 			window.close();
 			createMealPlan.display();	
 		});
 
 		Button goBack = new Button("Back");
-		goBack.setPrefSize(150, 20);
+		goBack.setPrefSize(200, 70);
 		goBack.setOnAction(e -> {
 			window.close();
 			homePage.display();

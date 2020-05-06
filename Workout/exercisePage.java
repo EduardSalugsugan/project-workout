@@ -1,44 +1,20 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.Set;
-
-import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class exercisePage {
 	
@@ -46,8 +22,6 @@ public class exercisePage {
 	private static GridPane layout;
 	private static Stage window = new Stage();
 	private static Scene page;
-	private static String strengthFileName = "strengthexercises.txt";
-	private static String cardioFileName = "cardioexercises.txt";
 	private static ArrayList<StrengthExercise> strengthExerciseList;
 	private static ArrayList<CardioExercise> cardioExerciseList;
 	private static ObservableList<String> observableExercises;
@@ -113,20 +87,22 @@ public class exercisePage {
 		Button cardio = new Button("Cardio exercises");
 		GridPane.setValignment(cardio, VPos.TOP);
 		GridPane.setHalignment(cardio, HPos.CENTER);
+		cardio.setPrefSize(200, 70);
 		gridPane.add(cardio, 0, 1);
-		//cardio.setOnAction(e -> setCardioWindow());
 		cardio.setOnAction(e -> setExerciseWindow("Cardio"));
 		
 		
 		Button strength = new Button("Strength exercises");
+		strength.setPrefSize(200, 70);
 		GridPane.setValignment(strength, VPos.TOP);
 		GridPane.setHalignment(strength, HPos.CENTER);
-		//GridPane.setMargin(strength, new Insets(0, 0, 0, 175));
+
 		gridPane.add(strength, 0, 2);
 		strength.setOnAction(e -> setExerciseWindow("Strength"));
 		
 		goBack = new Button("Return");
 		GridPane.setValignment(goBack, VPos.TOP);
+		goBack.setPrefSize(200, 70);
 		goBack.setOnAction(e -> {
 			window.close();
 			homePage.display();
@@ -156,8 +132,7 @@ public class exercisePage {
 			observableExercises = CardioExercise.loadExercises();
 		}
 		
-		//Set gridpane settings
-		
+			
 		
 		GridPane gridPane = new GridPane();
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
@@ -179,7 +154,7 @@ public class exercisePage {
 		
 		
 
-		//Placeholder, will eventually open new dialog box with exercise information
+
 		Button select = new Button("View Exercise Info");
 		select.setOnAction(e -> {
 			if(type.equalsIgnoreCase("Strength")) {
@@ -193,7 +168,7 @@ public class exercisePage {
 				viewExercisePage.displayCardio(cardio);
 			}
 	
-			//viewExercisePage.display(selectedExercise);
+	
 		});
 		
 		Button addNew = new Button("Add new exercise");

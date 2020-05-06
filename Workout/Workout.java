@@ -16,7 +16,6 @@ public class Workout {
 	
 	private ArrayList<Exercise> workoutList;
 	private String workoutName;
-	private static ArrayList<Workout> completedWorkoutList;
 	private static File workoutFile = new File("workouts.txt");
 	private static File completedWorkoutFile = new File("completedworkouts.txt");
 	
@@ -80,7 +79,7 @@ public class Workout {
 			System.out.println("New file created");
 			workoutFile.createNewFile();
 		}
-		String line = "Name," + this.workoutName;
+		String line = "Name," + Account.getCurrentUserName() + "," + this.workoutName;
 		
 		if(Workout.checkDuplicates(this) == true) {
 			return false;
@@ -110,6 +109,7 @@ public class Workout {
 		ArrayList<Workout> workoutList = new ArrayList<Workout>();
 		Exercise newExercise;
 		Workout currentWorkout = new Workout();
+		boolean account = true;
 		
 		try {
 			FileReader fr = new FileReader(workoutFile.getAbsoluteFile());
@@ -117,16 +117,27 @@ public class Workout {
 			String line;
 			
 			while((line = reader.readLine()) != null) {
+				
 				String cell [] = line.split(",");
 
 				if(cell[0].equalsIgnoreCase("end")) {
-					workoutList.add(currentWorkout);
-					currentWorkout = new Workout();
+					if(account == true) {
+						workoutList.add(currentWorkout);
+						currentWorkout = new Workout();
+					}
+					else continue;
 				}
 				
 				else if(cell[0].equalsIgnoreCase("Name")) {
-					currentWorkout = new Workout();
-					currentWorkout.setWorkoutName(cell[1]);
+					if(!cell[1].equals(Account.getCurrentUserName())) {
+						account = false;
+						continue;
+					}
+					else {
+						account = true;
+						currentWorkout = new Workout();
+						currentWorkout.setWorkoutName(cell[2]);
+					}
 				}	
 					
 				else if(cell[0].equalsIgnoreCase("Strength")) {
@@ -174,7 +185,7 @@ public class Workout {
 			completedWorkoutFile.createNewFile();
 		}
 		
-		String line = "Name," + this.workoutName + " - Completed:  " + formatter.format(date);
+		String line = "Name," + Account.getCurrentUserName() +"," +this.workoutName + " - Completed:  " + formatter.format(date);
 		
 		try {
 				
@@ -198,6 +209,7 @@ public class Workout {
 	public static ArrayList<Workout> getCompletedWorkouts() {
 		
 		ArrayList<Workout> completedWorkoutList = new ArrayList<Workout>();
+		boolean account = true; 
 	//	Exercise newExercise;
 		Workout currentWorkout = new Workout();
 		
@@ -208,33 +220,44 @@ public class Workout {
 			
 			while((line = reader.readLine()) != null) {
 				String cell [] = line.split(",");
+				
 
 				if(cell[0].equalsIgnoreCase("end")) {
-					completedWorkoutList.add(currentWorkout);
-					currentWorkout = new Workout();
+					if(account == true) {
+						completedWorkoutList.add(currentWorkout);
+						currentWorkout = new Workout();
+					}
+					else {
+						continue;
+					}
 				}
 				
 				else if(cell[0].equalsIgnoreCase("Name")) {
-					currentWorkout = new Workout();
-					currentWorkout.setWorkoutName(cell[1]);
+					if(!cell[1].equals(Account.getCurrentUserName()))
+						account = false;
+					else {
+						account = true;
+						currentWorkout = new Workout();
+						currentWorkout.setWorkoutName(cell[2]);
+					}
 				}	
 					
-				else if(cell[0].equalsIgnoreCase("Strength")) {
-					StrengthExercise newStrength = new StrengthExercise(cell[1], cell[2], cell[3], cell[4], cell[5]);
-					if(!cell[6].equalsIgnoreCase("nan")) 
-						newStrength.setWeightUsed(Integer.parseInt(cell[6]));
-					newStrength.setRepitions(Integer.parseInt(cell[7]));
-					newStrength.setSets(Integer.parseInt(cell[8]));
+				else if(cell[1].equalsIgnoreCase("Strength")) {
+					StrengthExercise newStrength = new StrengthExercise(cell[2], cell[3], cell[4], cell[5], cell[6]);
+					if(!cell[7].equalsIgnoreCase("nan")) 
+						newStrength.setWeightUsed(Integer.parseInt(cell[7]));
+					newStrength.setRepitions(Integer.parseInt(cell[8]));
+					newStrength.setSets(Integer.parseInt(cell[9]));
 					currentWorkout.addExercise(newStrength);
 				}
-				else if(cell[0].equalsIgnoreCase("Cardio")){
-					CardioExercise newCardio = new CardioExercise(cell[1], cell[2]);
-					if(!cell[3].equalsIgnoreCase("nan"))
-						newCardio.setLaps(Integer.parseInt(cell[3]));
+				else if(cell[1].equalsIgnoreCase("Cardio")){
+					CardioExercise newCardio = new CardioExercise(cell[2], cell[3]);
 					if(!cell[4].equalsIgnoreCase("nan"))
-						newCardio.setResistanceLevel(Integer.parseInt(cell[4]));
+						newCardio.setLaps(Integer.parseInt(cell[4]));
 					if(!cell[5].equalsIgnoreCase("nan"))
-						newCardio.setDistance(Double.parseDouble(cell[5]));
+						newCardio.setResistanceLevel(Integer.parseInt(cell[5]));
+					if(!cell[6].equalsIgnoreCase("nan")) 
+						newCardio.setDistance(Double.parseDouble(cell[6]));
 					currentWorkout.addExercise(newCardio);
 				}
 				
@@ -266,13 +289,13 @@ public class Workout {
 	
 	private static boolean checkDuplicates(Workout w) {
 		
-		//TO DO: Finish method and get it to correctly verify if the exercise exists
+
 		boolean exists = false;
 		int count = 0;
-		//Fill an array list with exercises from the strength exercise file
+		
 		ArrayList <Workout> allWorkouts = Workout.getAllWorkouts();
 		
-		//Check if the new exercise is already listed 
+	
 		for(int i = 0; i < allWorkouts.size(); i++) {
 			if(allWorkouts.get(i).equals(w)) {
 				count++;

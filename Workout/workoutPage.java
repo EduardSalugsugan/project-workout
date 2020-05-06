@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -17,10 +16,8 @@ public class workoutPage{
 	
 	private static Stage window = new Stage();
 	private static ObservableList<String> viewableWorkouts;
-	private static ArrayList<Workout> completedWorkouts;
 	
 	public static void display(){
-		
 		window.setOnCloseRequest(e -> closeWindow());
 		setWorkoutPage();
 		
@@ -31,7 +28,7 @@ public class workoutPage{
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		GridPane layout = createWorkoutPage();
-		Scene page = new Scene(layout, 450, 300);
+		Scene page = new Scene(layout, 425, 300);
 		window.setScene(page);  
 		window.show();
 	}
@@ -44,9 +41,10 @@ public class workoutPage{
 		
 		GridPane gridPane = new GridPane();
 		//gridPane.setGridLinesVisible(true);
-		gridPane.setPadding(new Insets(40, 40, 40, 40));
+		gridPane.setPadding(new Insets(20, 40, 0, 40));
 		gridPane.setVgap(10);
 		gridPane.setHgap(10);
+		gridPane.setAlignment(Pos.CENTER);
 		
 		
 		//Create and fill the list of exercises that can be viewed
@@ -65,8 +63,8 @@ public class workoutPage{
 		gridPane.getRowConstraints().add(row0);
 		
 
-		//Placeholder, will eventually open new dialog box with exercise information
-		Button view = new Button("View workout routine");
+
+		Button view = new Button("View workout stats");
 		view.setOnAction(e -> {
 			//TO DO: Open a new window that will show each exercise in the selected workout
 		});
@@ -83,8 +81,12 @@ public class workoutPage{
 			window.close();
 			homePage.display();
 		});
+		int prefWidth = 150;
+		int prefHeight = 40;
+		view.setPrefSize(prefWidth, prefHeight);
+		createWorkout.setPrefSize(prefWidth, prefHeight);
+		goBack.setPrefSize(75, prefHeight);
 		
-
 		
 		//Add buttons to an HBox for style purposes 
 		HBox buttonBox = new HBox();

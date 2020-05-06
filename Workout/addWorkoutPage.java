@@ -1,8 +1,5 @@
-
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -10,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -27,10 +23,6 @@ public class addWorkoutPage {
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene page;
-	private static TextField name;
-	private static ComboBox<String> typeBox;
-	private static Workout workout;
-	private static File workoutFile = new File("workoutFile.txt");
 	private static ObservableList<String> selectedViewableExercises;
 	private static ObservableList<String> allViewableExercises;
 	private static ArrayList<StrengthExercise> strengthExerciseList = StrengthExercise.getAllExercises(); 
@@ -136,12 +128,14 @@ public class addWorkoutPage {
 		Button addExercise = new Button("Add exercise");
 		addExercise.setOnAction(e -> {
 			if(isStrength == true) {
+				strengthExerciseList = StrengthExercise.getAllExercises();
 				selectedExercise = strengthExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
 				thisWorkout.addExercise(selectedExercise);
 				selectedViewableExercises = thisWorkout.loadExercises();
 				selectedExercises.setItems(selectedViewableExercises);
 			}
 			else {
+				cardioExerciseList = CardioExercise.getAllExercises();
 				selectedExercise = cardioExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
 				thisWorkout.addExercise(selectedExercise);
 				selectedViewableExercises = thisWorkout.loadExercises();
@@ -155,7 +149,7 @@ public class addWorkoutPage {
 			selectedViewableExercises = thisWorkout.loadExercises();
 			selectedExercises.setItems(selectedViewableExercises);
 		});
-		//Set button sizes
+		
 
 		Button goBack = new Button("Back");
 		goBack.setOnAction(e -> {
@@ -187,9 +181,7 @@ public class addWorkoutPage {
 			}catch(IOException i) {
 				System.out.println("IO Exception");
 			}
-//			for(int i = 0; i < thisWorkout.length(); i++) {
-//				System.out.println(thisWorkout.get(i).getName());
-		//	}
+
 		});
 		
 		

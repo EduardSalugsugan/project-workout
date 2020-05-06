@@ -17,10 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -83,23 +81,23 @@ public class loginPage {
 		userNameBox.getChildren().addAll(userNameLabel, userName);
 		userNameBox.setAlignment(Pos.CENTER);
 		userNameBox.setSpacing(30);
-	//	gridPane.add(userNameBox, 0, 1);
+	
 		
 		Label passwordLabel = new Label("Password: ");
 		passwordLabel.setPrefWidth(70);
 		passwordLabel.setPrefHeight(25);
-	//	gridPane.add(passwordLabel, 0, 2);
+
 		
 		PasswordField passwordField = new PasswordField();
 		passwordField.setPrefHeight(25);
 		passwordField.setPrefWidth(200);
-	//	gridPane.add(passwordField, 1, 2);
+
 		
 		HBox passwordBox = new HBox();
 		passwordBox.getChildren().addAll(passwordLabel, passwordField);
 		passwordBox.setAlignment(Pos.CENTER);
 		passwordBox.setSpacing(30);
-		//gridPane.add(passwordBox, 0, 2);
+	
 		
 		VBox fields = new VBox();
 		fields.getChildren().addAll(userNameBox, passwordBox);
@@ -111,9 +109,7 @@ public class loginPage {
 		signUpButton.setPrefHeight(20);
 		signUpButton.setDefaultButton(true);
 		signUpButton.setPrefWidth(80);
-		//gridPane.add(signUpButton, 1, 3, 2, 1);
-		//GridPane.setHalignment(signUpButton, HPos.LEFT);
-		//GridPane.setMargin(signUpButton, new Insets(20, 0, 20, 0));
+
 
 		Button loginButton = new Button("Login");
 		loginButton.setPrefHeight(20);
@@ -125,9 +121,7 @@ public class loginPage {
 		buttonBox.setSpacing(20);
 		buttonBox.setAlignment(Pos.CENTER);
 		gridPane.add(buttonBox, 0, 4);
-		//gridPane.add(loginButton, 0, 3, 2, 1);
-	//	GridPane.setHalignment(loginButton, HPos.CENTER);
-	//	GridPane.setMargin(loginButton, new Insets(20, 0, 20, 0));
+
 		
 		loginButton.setOnAction(e -> {
 			try {
@@ -203,9 +197,7 @@ public class loginPage {
 		backButton.setPrefHeight(40);
 		backButton.setDefaultButton(true);
 		backButton.setPrefWidth(100);
-		//gridPane.add(backButton, 1, 6, 2, 1);
-		//GridPane.setHalignment(backButton, HPos.LEFT);
-		//GridPane.setMargin(backButton, new Insets(20, 0, 20, 0));
+
 		backButton.setOnAction(e -> {
 			logUIControls(logPane);
 			main.setScene(logScene);
@@ -216,8 +208,7 @@ public class loginPage {
 		submitButton.setPrefHeight(40);
 		submitButton.setDefaultButton(true);
 		submitButton.setPrefWidth(100);
-		//gridPane.add(submitButton, 0, 6, 2, 1);
-		//GridPane.setMargin(submitButton, new Insets(20, 0, 20, 0));
+
 		
 		HBox signUpButtonBox = new HBox();
 		signUpButtonBox.getChildren().addAll(submitButton, backButton);
@@ -226,12 +217,17 @@ public class loginPage {
 		gridPane.add(signUpButtonBox, 0, 6, 2, 1);
 		
 		submitButton.setOnAction(e -> {
-			account = new Account();
-			account.setUsername(userName.getText());
-			account.setPassword(passwordField.getText());
-			account.setAge(Integer.parseInt(age.getText()));
-			account.setGender(genderBox.getValue());
-			account.setWeight(Integer.parseInt(userWeight.getText()));
+			try {
+				account = new Account();
+				account.setUsername(userName.getText());
+				account.setPassword(passwordField.getText());
+				account.setAge(Integer.parseInt(age.getText()));
+				account.setGender(genderBox.getValue());
+				account.setWeight(Integer.parseInt(userWeight.getText()));
+			}
+			catch(NumberFormatException n) {
+				showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Invalid entry", "Invalid information, check entries and try again");
+			}
 			try {
 				saveAccount();
 			}
