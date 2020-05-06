@@ -40,7 +40,7 @@ public class startWorkoutPage {
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		layout = createStartWorkoutPage();
-		page = new Scene(layout, 500, 340);
+		page = new Scene(layout, 500, 360);
 		window.setScene(page);
 		window.show();
 		
@@ -54,7 +54,7 @@ public class startWorkoutPage {
 		
 		GridPane gridPane = new GridPane(); 
 		//gridPane.setGridLinesVisible(true);
-		gridPane.setPadding(new Insets(20, 40, 40, 40));
+		gridPane.setPadding(new Insets(20, 40, 20, 40));
 		gridPane.setVgap(10);
 		gridPane.setHgap(10);
 		
@@ -83,7 +83,7 @@ public class startWorkoutPage {
 		gridPane.getRowConstraints().add(row1);
 		
 		Button createWorkout = new Button("Create new workout");
-		createWorkout.setPrefWidth(200);
+		//createWorkout.setPrefWidth(200);
 		GridPane.setHalignment(createWorkout, HPos.LEFT);
 		createWorkout.setOnAction(e -> {
 			window.close();
@@ -91,29 +91,35 @@ public class startWorkoutPage {
 		});
 		
 		Button view = new Button("View Selected Workout");
-		view.setPrefWidth(200);
+	//	view.setPrefWidth(200);
 		view.setOnAction(e ->{
 			//selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
 		});
 
 		//Placeholder, will eventually open new dialog box with exercise information
 		Button select = new Button("Start Selected Workout");
-		select.setPrefWidth(200);
+	//	select.setPrefWidth(200);
 		select.setOnAction(e -> {
-			if(workouts.size() > allWorkouts.size()) {
-				allWorkouts = Workout.getAllWorkouts();
-			}
+		
+			allWorkouts = Workout.getAllWorkouts();
 			selectedWorkout = allWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
 			window.close();
 			workoutTrackingPage.display(selectedWorkout);
 		});
 
 		goBack = new Button("Back");
-		goBack.setPrefWidth(200);
+	//	goBack.setPrefWidth(200);
 		goBack.setOnAction(e -> {
 			window.close();
 			homePage.display();
 		});
+		int prefWidth = 200;
+		int prefHeight = 40;
+		createWorkout.setPrefSize(prefWidth, prefHeight);
+		view.setPrefSize(prefWidth, prefHeight);
+		select.setPrefSize(prefWidth, prefHeight);
+		goBack.setPrefSize(prefWidth, prefHeight);
+		
 		
 		VBox firstButtons = new VBox();
 		firstButtons.setSpacing(10);

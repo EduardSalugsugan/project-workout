@@ -1,10 +1,8 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,8 +17,7 @@ public class CardioExercise extends Exercise{
 	private boolean hasLaps;
 	private boolean hasResistance;
 	private boolean hasDistance;
-	
-	//private int timeToComplete;
+
 	
 	public CardioExercise() {
 		name = "";
@@ -139,9 +136,11 @@ public class CardioExercise extends Exercise{
 			
 			while((line = reader.readLine()) != null) {
 				String [] cell = line.split(",");
+				if(!cell[0].equals(Account.getCurrentUserName()))
+					continue;
 				currentExercise = new CardioExercise();
-				currentExercise.setName(cell[0]);;
-				currentExercise.setEquiptmentNeeded(cell[1]);
+				currentExercise.setName(cell[1]);;
+				currentExercise.setEquiptmentNeeded(cell[2]);
 				
 				exerciseList.add(currentExercise);
 			}

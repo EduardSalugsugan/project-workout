@@ -129,12 +129,14 @@ public class StrengthExercise extends Exercise {
 			
 			while((line = reader.readLine()) != null) {
 				String [] cell = line.split(",");
+				if(!cell[0].equals(Account.getCurrentUserName()))
+					continue;
 				currentExercise = new StrengthExercise();
-				currentExercise.setName(cell[0]);
-				currentExercise.setTargetMuscleArea(cell[1]);
-				currentExercise.setMainTargetMuscle(cell[2]);
-				currentExercise.setEquiptmentNeeded(cell[3]);
-				currentExercise.setWeightType(cell[4]);
+				currentExercise.setName(cell[1]);
+				currentExercise.setTargetMuscleArea(cell[2]);
+				currentExercise.setMainTargetMuscle(cell[3]);
+				currentExercise.setEquiptmentNeeded(cell[4]);
+				currentExercise.setWeightType(cell[5]);
 				exerciseList.add(currentExercise);
 			}
 			reader.close();

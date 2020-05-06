@@ -5,9 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javafx.scene.control.Alert;
-import javafx.stage.Window;
-
 public class Account {
 	private String username;
 	private String password;
@@ -15,6 +12,7 @@ public class Account {
 	private String gender;
 	private int weight;
 	private static File accountFile = new File("Accounts.txt");
+	private static File currentAccountFile = new File("currentAccount.txt");
 
 
 	public Account() {
@@ -126,15 +124,35 @@ public class Account {
 	
 	}
 	
+	public static boolean isLoggedIn() {
+		if(!currentAccountFile.exists() || currentAccountFile.length() == 0)
+			return false;
+		
+		return true;
+	}
+	
+	public static String getCurrentUserName() {
+		if(Account.isLoggedIn()) {
+			Account a = getCurrentAccount();
+			return a.getUsername();
+		}
+		return null;
+		
+	}
+	
+	public static void logOut() {
+		currentAccountFile.delete();
+	}
+	
 	public static boolean checkDuplicates(Account a) {
 		
-		//TO DO: Finish method and get it to correctly verify if the exercise exists
+
 		boolean exists = false;
 		int count = 0;
-		//Fill an array list with exercises from the strength exercise file
+		//Fill an array list with accounts from the account file
 		ArrayList <Account> allAccounts = Account.getAllAccounts();
 		
-		//Check if the new exercise is already listed 
+		//Check if the new account is already listed 
 		for(int i = 0; i < allAccounts.size(); i++) {
 			if(allAccounts.get(i).equals(a)) {
 				count++;

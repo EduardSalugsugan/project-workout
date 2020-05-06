@@ -1,5 +1,3 @@
-import java.io.File;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -58,8 +56,7 @@ public class homePage  {
 		accountButton.setPrefSize(200, 70);
 		pane.add(accountButton, 0, 1);
 		accountButton.setOnAction(e -> {
-			File accountLoggedIn = new File("currentAccount.txt");
-			if(accountLoggedIn.length() == 0) {
+			if(!Account.isLoggedIn()) {
 				showAlert(Alert.AlertType.ERROR, window, "Not logged in", "Please log into an account to view this page");
 				return;
 			}
@@ -74,15 +71,30 @@ public class homePage  {
 		beginButton.setPrefSize(200, 70);
 		pane.add(beginButton, 0, 2);
 		GridPane.setHalignment(beginButton, HPos.CENTER);
-		beginButton.setOnAction(e -> startWorkoutPage.display());
+		beginButton.setOnAction(e -> {
+			if(!Account.isLoggedIn()) {
+				showAlert(Alert.AlertType.ERROR, window, "Not logged in", "Please log into an account to view this page");
+				return;
+			}
+			else {
+				window.close();
+				startWorkoutPage.display();
+			}
+		});
 
 		
 		workoutsButton = new Button("View Completed Workouts");
 		workoutsButton.setPrefSize(200, 70);
 		pane.add(workoutsButton, 0, 3);
 		workoutsButton.setOnAction(e -> {
-			window.close();
-			workoutPage.display();
+			if(!Account.isLoggedIn()) {
+				showAlert(Alert.AlertType.ERROR, window, "Not logged in", "Please log into an account to view this page");
+				return;
+			}
+			else {
+				window.close();
+				workoutPage.display();
+			}
 		});
 		GridPane.setHalignment(workoutsButton, HPos.CENTER);
 		
@@ -91,8 +103,14 @@ public class homePage  {
 		exercisesButton.setPrefSize(200, 70);
 		pane.add(exercisesButton, 0, 4);
 		exercisesButton.setOnAction(e -> {
-			window.close();
-			exercisePage.display();
+			if(!Account.isLoggedIn()) {
+				showAlert(Alert.AlertType.ERROR, window, "Not logged in", "Please log into an account to view this page");
+				return;
+			}
+			else {
+				window.close();
+				exercisePage.display();
+			}
 		});
 		GridPane.setHalignment(exercisesButton, HPos.CENTER);
 
@@ -100,8 +118,14 @@ public class homePage  {
 		foodPlanButton.setPrefSize(200, 70);
 		pane.add(foodPlanButton, 0, 5);
 		foodPlanButton.setOnAction(e -> {
-			window.close();
-			mealPlanPage.display();
+			if(!Account.isLoggedIn()) {
+				showAlert(Alert.AlertType.ERROR, window, "Not logged in", "Please log into an account to view this page");
+				return;
+			}
+			else {
+				window.close();
+				mealPlanPage.display();
+			}
 		});
 		GridPane.setHalignment(foodPlanButton, HPos.CENTER);
 
