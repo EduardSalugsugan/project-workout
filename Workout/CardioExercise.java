@@ -130,6 +130,31 @@ public class CardioExercise extends Exercise{
 		CardioExercise currentExercise;
 		
 		try {
+			FileReader fr = new FileReader("standardcardioexercises.txt");
+			BufferedReader reader = new BufferedReader(fr);
+			String line;
+			
+			while((line = reader.readLine()) != null) {
+				String [] cell = line.split(",");
+				currentExercise = new CardioExercise();
+				currentExercise.setName(cell[0]);;
+				currentExercise.setEquiptmentNeeded(cell[1]);
+				
+				exerciseList.add(currentExercise);
+			}
+			reader.close();
+		
+		}catch(FileNotFoundException f) { 
+			System.out.println("File not found");
+		}//End of catch
+		
+		catch(IOException i) {
+			System.out.println("IO exception");
+		}
+		
+		
+		
+		try {
 			FileReader fr = new FileReader(fileName);
 			BufferedReader reader = new BufferedReader(fr);
 			String line;

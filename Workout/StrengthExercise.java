@@ -99,15 +99,16 @@ public class StrengthExercise extends Exercise {
 	public String getType() {
 		return type;
 	}
+
 	
 	public String toString() {
-		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.equiptmentNeeded +
-				"," + this.weightType;
+		return this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.weightType +
+				"," + this.equiptmentNeeded;
 	} 
 	
 	public String completedToString() {
-		String completedString = this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.equiptmentNeeded +
-				"," + this.weightType;
+		String completedString = this.type + "," + this.name + "," + this.targetMuscleArea + "," + this.mainTargetMuscle + "," + this.weightType +
+				"," + this.equiptmentNeeded;
 		if(this.weightType.equalsIgnoreCase("Free Weights") || this.weightType.equalsIgnoreCase("Machine Resistance"))
 			completedString += "," + this.weightUsed;
 		else
@@ -122,6 +123,36 @@ public class StrengthExercise extends Exercise {
 		ArrayList<StrengthExercise> exerciseList = new ArrayList<StrengthExercise>();
 		StrengthExercise currentExercise;
 		
+		
+		try {
+			FileReader fr = new FileReader("standardstrengthexercises.txt");
+			BufferedReader reader = new BufferedReader(fr);
+			String line;
+			
+			while((line = reader.readLine()) != null) {
+				String [] cell = line.split(",");
+
+				currentExercise = new StrengthExercise();
+				currentExercise.setName(cell[0]);
+				currentExercise.setTargetMuscleArea(cell[1]);
+				currentExercise.setMainTargetMuscle(cell[2]);
+				currentExercise.setWeightType(cell[3]);
+				currentExercise.setEquiptmentNeeded(cell[4]);
+				exerciseList.add(currentExercise);
+			}
+			reader.close();
+		
+		}catch(FileNotFoundException f) {
+			System.out.println("File not found");
+		}//End of catch
+		
+		catch(IOException i) {
+			System.out.println("IO exception");
+		}
+		
+		
+		
+		
 		try {
 			FileReader fr = new FileReader(fileName);
 			BufferedReader reader = new BufferedReader(fr);
@@ -135,8 +166,8 @@ public class StrengthExercise extends Exercise {
 				currentExercise.setName(cell[1]);
 				currentExercise.setTargetMuscleArea(cell[2]);
 				currentExercise.setMainTargetMuscle(cell[3]);
-				currentExercise.setEquiptmentNeeded(cell[4]);
-				currentExercise.setWeightType(cell[5]);
+				currentExercise.setWeightType(cell[4]);
+				currentExercise.setEquiptmentNeeded(cell[5]);
 				exerciseList.add(currentExercise);
 			}
 			reader.close();

@@ -242,22 +242,22 @@ public class Workout {
 					}
 				}	
 					
-				else if(cell[1].equalsIgnoreCase("Strength")) {
-					StrengthExercise newStrength = new StrengthExercise(cell[2], cell[3], cell[4], cell[5], cell[6]);
-					if(!cell[7].equalsIgnoreCase("nan")) 
-						newStrength.setWeightUsed(Integer.parseInt(cell[7]));
-					newStrength.setRepitions(Integer.parseInt(cell[8]));
-					newStrength.setSets(Integer.parseInt(cell[9]));
+				else if(cell[0].equalsIgnoreCase("Strength")) {
+					StrengthExercise newStrength = new StrengthExercise(cell[1], cell[2], cell[3], cell[4], cell[5]);
+					if(!cell[6].equalsIgnoreCase("nan")) 
+						newStrength.setWeightUsed(Integer.parseInt(cell[6]));
+					newStrength.setRepitions(Integer.parseInt(cell[7]));
+					newStrength.setSets(Integer.parseInt(cell[8]));
 					currentWorkout.addExercise(newStrength);
 				}
-				else if(cell[1].equalsIgnoreCase("Cardio")){
-					CardioExercise newCardio = new CardioExercise(cell[2], cell[3]);
+				else if(cell[0].equalsIgnoreCase("Cardio")){
+					CardioExercise newCardio = new CardioExercise(cell[1], cell[2]);
+					if(!cell[3].equalsIgnoreCase("nan"))
+						newCardio.setLaps(Integer.parseInt(cell[3]));
 					if(!cell[4].equalsIgnoreCase("nan"))
-						newCardio.setLaps(Integer.parseInt(cell[4]));
-					if(!cell[5].equalsIgnoreCase("nan"))
-						newCardio.setResistanceLevel(Integer.parseInt(cell[5]));
-					if(!cell[6].equalsIgnoreCase("nan")) 
-						newCardio.setDistance(Double.parseDouble(cell[6]));
+						newCardio.setResistanceLevel(Integer.parseInt(cell[4]));
+					if(!cell[5].equalsIgnoreCase("nan")) 
+						newCardio.setDistance(Double.parseDouble(cell[5]));
 					currentWorkout.addExercise(newCardio);
 				}
 				

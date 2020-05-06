@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class myMeal {
@@ -116,9 +115,6 @@ public class myMeal {
 		}
 		catch(FileNotFoundException f) {
 			System.out.println("File not found");
-		}
-		catch(IOException e) {
-			System.out.println("IO exception");
 		}
 		return mealplan;
 	}

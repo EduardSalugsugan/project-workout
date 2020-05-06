@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -38,6 +39,7 @@ public class workoutTrackingPage {
 	private static TextField resistanceLog;
 	private static Label distanceLabel;
 	private static TextField distanceLog;
+	//private static ScrollPane layout;
 	
 	
 	public static void display(Workout w) {
@@ -62,41 +64,71 @@ public class workoutTrackingPage {
 	
 	public static GridPane createWorkoutTrackerPage() {
 		GridPane pane = new GridPane();
+		ScrollPane scroll = new ScrollPane();
+		scroll.setFitToWidth(true);
 		
-		pane.setPadding(new Insets(40,0,40,0));
+		pane.setPadding(new Insets(20,0,20,0));
 		pane.setAlignment(Pos.TOP_CENTER);
 		
-		pane.setGridLinesVisible(true);
-		pane.setVgap(40);
+		//pane.setGridLinesVisible(true);
+		pane.setVgap(20);
 		pane.setHgap(10);
 		completedWorkout = new Workout();
 		completedWorkout.setWorkoutName(thisWorkout.getWorkoutName());
+		
 		Label workoutName = new Label(thisWorkout.getWorkoutName());
 		workoutName.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 32));
 		workoutName.setAlignment(Pos.TOP_CENTER);
+		workoutName.setPrefSize(400, 100);
+		workoutName.setStyle("-fx-padding: 5;" + "-fx-border-style: solid;"
+        + "-fx-border-width: 8;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 10;" + "-fx-border-color: black;");
+		
 		GridPane.setHalignment(workoutName, HPos.CENTER);
+		
 		pane.add(workoutName, 0, 0);
+		
 		Label description = new Label("Exercises to complete:");
 		description.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		VBox exerciseNameBox = new VBox();
 		exerciseNameBox.setAlignment(Pos.CENTER);
 		exerciseNameBox.setSpacing(10);
 		exerciseNameBox.getChildren().add(description);
+		
 		for(int i = 0; i < thisWorkout.length(); i++) {
-			Label exerciseName = new Label( i + 1 + ": " +thisWorkout.getExercise(i).getName());
+			Button exerciseName = new Button(thisWorkout.getExercise(i).getName());
+			int index = i;
+			exerciseName.setOnAction(e ->{
+				if(thisWorkout.getExercise(index).getType().equals("Strength")) {
+					viewExercisePage.displayStrength((StrengthExercise) thisWorkout.getExercise(index)); 
+				}
+				else {
+					viewExercisePage.displayCardio((CardioExercise) thisWorkout.getExercise(index)); 
+				}
+			});
+			exerciseName.setAlignment(Pos.CENTER);
+			exerciseName.setPrefWidth(350);
 			exerciseName.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+			exerciseNameBox.setStyle("-fx-background-color: gray;");
 			exerciseNameBox.getChildren().add(exerciseName);
 		}
+		
 		Button beginWorkout = new Button("Begin Workout");
-		//exerciseNameBox.getChildren().add(beginWorkout);
 		pane.add(exerciseNameBox, 0, 1);
 		beginWorkout.setAlignment(Pos.BOTTOM_CENTER);
 		GridPane.setHalignment(beginWorkout, HPos.CENTER);
 		pane.add(beginWorkout, 0, 3);
 
+		scroll.setContent(exerciseNameBox);
+		scroll.setPrefHeight(500);
+		scroll.setStyle("-fx-padding: 5;" + "-fx-border-style: solid;"
+        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;" + "-fx-border-color: black;");
+		pane.add(scroll, 0, 1);
 		
 		beginWorkout.setOnAction(e -> {
 			index = 0;
+			pane.getChildren().remove(scroll);
 			pane.getChildren().remove(beginWorkout);
 			pane.getChildren().remove(exerciseNameBox);
 			pane.getChildren().remove(workoutName);
@@ -115,11 +147,13 @@ public class workoutTrackingPage {
 		//final long start = System.currentTimeMillis();
 		window.setWidth(1000);
 		window.setHeight(600);
+		
 		window.centerOnScreen();
+
 		pane.setAlignment(Pos.TOP_CENTER);
 		Label name = new Label("Exercise name");
 		name.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
-		
+
 
 		if(index >= numberOfExercisesInWorkout) {
 			Button finishWorkout = new Button("Finish Workout");
@@ -152,7 +186,7 @@ public class workoutTrackingPage {
 		if(currentExercise.getType().equalsIgnoreCase("Strength")) {
 			
 			currentStrength = (StrengthExercise) currentExercise;
-			if(currentStrength.getWeightType().equalsIgnoreCase("Free Weights")) {
+			if(currentStrength.getWeightType().equalsIgnoreCase("Free Weights") || currentStrength.getWeightType().equalsIgnoreCase("Machine Resistance")) {
 				
 				Label weightUsed = new Label("Weight(lbs):");
 				weightUsed.setFont(Font.font("Arial", FontWeight.BOLD, 14));
