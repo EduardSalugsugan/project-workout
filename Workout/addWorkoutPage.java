@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -53,7 +54,7 @@ public class addWorkoutPage {
 		gridPane.setAlignment(Pos.CENTER);
 
 		//Set the style settings for the pane
-		gridPane.setPadding(new Insets(40, 40, 40, 40));
+		gridPane.setPadding(new Insets(20, 20, 20, 20));
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		
@@ -66,8 +67,10 @@ public class addWorkoutPage {
 	
 	private static GridPane addUIControls(GridPane pane) {
 
-		//pane.setGridLinesVisible(true);
+		pane.setGridLinesVisible(true);
+		pane.setAlignment(Pos.TOP_CENTER);
 		GridPane.setHalignment(pane, HPos.CENTER);
+		GridPane.setValignment(pane, VPos.TOP);
 		Label headerLabel = new Label("Create New Workout Routine");
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 
@@ -117,6 +120,8 @@ public class addWorkoutPage {
 		showButtons.setSpacing(50);
 		showButtons.setAlignment(Pos.CENTER);
 		showButtons.getChildren().addAll(showStrength, showCardio);
+		
+		
 		////////////////////////////////////////////////////////////
 		////////////End of fill all exercise controls///////////////
 		////////////////////////////////////////////////////////////
@@ -202,12 +207,23 @@ public class addWorkoutPage {
 		secondRowButtons.setSpacing(30);
 		
 	
-		
+		Button viewExerciseInfo = new Button("View Selected Exercise Info");
+		viewExerciseInfo.setOnAction(e ->{
+			if(isStrength) {
+				StrengthExercise selectedStrength = strengthExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
+				viewExercisePage.displayStrength(selectedStrength);
+			}
+			else {
+				CardioExercise selectedCardio = cardioExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
+				viewExercisePage.displayCardio(selectedCardio);
+			}
+		});
+		viewExerciseInfo.setPrefSize(300, 40);
 		
 		VBox labelBox = new VBox();
 		labelBox.setSpacing(15);
 		labelBox.setAlignment(Pos.CENTER);
-		labelBox.getChildren().addAll(headerLabel, nameLabel, nameField, typeLabel, showButtons , exercisesToAdd, allExercises,
+		labelBox.getChildren().addAll(headerLabel, nameLabel, nameField, typeLabel, showButtons , exercisesToAdd, allExercises, viewExerciseInfo,
 				exercisesAdded, selectedExercises, buttonBox, secondRowButtons);
 		GridPane.setHalignment(labelBox, HPos.CENTER);
 		pane.add(labelBox, 0, 0);
