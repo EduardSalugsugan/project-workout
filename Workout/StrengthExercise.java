@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class StrengthExercise extends Exercise {
 	private String targetMuscleArea;
 	private String mainTargetMuscle;
 	private String weightType;
+	private static File standardExerciseFile = new File("standardstrengthexercises.txt");
 	private static String fileName = "strengthexercises.txt";
 	public final String type = "Strength";
 	
@@ -125,7 +127,7 @@ public class StrengthExercise extends Exercise {
 		
 		
 		try {
-			FileReader fr = new FileReader("standardstrengthexercises.txt");
+			FileReader fr = new FileReader(standardExerciseFile);
 			BufferedReader reader = new BufferedReader(fr);
 			String line;
 			

@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,6 +13,7 @@ public class CardioExercise extends Exercise{
 	private int laps;
 	private double distance;
 	private double lapTime;
+	private static File standardExerciseFile = new File("standardcardioexercises.txt");
 	private static String fileName = "cardioexercises.txt";
 	public final String type = "Cardio";
 	private boolean hasLaps;
@@ -130,7 +132,7 @@ public class CardioExercise extends Exercise{
 		CardioExercise currentExercise;
 		
 		try {
-			FileReader fr = new FileReader("standardcardioexercises.txt");
+			FileReader fr = new FileReader(standardExerciseFile);
 			BufferedReader reader = new BufferedReader(fr);
 			String line;
 			
