@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,13 +13,13 @@ public class CardioExercise extends Exercise{
 	private int laps;
 	private double distance;
 	private double lapTime;
+	private static File standardExerciseFile = new File("standardcardioexercises.txt");
 	private static String fileName = "cardioexercises.txt";
 	public final String type = "Cardio";
 	private boolean hasLaps;
 	private boolean hasResistance;
 	private boolean hasDistance;
-	
-	//private int timeToComplete;
+
 	
 	public CardioExercise() {
 		name = "";
@@ -133,7 +132,7 @@ public class CardioExercise extends Exercise{
 		CardioExercise currentExercise;
 		
 		try {
-			FileReader fr = new FileReader(fileName);
+			FileReader fr = new FileReader(standardExerciseFile);
 			BufferedReader reader = new BufferedReader(fr);
 			String line;
 			
@@ -142,6 +141,33 @@ public class CardioExercise extends Exercise{
 				currentExercise = new CardioExercise();
 				currentExercise.setName(cell[0]);;
 				currentExercise.setEquiptmentNeeded(cell[1]);
+				
+				exerciseList.add(currentExercise);
+			}
+			reader.close();
+		
+		}catch(FileNotFoundException f) { 
+			System.out.println("File not found");
+		}//End of catch
+		
+		catch(IOException i) {
+			System.out.println("IO exception");
+		}
+		
+		
+		
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader reader = new BufferedReader(fr);
+			String line;
+			
+			while((line = reader.readLine()) != null) {
+				String [] cell = line.split(",");
+				if(!cell[0].equals(Account.getCurrentUserName()))
+					continue;
+				currentExercise = new CardioExercise();
+				currentExercise.setName(cell[1]);;
+				currentExercise.setEquiptmentNeeded(cell[2]);
 				
 				exerciseList.add(currentExercise);
 			}

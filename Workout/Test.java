@@ -1,11 +1,11 @@
+import java.util.ArrayList;
 
 public class Test {
 	
-	public static void main (String[] args) {
-		CardioExercise cardio = new CardioExercise();
-		cardio.setName("Running");
-		cardio.setEquiptmentNeeded("None");
-		System.out.println(cardio);
+	public static void main (String [] args) {
+		ArrayList<StrengthExercise> exercises = StrengthExercise.getAllExercises();
+		
+		System.out.println(exercises.get(0).getName() +":" + exercises.get(0).getWeightType());
 	}
 
 }

@@ -1,16 +1,13 @@
-
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -27,10 +24,6 @@ public class addWorkoutPage {
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene page;
-	private static TextField name;
-	private static ComboBox<String> typeBox;
-	private static Workout workout;
-	private static File workoutFile = new File("workoutFile.txt");
 	private static ObservableList<String> selectedViewableExercises;
 	private static ObservableList<String> allViewableExercises;
 	private static ArrayList<StrengthExercise> strengthExerciseList = StrengthExercise.getAllExercises(); 
@@ -61,7 +54,7 @@ public class addWorkoutPage {
 		gridPane.setAlignment(Pos.CENTER);
 
 		//Set the style settings for the pane
-		gridPane.setPadding(new Insets(40, 40, 40, 40));
+		gridPane.setPadding(new Insets(20, 20, 20, 20));
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		
@@ -74,8 +67,10 @@ public class addWorkoutPage {
 	
 	private static GridPane addUIControls(GridPane pane) {
 
-		//pane.setGridLinesVisible(true);
+		pane.setGridLinesVisible(true);
+		pane.setAlignment(Pos.TOP_CENTER);
 		GridPane.setHalignment(pane, HPos.CENTER);
+		GridPane.setValignment(pane, VPos.TOP);
 		Label headerLabel = new Label("Create New Workout Routine");
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 
@@ -125,6 +120,8 @@ public class addWorkoutPage {
 		showButtons.setSpacing(50);
 		showButtons.setAlignment(Pos.CENTER);
 		showButtons.getChildren().addAll(showStrength, showCardio);
+		
+		
 		////////////////////////////////////////////////////////////
 		////////////End of fill all exercise controls///////////////
 		////////////////////////////////////////////////////////////
@@ -136,12 +133,14 @@ public class addWorkoutPage {
 		Button addExercise = new Button("Add exercise");
 		addExercise.setOnAction(e -> {
 			if(isStrength == true) {
+				strengthExerciseList = StrengthExercise.getAllExercises();
 				selectedExercise = strengthExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
 				thisWorkout.addExercise(selectedExercise);
 				selectedViewableExercises = thisWorkout.loadExercises();
 				selectedExercises.setItems(selectedViewableExercises);
 			}
 			else {
+				cardioExerciseList = CardioExercise.getAllExercises();
 				selectedExercise = cardioExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
 				thisWorkout.addExercise(selectedExercise);
 				selectedViewableExercises = thisWorkout.loadExercises();
@@ -155,7 +154,7 @@ public class addWorkoutPage {
 			selectedViewableExercises = thisWorkout.loadExercises();
 			selectedExercises.setItems(selectedViewableExercises);
 		});
-		//Set button sizes
+		
 
 		Button goBack = new Button("Back");
 		goBack.setOnAction(e -> {
@@ -187,9 +186,7 @@ public class addWorkoutPage {
 			}catch(IOException i) {
 				System.out.println("IO Exception");
 			}
-//			for(int i = 0; i < thisWorkout.length(); i++) {
-//				System.out.println(thisWorkout.get(i).getName());
-		//	}
+
 		});
 		
 		
@@ -210,12 +207,23 @@ public class addWorkoutPage {
 		secondRowButtons.setSpacing(30);
 		
 	
-		
+		Button viewExerciseInfo = new Button("View Selected Exercise Info");
+		viewExerciseInfo.setOnAction(e ->{
+			if(isStrength) {
+				StrengthExercise selectedStrength = strengthExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
+				viewExercisePage.displayStrength(selectedStrength);
+			}
+			else {
+				CardioExercise selectedCardio = cardioExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());
+				viewExercisePage.displayCardio(selectedCardio);
+			}
+		});
+		viewExerciseInfo.setPrefSize(300, 40);
 		
 		VBox labelBox = new VBox();
 		labelBox.setSpacing(15);
 		labelBox.setAlignment(Pos.CENTER);
-		labelBox.getChildren().addAll(headerLabel, nameLabel, nameField, typeLabel, showButtons , exercisesToAdd, allExercises,
+		labelBox.getChildren().addAll(headerLabel, nameLabel, nameField, typeLabel, showButtons , exercisesToAdd, allExercises, viewExerciseInfo,
 				exercisesAdded, selectedExercises, buttonBox, secondRowButtons);
 		GridPane.setHalignment(labelBox, HPos.CENTER);
 		pane.add(labelBox, 0, 0);

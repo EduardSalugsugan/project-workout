@@ -1,16 +1,10 @@
-
-import java.io.File;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -53,6 +47,7 @@ public class viewExercisePage {
 	
 	private static GridPane createViewStrengthPage() {
 		GridPane pane = new GridPane();
+
 		//pane.setGridLinesVisible(true);
 		pane.setAlignment(Pos.TOP_CENTER);
 		//pane.setGridLinesVisible(true);
@@ -70,15 +65,11 @@ public class viewExercisePage {
 		
 		Label areaLabel = new Label(strengthExercise.getTargetMuscleArea() +" Exercise");
 		areaLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		//areaLabel.setAlignment(Pos.BASELINE_CENTER);
-		///GridPane.setHalignment(typeLabel, HPos.CENTER);
-		//pane.add(typeLabel, 0, 1);
+
 		
 		Label muscle = new Label("Targets " + strengthExercise.getMainTargetMuscle() + " Muscles");
 		muscle.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		//muscle.setAlignment(Pos.BASELINE_CENTER);
-		//GridPane.setHalignment(type, HPos.RIGHT);
-		//pane.add(type, 1, 1);
+
 		Label weightType;
 		if(strengthExercise.getWeightType().equalsIgnoreCase("Body Weight")) {
 			weightType = new Label("Bodyweight exercise");

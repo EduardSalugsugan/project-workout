@@ -278,7 +278,7 @@ public class addStrengthExerciseWindow{
 		try(FileWriter fw = new FileWriter(exerciseFile.getAbsoluteFile(), true);
 			BufferedWriter writer = new BufferedWriter(fw)){
 		
-			writer.write(newExercise.getName() + "," + newExercise.getTargetMuscleArea() + "," +
+			writer.write(Account.getCurrentUserName() + "," + newExercise.getName() + "," + newExercise.getTargetMuscleArea() + "," +
 			newExercise.getMainTargetMuscle() + "," + newExercise.getWeightType() + "," + newExercise.getEquiptmentNeeded() + "\n");
 			writer.close();
 			showAlert(Alert.AlertType.CONFIRMATION, layout.getScene().getWindow(), "Success", "Exercise added");
