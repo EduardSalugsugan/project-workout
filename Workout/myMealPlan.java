@@ -52,13 +52,21 @@ public class myMealPlan{
         muscle.setAlignment(Pos.CENTER_LEFT);
         muscle.setSpacing(25);
 
-        Text breakfast = new Text(meal.getBreakfast());
-        Text snack1 = new Text(meal.getSnack1());
-        Text lunch = new Text(meal.getLunch());
-        Text snack2 = new Text(meal.getSnack2());
-        Text dinner = new Text(meal.getDinner());
-        Text snack3 = new Text(meal.getSnack3());
-        Text notes = new Text(meal.getNotes());
+		String temp1 = meal.getBreakfast().replaceAll("\\+ ","\n");
+		String temp2 = meal.getSnack1().replaceAll("\\+ ","\n");
+		String temp3 = meal.getLunch().replaceAll("\\+ ","\n");
+		String temp4 = meal.getSnack2().replaceAll("\\+ ","\n");
+		String temp5 = meal.getDinner().replaceAll("\\+ ","\n");
+		String temp6 = meal.getSnack3().replaceAll("\\+ ","\n");
+		String temp7 = meal.getNotes().replaceAll("\\+ ","\n");
+
+        Text breakfast = new Text(temp1);
+        Text snack1 = new Text(temp2);
+        Text lunch = new Text(temp3);
+        Text snack2 = new Text(temp4);
+        Text dinner = new Text(temp5);
+        Text snack3 = new Text(temp6);
+        Text notes = new Text(temp7);
         
         Button back = new Button("Back");
         back.setOnAction(e-> {
