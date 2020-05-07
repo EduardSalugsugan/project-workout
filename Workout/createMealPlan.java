@@ -29,10 +29,7 @@ public class createMealPlan{
 	private static Scene createMyPlan;
     private static myMeal meal;
 	private static File mealFile = new File("mealPlan.txt");
-	private static Account account = Account.getCurrentAccount();
-	private static String temp;
-	private static File tempFile = new File("tempMeal.txt");	
-	private static boolean bool = false;
+	private static Scanner scan;
 	
 	public static void display() {
 		setCreatePlanWindow();
@@ -146,35 +143,46 @@ public class createMealPlan{
 			System.out.println("File created: " + mealFile.getName());
 		}
 
+		Account account = Account.getCurrentAccount();
+		String temp;
+		File tempFile = new File("tempMeal.txt");	
 		try(FileWriter fw = new FileWriter(mealFile, true)) {
 			BufferedWriter writer = new BufferedWriter(fw);
-			mealInfo = account.getUsername() + "," + meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
+			mealInfo = account.getUsername() + "," + meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes();
 			writer.write(mealInfo);
 			writer.close();
 
 			File file = new File("mealPlan.txt");
-			Scanner scan = new Scanner(file);
+			scan = new Scanner(file);
 			String found = account.getUsername();
 			String a[];
 
 			FileWriter bw = new FileWriter(tempFile);
 			BufferedWriter w2 = new BufferedWriter(bw);
-			
+			boolean bool = false;
 			while(scan.hasNextLine()){
 				temp = scan.nextLine();
 				a = temp.split(",");
 				if(a[0].equals(found)){
 	 				if(bool){
-		 			break;
+		 				break;
 	 				}	
 	 			bool = true;
 	 			temp = mealInfo;
 	 			}
-		 	w2.write(temp+"\n");
+		 		w2.write(temp+"\n");
 			}
-		bool = false; 
+			bool = false;
+			w2.close();
+			scan = new Scanner(tempFile);
+			bw = new FileWriter(file);
+			w2 = new BufferedWriter(bw);
+			while(scan.hasNextLine()){
+				temp = scan.nextLine();
+				w2.write(temp+"\n");
+			}
+		scan.close();
 		w2.close();
-			
 		}catch(IOException e) {
 			System.out.println("Error");
 		}	

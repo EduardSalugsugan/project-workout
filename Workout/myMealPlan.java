@@ -22,8 +22,8 @@ public class myMealPlan {
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene page;
-	private static myMeal meal = myMeal.getCurrentMealPlan();
-	private static Account account = Account.getCurrentAccount();
+	// private static myMeal meal = myMeal.getCurrentMealPlan();
+	// private static Account account = Account.getCurrentAccount();
 	private static String a[];
 
 	public static void display() throws FileNotFoundException {
@@ -41,6 +41,9 @@ public class myMealPlan {
 	}
 
 	private static GridPane createFoodPlanPage() throws FileNotFoundException {
+		//myMeal meal = myMeal.getCurrentMealPlan();
+		Account account = Account.getCurrentAccount();
+
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.setPadding(new Insets(50, 20, 20, 20));
@@ -55,7 +58,9 @@ public class myMealPlan {
 
         VBox muscle = new VBox();
         muscle.setAlignment(Pos.CENTER_LEFT);
-        muscle.setSpacing(25);
+		muscle.setSpacing(25);
+		
+
 
 		File file = new File("tempMeal.txt");
 		Scanner scan = new Scanner(file);
@@ -69,14 +74,6 @@ public class myMealPlan {
 			}
 		}
 		
-		Text breakfast;
-		Text snack1;
-		Text lunch;
-		Text snack2;
-		Text dinner;
-		Text snack3;
-		Text notes;
-		
 		String temp1 = a[1].replaceAll("\\+ ","\n");
 		String temp2 = a[2].replaceAll("\\+ ","\n");
 		String temp3 = a[3].replaceAll("\\+ ","\n");
@@ -85,13 +82,13 @@ public class myMealPlan {
 		String temp6 = a[6].replaceAll("\\+ ","\n");
 		String temp7 = a[7].replaceAll("\\+ ","\n");
 
-		breakfast = new Text(temp1);
-		snack1 = new Text(temp2);
-		lunch = new Text(temp3);
-		snack2 = new Text(temp4);
-		dinner = new Text(temp5);
-		snack3 = new Text(temp6);
-		notes = new Text(temp7);
+		Text breakfast = new Text(temp1);
+		Text snack1 = new Text(temp2);
+		Text lunch = new Text(temp3);
+		Text snack2 = new Text(temp4);
+		Text dinner = new Text(temp5);
+		Text snack3 = new Text(temp6);
+		Text notes = new Text(temp7);
         
         Button back = new Button("Back");
         back.setOnAction(e-> {
@@ -101,6 +98,7 @@ public class myMealPlan {
 
         muscle.getChildren().addAll(breakfast, snack1, lunch, snack2, dinner, snack3, notes, back);
 		pane.add(muscle, 0 , 1);
+		scan.close();
 		return pane;
 	}
 

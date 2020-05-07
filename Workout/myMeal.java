@@ -108,8 +108,9 @@ public class myMeal {
                 mealplan.setSnack3(cell[6]);
                 mealplan.setNotes(cell[7]);
                 scan.close();	
-            }
-            bool2 = false;		
+            }	
+
+            scan.close();
 		}
 		catch(FileNotFoundException f) {
 			System.out.println("File not found");

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -23,6 +24,8 @@ public class mealPlanPage {
 	private static GridPane layout;
 	private static Scene foodplan;
 	private static File mealFile = new File("mealPlan.txt");
+	private static boolean bool2;
+	private static boolean b;
 
 	public static void display() {
 		setFoodPlanWindow();
@@ -79,6 +82,17 @@ public class mealPlanPage {
 		Button MyPlan = new Button("My Plan");
 		MyPlan.setPrefSize(200, 70);
 		MyPlan.setOnAction(e -> {
+			try {
+				b = f();
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
+			if(b == false){
+				showAlert(Alert.AlertType.ERROR, window.getScene().getWindow(), "Error", "Create a My Plan first");
+				System.out.println("Profile not found");
+				return;
+			}
+			bool2 = false;
 			if (!mealFile.exists()) {
 				showAlert(Alert.AlertType.ERROR, window.getScene().getWindow(), "Error", "Create a My Plan first");
 				System.out.println("File doesn't exist");
@@ -93,10 +107,10 @@ public class mealPlanPage {
 		});
 
 		Button Create = new Button("Create my meal plan");
-        Create.setPrefSize(200, 70);
-       	Create.setOnAction(e -> {
+		Create.setPrefSize(200, 70);
+		Create.setOnAction(e -> {
 			window.close();
-			createMealPlan.display();	
+			createMealPlan.display();
 		});
 
 		Button goBack = new Button("Back");
@@ -107,9 +121,9 @@ public class mealPlanPage {
 		});
 
 		foodplan.getChildren().addAll(Gain, Lost, Vegan, MyPlan, Create, goBack);
-		
-		pane.add(foodplan, 0 , 1);
-		
+
+		pane.add(foodplan, 0, 1);
+
 		return pane;
 	}
 
@@ -120,6 +134,25 @@ public class mealPlanPage {
 		alert.setContentText(message);
 		alert.initOwner(win);
 		alert.show();
+	}
+
+	private static boolean f() throws FileNotFoundException {
+		Account account = Account.getCurrentAccount();
+		File file = new File("tempMeal.txt");
+		Scanner scan = new Scanner(file);
+		String found = account.getUsername();
+		String a[];
+		String temp;
+		while(scan.hasNextLine()) {
+			temp = scan.nextLine();
+			a = temp.split(",");
+			if (a[0].equals(found)){
+				bool2 = true;
+				break;
+			}
+		}
+		scan.close();
+		return bool2;
 	}
 
 }
