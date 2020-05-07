@@ -12,7 +12,7 @@ public class myMeal {
     String notes;
     private static Account account = Account.getCurrentAccount();
     private static String temp1;
-    private static boolean bool;
+    private static boolean bool2 = false;
     public myMeal(){
         breakfast = null;
         snack1 = null;
@@ -83,7 +83,7 @@ public class myMeal {
 
         myMeal mealplan = new myMeal();
 		try {
-            File file = new File("mealPlan.txt");
+            File file = new File("tempMeal.txt");
             Scanner scan = new Scanner(file);
             String found = account.getUsername();
             String a[];
@@ -93,15 +93,12 @@ public class myMeal {
                 a = temp.split(",");
                 if (a[0].equals(found)){
                     temp1 = temp;
-                    bool = true;
+                    bool2 = true;
                     break;
                 }
             }
 
-			// FileReader fr = new FileReader("mealPlan.txt");
-			// BufferedReader reader = new BufferedReader(fr);
-            // String line = reader.readLine();
-            if(bool){
+            if(bool2){
                 String[] cell = temp1.split(",");
                 mealplan.setBreakfast(cell[1]);
                 mealplan.setSnack1(cell[2]);
@@ -111,7 +108,8 @@ public class myMeal {
                 mealplan.setSnack3(cell[6]);
                 mealplan.setNotes(cell[7]);
                 scan.close();	
-            }		
+            }
+            bool2 = false;		
 		}
 		catch(FileNotFoundException f) {
 			System.out.println("File not found");

@@ -82,7 +82,6 @@ public class homePage  {
 			}
 		});
 
-		
 		workoutsButton = new Button("View Completed Workouts");
 		workoutsButton.setPrefSize(200, 70);
 		pane.add(workoutsButton, 0, 3);

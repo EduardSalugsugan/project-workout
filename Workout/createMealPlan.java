@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -17,20 +18,21 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class createMealPlan{
 	
 	private static Stage window = new Stage();
-	// private static Stage alert = new Stage();
 	private static GridPane layout;
-	// private static GridPane alertlayout;
 	private static Scene createMyPlan;
-	// private static Scene alertScene;
     private static myMeal meal;
 	private static File mealFile = new File("mealPlan.txt");
 	private static Account account = Account.getCurrentAccount();
+	private static String temp;
+	private static File tempFile = new File("tempMeal.txt");	
+	private static boolean bool = false;
 	
 	public static void display() {
 		setCreatePlanWindow();
@@ -40,7 +42,7 @@ public class createMealPlan{
 		window.setTitle("Create Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
-		createMyPlan = new Scene(layout, 400, 800); 
+		createMyPlan = new Scene(layout, 400, 900); 
 		window.setScene(createMyPlan);
 		window.show();
 		window.setResizable(false);
@@ -62,6 +64,9 @@ public class createMealPlan{
 		VBox create = new VBox();
 		create.setAlignment(Pos.CENTER_LEFT);
 		create.setSpacing(15);
+
+		Text insText = new Text("Type none if you choose to not eat on that \ncertain meal and use + to separate food");
+		insText.setFont(Font.font("Arial"));
 
         Label breakfast = new Label("Breakfast");
 		TextField breakfastTextField = new TextField();
@@ -101,7 +106,7 @@ public class createMealPlan{
 			mealPlanPage.display();
 		});
 
-		create.getChildren().addAll(breakfast,breakfastTextField,snack1,snack1TextField,lunch,lunchTextField,snack2,snack2TextField,dinner,dinnerTextField,snack3,snack3TextField,notes,notesTextField,submitButton,back);
+		create.getChildren().addAll(insText,breakfast,breakfastTextField,snack1,snack1TextField,lunch,lunchTextField,snack2,snack2TextField,dinner,dinnerTextField,snack3,snack3TextField,notes,notesTextField,submitButton,back);
 		
         pane.add(create, 0 , 1);
         
@@ -130,7 +135,7 @@ public class createMealPlan{
 		});
 		
 		return pane;
-			
+
 	}
 	
     private static void saveAccount() throws IOException {
@@ -146,6 +151,30 @@ public class createMealPlan{
 			mealInfo = account.getUsername() + "," + meal.getBreakfast() + "," + meal.getSnack1() + "," + meal.getLunch() + "," + meal.getSnack2() + "," + meal.getDinner() + "," + meal.getSnack3() + "," + meal.getNotes() + "\n";
 			writer.write(mealInfo);
 			writer.close();
+
+			File file = new File("mealPlan.txt");
+			Scanner scan = new Scanner(file);
+			String found = account.getUsername();
+			String a[];
+
+			FileWriter bw = new FileWriter(tempFile);
+			BufferedWriter w2 = new BufferedWriter(bw);
+			
+			while(scan.hasNextLine()){
+				temp = scan.nextLine();
+				a = temp.split(",");
+				if(a[0].equals(found)){
+	 				if(bool){
+		 			break;
+	 				}	
+	 			bool = true;
+	 			temp = mealInfo;
+	 			}
+		 	w2.write(temp+"\n");
+			}
+		bool = false; 
+		w2.close();
+			
 		}catch(IOException e) {
 			System.out.println("Error");
 		}	
