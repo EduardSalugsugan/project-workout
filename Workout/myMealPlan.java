@@ -82,13 +82,13 @@ public class myMealPlan {
 			}
 		}
 		
-		String temp1 = a[1].replaceAll("\\+ ","\n");
-		String temp2 = a[2].replaceAll("\\+ ","\n");
-		String temp3 = a[3].replaceAll("\\+ ","\n");
-		String temp4 = a[4].replaceAll("\\+ ","\n");
-		String temp5 = a[5].replaceAll("\\+ ","\n");
-		String temp6 = a[6].replaceAll("\\+ ","\n");
-		String temp7 = a[7].replaceAll("\\+ ","\n");
+		String temp1 = "Breakfast (Meal One): 6am\n" + a[1].replaceAll("\\+ ","\n");
+		String temp2 = "Snack (Meal Two): 9am\n" + a[2].replaceAll("\\+ ","\n");
+		String temp3 = "Lunch (Meal Three): 12pm\n" + a[3].replaceAll("\\+ ","\n");
+		String temp4 = "Snack (Meal Four): 3pm\n" + a[4].replaceAll("\\+ ","\n");
+		String temp5 = "Dinner (Meal Five): 6pm\n" + a[5].replaceAll("\\+ ","\n");
+		String temp6 = "Late-Night/Before Bed Meal (Meal Six): 9pm\n" + a[6].replaceAll("\\+ ","\n");
+		String temp7 = "Notes:\n" + a[7].replaceAll("\\+ ","\n");
 
 		Text breakfast = new Text(temp1);
 		breakfast.setStyle(textStyle);
