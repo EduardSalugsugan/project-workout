@@ -47,7 +47,7 @@ public class createMealPlan{
 		window.setTitle("Create Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
-		createMyPlan = new Scene(layout, 400, 900); 
+		createMyPlan = new Scene(layout, 400, 820); 
 		window.setScene(createMyPlan);
 		window.show();
 		window.setResizable(false);

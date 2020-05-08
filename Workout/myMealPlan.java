@@ -40,7 +40,7 @@ public class myMealPlan {
 		window.setTitle("Meal Plan");
 		window.centerOnScreen();
 		layout = createFoodPlanPage();
-		page = new Scene(layout, 400, 800);
+		page = new Scene(layout, 400, 550);
 		window.setScene(page);
 		window.show();
 		window.setResizable(false);
