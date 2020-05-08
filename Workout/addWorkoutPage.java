@@ -31,7 +31,16 @@ public class addWorkoutPage {
 	private static boolean isStrength;
 	private static Workout thisWorkout = new Workout();
 	private static Exercise selectedExercise;
-	
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
+	private static String listStyle = "-fx-control-inner-background: grey; "
+			+ "-fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);" +
+			"-fx-font: 13px Arial; -fx-font-weight: Bold;";
+
 	
 	public static void display() {
 		window.setOnCloseRequest(e -> window.close());
@@ -67,22 +76,28 @@ public class addWorkoutPage {
 	
 	private static GridPane addUIControls(GridPane pane) {
 
-		pane.setGridLinesVisible(true);
+
 		pane.setAlignment(Pos.TOP_CENTER);
+		pane.setStyle(style);
 		GridPane.setHalignment(pane, HPos.CENTER);
 		GridPane.setValignment(pane, VPos.TOP);
 		Label headerLabel = new Label("Create New Workout Routine");
+		headerLabel.setStyle(textStyle);
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 
 	
 		Label nameLabel = new Label("Workout Name: ");
+		nameLabel.setStyle(textStyle);
 		Label typeLabel = new Label("What type of exercise to add?");
+		typeLabel.setStyle(textStyle);
 
 		nameLabel.setPrefHeight(30);
 		typeLabel.setPrefHeight(30);
 		
 		Label exercisesAdded = new Label("Exercises in this workout plan");
+		exercisesAdded.setStyle(textStyle);
 		Label exercisesToAdd = new Label("Select an exercise to add and press \"Add Exercise\"");
+		exercisesToAdd.setStyle(textStyle);
 		
 
 		
@@ -93,6 +108,7 @@ public class addWorkoutPage {
 		
 		
 		ListView<String> allExercises = new ListView<String>();
+		allExercises.setStyle(listStyle);
 		allExercises.setPrefHeight(100);
 		
 		
@@ -100,6 +116,7 @@ public class addWorkoutPage {
 		////////////Controls to fill all exercises//////////////////
 		////////////////////////////////////////////////////////////
 		Button showStrength = new Button("Show Strength Exercises");
+		showStrength.setStyle(buttonStyle);
 		showStrength.setOnAction(e -> {
 			allViewableExercises = StrengthExercise.loadExercises();
 			allExercises.setItems(allViewableExercises);
@@ -108,6 +125,7 @@ public class addWorkoutPage {
 		
 		
 		Button showCardio = new Button("Show Cardio Exercises");
+		showCardio.setStyle(buttonStyle);
 		showCardio.setOnAction(e ->{
 			allViewableExercises = CardioExercise.loadExercises();
 			allExercises.setItems(allViewableExercises);
@@ -128,9 +146,11 @@ public class addWorkoutPage {
 
 		
 		ListView<String> selectedExercises = new ListView<String>();
+		selectedExercises.setStyle(listStyle);
 		selectedExercises.setPrefHeight(100);
 		
 		Button addExercise = new Button("Add exercise");
+		addExercise.setStyle(buttonStyle);
 		addExercise.setOnAction(e -> {
 			if(isStrength == true) {
 				strengthExerciseList = StrengthExercise.getAllExercises();
@@ -149,6 +169,7 @@ public class addWorkoutPage {
 		});
 		
 		Button removeExercise = new Button("Remove exercise");
+		removeExercise.setStyle(buttonStyle);
 		removeExercise.setOnAction(e ->{
 			thisWorkout.remove(selectedExercises.getSelectionModel().getSelectedIndex());
 			selectedViewableExercises = thisWorkout.loadExercises();
@@ -157,6 +178,7 @@ public class addWorkoutPage {
 		
 
 		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
 		goBack.setOnAction(e -> {
 			thisWorkout = new Workout();
 			window.close();
@@ -164,6 +186,7 @@ public class addWorkoutPage {
 		});
 		
 		Button saveWorkout = new Button("Save workout");
+		saveWorkout.setStyle(buttonStyle);
 		saveWorkout.setOnAction(e -> {
 			if(nameField.getText().isEmpty()) {
 				showAlert(Alert.AlertType.ERROR, layout.getScene().getWindow(), "Name Missing" , "Please enter a name.");
@@ -208,6 +231,7 @@ public class addWorkoutPage {
 		
 	
 		Button viewExerciseInfo = new Button("View Selected Exercise Info");
+		viewExerciseInfo.setStyle(buttonStyle);
 		viewExerciseInfo.setOnAction(e ->{
 			if(isStrength) {
 				StrengthExercise selectedStrength = strengthExerciseList.get(allExercises.getSelectionModel().getSelectedIndex());

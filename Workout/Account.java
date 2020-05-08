@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -68,6 +70,10 @@ public class Account {
 			return true;
 		
 		return false;
+	}
+	
+	public String toString() {
+		return this.username + "," + this.password + "," + this.age + "," + this.gender + "," + this.weight;
 	}
 	
 	public static ArrayList<Account> getAllAccounts(){
@@ -142,6 +148,37 @@ public class Account {
 	
 	public static void logOut() {
 		currentAccountFile.delete();
+	}
+	
+	public static void changeAccountInfo(Account oldInfo, Account newInfo) {
+		
+	    try {
+	        // input the (modified) file content to the StringBuffer "input"
+	        BufferedReader file = new BufferedReader(new FileReader("Accounts.txt"));
+	        String fileText = "";
+	        String line;
+
+	        while ((line = file.readLine()) != null) {
+	        	
+	            fileText += line + System.lineSeparator();
+	        }
+	        file.close();
+
+	        // write the new string with the replaced line OVER the same file
+	        String newFileText = fileText.replaceAll(oldInfo.toString(), newInfo.toString());
+	        
+	        FileWriter writer = new FileWriter("Accounts.txt");
+	        writer.write(newFileText);
+	        writer.close();
+	        
+	        writer = new FileWriter("currentAccount.txt");
+	        writer.write(newInfo.toString());
+	        writer.close();
+
+	    } catch (Exception e) {
+	        System.out.println("Problem reading file.");
+	    }
+		
 	}
 	
 	public static boolean checkDuplicates(Account a) {

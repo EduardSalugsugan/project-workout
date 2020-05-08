@@ -32,6 +32,13 @@ public class addStrengthExerciseWindow{
 	private static ComboBox<String> equiptmentBox;
 	private static ComboBox<String> targetMuscleBox;
 	private static File exerciseFile = new File("strengthexercises.txt");
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
 	
 	
 	//The display method allows the GUI page to be called from other pages
@@ -83,11 +90,13 @@ public class addStrengthExerciseWindow{
 	
 	private static GridPane addUIControls(GridPane pane) {
 		GridPane gridPane = pane;
+		gridPane.setStyle(style);
 		
 		///////////////////////////////////////////////////////
 		//////////////Create labels and text fields////////////
 		///////////////////////////////////////////////////////
 		Label headerLabel = new Label("Add New Exercise");
+		headerLabel.setStyle(textStyle);
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 		
 		gridPane.add(headerLabel, 0, 0, 2, 1);
@@ -96,6 +105,7 @@ public class addStrengthExerciseWindow{
 		
 		
 		Label nameLabel = new Label("Exercise Name: ");
+		nameLabel.setStyle(textStyle);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
 		gridPane.add(nameLabel, 0, 1);
 		
@@ -103,6 +113,7 @@ public class addStrengthExerciseWindow{
 		gridPane.add(name, 1, 1);
 		
 		Label typeLabel = new Label("Upper or Lower Body: ");
+		typeLabel.setStyle(textStyle);
 		GridPane.setHalignment(typeLabel, HPos.LEFT);
 		GridPane.setHgrow(typeLabel, Priority.ALWAYS );
 		gridPane.add(typeLabel, 0, 2);
@@ -114,6 +125,7 @@ public class addStrengthExerciseWindow{
 		
 		
 		Label weightType = new Label("Weight Type: ");
+		weightType.setStyle(textStyle);
 		GridPane.setHalignment(weightType, HPos.LEFT);
 		gridPane.add(weightType, 0, 3);
 		
@@ -122,7 +134,8 @@ public class addStrengthExerciseWindow{
 		weightTypeBox.getItems().addAll("Body Weight", "Free Weights", "Machine Resistance");
 		gridPane.add(weightTypeBox, 1, 3);
 		
-		Label equiptment = new Label("Equiptment Needed: ");
+		Label equiptment = new Label("Equipment Needed: ");
+		equiptment.setStyle(textStyle);
 		GridPane.setHalignment(equiptment, HPos.LEFT);
 		gridPane.add(equiptment, 0, 4);
 		
@@ -148,6 +161,7 @@ public class addStrengthExerciseWindow{
 		gridPane.add(equiptmentBox, 1, 4);
 		
 		Label targetArea = new Label("Target Area: ");
+		targetArea.setStyle(textStyle);
 		GridPane.setHalignment(targetArea, HPos.LEFT);
 		gridPane.add(targetArea, 0, 5);
 		
@@ -189,6 +203,7 @@ public class addStrengthExerciseWindow{
 	    ////////////////Create Buttons////////////////////////
 		///////////////////////////////////////////////////////
 		Button save = new Button("Save Exercise");
+		save.setStyle(buttonStyle);
 		save.setOnAction(e -> {
 			try {
 				saveExercise();
@@ -204,6 +219,7 @@ public class addStrengthExerciseWindow{
 		});
 		
 		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
 		goBack.setOnAction(e -> {
 			window.close();
 			exercisePage.display();

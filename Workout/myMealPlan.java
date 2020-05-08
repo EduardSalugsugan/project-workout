@@ -22,8 +22,14 @@ public class myMealPlan {
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene page;
-	// private static myMeal meal = myMeal.getCurrentMealPlan();
-	// private static Account account = Account.getCurrentAccount();
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
+	private static String labelStyle = "-fx-text-fill: #c6f5f9;";
+	private static String textStyle = "-fx-fill: #c6f5f9;";
 	private static String a[];
 
 	public static void display() throws FileNotFoundException {
@@ -45,11 +51,13 @@ public class myMealPlan {
 		Account account = Account.getCurrentAccount();
 
 		GridPane pane = new GridPane();
+		pane.setStyle(style);
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
 		Label nameLabel = new Label(account.getUsername() + " Meal Plan");
+		nameLabel.setStyle(labelStyle);
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
@@ -83,14 +91,21 @@ public class myMealPlan {
 		String temp7 = a[7].replaceAll("\\+ ","\n");
 
 		Text breakfast = new Text(temp1);
+		breakfast.setStyle(textStyle);
 		Text snack1 = new Text(temp2);
+		snack1.setStyle(textStyle);
 		Text lunch = new Text(temp3);
+		lunch.setStyle(textStyle);
 		Text snack2 = new Text(temp4);
+		snack2.setStyle(textStyle);
 		Text dinner = new Text(temp5);
+		dinner.setStyle(textStyle);
 		Text snack3 = new Text(temp6);
+		snack3.setStyle(textStyle);
 		Text notes = new Text(temp7);
-        
+        notes.setStyle(textStyle);
         Button back = new Button("Back");
+        back.setStyle(buttonStyle);
         back.setOnAction(e-> {
             window.close();
             mealPlanPage.display();

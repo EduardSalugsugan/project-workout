@@ -26,6 +26,12 @@ public class mealPlanPage {
 	private static File mealFile = new File("mealPlan.txt");
 	private static boolean bool2;
 	private static boolean b;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
 
 	public static void display() {
 		setFoodPlanWindow();
@@ -43,11 +49,13 @@ public class mealPlanPage {
 
 	private static GridPane createFoodPlanPage() {
 		GridPane pane = new GridPane();
+		pane.setStyle(style);
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 
 		Label nameLabel = new Label("Meal Plans");
+		nameLabel.setStyle(textStyle);
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.CENTER);
@@ -59,6 +67,7 @@ public class mealPlanPage {
 		foodplan.setSpacing(5);
 
 		Button Gain = new Button("Muscle Gains");
+		Gain.setStyle(buttonStyle);
 		Gain.setPrefSize(200, 70);
 		Gain.setOnAction(e -> {
 			window.close();
@@ -66,6 +75,7 @@ public class mealPlanPage {
 		});
 
 		Button Lost = new Button("Weight Lost");
+		Lost.setStyle(buttonStyle);
 		Lost.setPrefSize(200, 70);
 		Lost.setOnAction(e -> {
 			window.close();
@@ -73,6 +83,7 @@ public class mealPlanPage {
 		});
 
 		Button Vegan = new Button("Vegan Diet");
+		Vegan.setStyle(buttonStyle);
 		Vegan.setPrefSize(200, 70);
 		Vegan.setOnAction(e -> {
 			window.close();
@@ -80,6 +91,7 @@ public class mealPlanPage {
 		});
 
 		Button MyPlan = new Button("My Plan");
+		MyPlan.setStyle(buttonStyle);
 		MyPlan.setPrefSize(200, 70);
 		MyPlan.setOnAction(e -> {
 			try {
@@ -107,6 +119,7 @@ public class mealPlanPage {
 		});
 
 		Button Create = new Button("Create my meal plan");
+		Create.setStyle(buttonStyle);
 		Create.setPrefSize(200, 70);
 		Create.setOnAction(e -> {
 			window.close();
@@ -114,6 +127,7 @@ public class mealPlanPage {
 		});
 
 		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
 		goBack.setPrefSize(200, 70);
 		goBack.setOnAction(e -> {
 			window.close();

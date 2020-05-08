@@ -31,6 +31,12 @@ public class addCardioExerciseWindow{
 	private static CardioExercise newExercise;
 	private static ComboBox<String> equiptmentBox;
 	private static File exerciseFile = new File("cardioexercises.txt");
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
 	
 	
 	//The display method allows the GUI page to be called from other pages
@@ -83,12 +89,14 @@ public class addCardioExerciseWindow{
 	private static GridPane addUIControls(GridPane pane) {
 		
 		GridPane gridPane = pane;
+		pane.setStyle(style);
 		
 		
 		///////////////////////////////////////////////////////
 		//////////////Create labels and text fields////////////
 		///////////////////////////////////////////////////////
 		Label headerLabel = new Label("Add new exercise");
+		headerLabel.setStyle(textStyle);
 		headerLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 		
 		gridPane.add(headerLabel, 0, 0, 2, 1);
@@ -97,6 +105,7 @@ public class addCardioExerciseWindow{
 		
 
 		Label nameLabel = new Label("Exercise Name: ");
+		nameLabel.setStyle(textStyle);
 		GridPane.setHalignment(nameLabel, HPos.LEFT);
 		gridPane.add(nameLabel, 0, 1);
 		
@@ -104,7 +113,8 @@ public class addCardioExerciseWindow{
 		gridPane.add(name, 1, 1);
 		
 		
-		Label equiptmentLabel = new Label("Equiptment Needed: ");
+		Label equiptmentLabel = new Label("Equipment Needed: ");
+		equiptmentLabel.setStyle(textStyle);
 		GridPane.setHalignment(equiptmentLabel, HPos.LEFT);
 		GridPane.setHgrow(equiptmentLabel, Priority.ALWAYS);
 		gridPane.add(equiptmentLabel, 0, 2);
@@ -126,6 +136,7 @@ public class addCardioExerciseWindow{
 	    ////////////////Create Buttons////////////////////////
 		///////////////////////////////////////////////////////
 		Button save = new Button("Save Exercise");
+		save.setStyle(buttonStyle);
 		save.setOnAction(e -> {
 			try {
 				saveExercise();
@@ -138,6 +149,7 @@ public class addCardioExerciseWindow{
 		});
 		
 		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
 		goBack.setOnAction(e -> {
 			window.close();
 			exercisePage.display();

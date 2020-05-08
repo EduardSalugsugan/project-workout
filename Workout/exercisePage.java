@@ -27,6 +27,16 @@ public class exercisePage {
 	private static ObservableList<String> observableExercises;
 	private static StrengthExercise strength;
 	private static CardioExercise cardio;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String listStyle = "-fx-control-inner-background: grey; "
+			+ "-fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);" +
+			"-fx-font: 13px Arial; -fx-font-weight: Bold;";
 
 	
 	//The display method allows the GUI page to be called from other pages
@@ -64,6 +74,7 @@ public class exercisePage {
 	private static GridPane createExerciseHomePage() {
 		
 	    GridPane gridPane = new GridPane();
+	    gridPane.setStyle(style);
 	    
 	    gridPane.setAlignment(Pos.CENTER);
 	    gridPane.setVgap(10);
@@ -77,7 +88,7 @@ public class exercisePage {
 	    
 	    
 		Label headerLabel = new Label("Exercises");
-		
+		headerLabel.setStyle(textStyle);
 		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 28));
 		gridPane.add(headerLabel, 0, 0);
 		GridPane.setValignment(headerLabel, VPos.TOP);
@@ -85,6 +96,7 @@ public class exercisePage {
 
 		
 		Button cardio = new Button("Cardio exercises");
+		cardio.setStyle(buttonStyle);
 		GridPane.setValignment(cardio, VPos.TOP);
 		GridPane.setHalignment(cardio, HPos.CENTER);
 		cardio.setPrefSize(200, 70);
@@ -93,6 +105,7 @@ public class exercisePage {
 		
 		
 		Button strength = new Button("Strength exercises");
+		strength.setStyle(buttonStyle);
 		strength.setPrefSize(200, 70);
 		GridPane.setValignment(strength, VPos.TOP);
 		GridPane.setHalignment(strength, HPos.CENTER);
@@ -101,6 +114,7 @@ public class exercisePage {
 		strength.setOnAction(e -> setExerciseWindow("Strength"));
 		
 		goBack = new Button("Return");
+		goBack.setStyle(buttonStyle);
 		GridPane.setValignment(goBack, VPos.TOP);
 		goBack.setPrefSize(200, 70);
 		goBack.setOnAction(e -> {
@@ -135,12 +149,15 @@ public class exercisePage {
 			
 		
 		GridPane gridPane = new GridPane();
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setStyle(style);
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
 		gridPane.setVgap(10);
 		gridPane.setHgap(10);
 		
 		//Create and fill the list of exercises that can be viewed
 		ListView<String> exerciseListView = new ListView<String>();
+		exerciseListView.setStyle(listStyle);
 		exerciseListView.setItems(observableExercises);
 		
 		//Settings for the listview style
@@ -156,6 +173,7 @@ public class exercisePage {
 
 
 		Button select = new Button("View Exercise Info");
+		select.setStyle(buttonStyle);
 		select.setOnAction(e -> {
 			if(type.equalsIgnoreCase("Strength")) {
 				strength = strengthExerciseList.get(exerciseListView.getSelectionModel().getSelectedIndex());
@@ -172,6 +190,7 @@ public class exercisePage {
 		});
 		
 		Button addNew = new Button("Add new exercise");
+		addNew.setStyle(buttonStyle);
 		GridPane.setHalignment(addNew, HPos.LEFT);
 		addNew.setOnAction(e -> {
 			window.close();
@@ -182,6 +201,7 @@ public class exercisePage {
 		}); 
 		
 		goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
 		goBack.setOnAction(e -> {
 			window.close();
 			setMainWindow();
@@ -191,7 +211,7 @@ public class exercisePage {
 		//Add buttons to an HBox for style purposes 
 		HBox buttonBox = new HBox();
 		buttonBox.getChildren().addAll(select, addNew, goBack);
-		buttonBox.setSpacing(20);
+		buttonBox.setSpacing(10);
 		buttonBox.setAlignment(Pos.BASELINE_CENTER);
 		gridPane.add(buttonBox, 0, 1);
 		

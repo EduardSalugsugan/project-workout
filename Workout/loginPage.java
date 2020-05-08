@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -36,6 +37,13 @@ public class loginPage {
 	private static File accountFile = new File("Accounts.txt");
 	private static File currentAccount = new File("currentAccount.txt");
 	private static Account account;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
 	
 	public static void display() {
 		setLoginWindow();
@@ -53,23 +61,27 @@ public class loginPage {
 	private static GridPane createLoginForm() {
 		GridPane gridPane = new GridPane();
 		gridPane.setAlignment(Pos.CENTER);
-		
+		gridPane.setStyle(style);
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
 		
 		gridPane.setHgap(10);
-		gridPane.setVgap(10);
+		gridPane.setVgap(25);
 		
 		return gridPane;
 	}
 	
 	private static void logUIControls(GridPane gridPane) {
+
+		gridPane.setStyle(style);
 		Label headerLabel = new Label("Login Form");
+		headerLabel.setStyle(textStyle);
 		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		gridPane.add(headerLabel, 0, 0);
+		GridPane.setValignment(headerLabel, VPos.TOP);
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
 		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
-	//	gridPane.setGridLinesVisible(true);
 		Label userNameLabel = new Label("Username: ");
+		userNameLabel.setStyle(textStyle);
 		userNameLabel.setPrefWidth(70);
 
 		
@@ -84,6 +96,7 @@ public class loginPage {
 	
 		
 		Label passwordLabel = new Label("Password: ");
+		passwordLabel.setStyle(textStyle);
 		passwordLabel.setPrefWidth(70);
 		passwordLabel.setPrefHeight(25);
 
@@ -106,21 +119,32 @@ public class loginPage {
 		
 
 		Button signUpButton = new Button("Sign Up");
-		signUpButton.setPrefHeight(20);
+		signUpButton.setPrefHeight(30);
+		signUpButton.setStyle(buttonStyle);
 		signUpButton.setDefaultButton(true);
 		signUpButton.setPrefWidth(80);
 
 
 		Button loginButton = new Button("Login");
-		loginButton.setPrefHeight(20);
+		loginButton.setStyle(buttonStyle);
+		loginButton.setPrefHeight(30);
 		loginButton.setDefaultButton(true);
 		loginButton.setPrefWidth(80);
 		
+		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
+		goBack.setPrefHeight(30);
+		goBack.setPrefWidth(70);
+		goBack.setOnAction(e -> {
+			main.close();
+			homePage.display();
+		});
+		
 		HBox buttonBox = new HBox();
-		buttonBox.getChildren().addAll(signUpButton, loginButton);
+		buttonBox.getChildren().addAll(signUpButton, loginButton, goBack);
 		buttonBox.setSpacing(20);
 		buttonBox.setAlignment(Pos.CENTER);
-		gridPane.add(buttonBox, 0, 4);
+		gridPane.add(buttonBox, 0, 3);
 
 		
 		loginButton.setOnAction(e -> {
@@ -150,20 +174,26 @@ public class loginPage {
 	}
 
 	private static void signUIControls(GridPane gridPane) {
+		gridPane.setVgap(10);
 		Label headerLabel = new Label("Sign Up Form");
+		headerLabel.setStyle(textStyle);
+		gridPane.setStyle(style);
 		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		gridPane.add(headerLabel, 0, 0, 2, 1);
 		GridPane.setHalignment(headerLabel, HPos.CENTER);
 		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
 		
 		Label userNameLabel = new Label("Username: ");
+		userNameLabel.setStyle(textStyle);
 		gridPane.add(userNameLabel, 0, 1);
 		
 		TextField userName = new TextField();
+		userName.setStyle("-fx-background-color: green, white, white;");
 		userName.setPrefHeight(40);
 		gridPane.add(userName, 1, 1);
 		
 		Label passwordLabel = new Label("Password: ");
+		passwordLabel.setStyle(textStyle);
 		gridPane.add(passwordLabel, 0, 2);
 		
 		PasswordField passwordField = new PasswordField();
@@ -171,6 +201,7 @@ public class loginPage {
 		gridPane.add(passwordField, 1, 2);
 		
 		Label genderLabel = new Label("Gender: ");
+		genderLabel.setStyle(textStyle);
 		gridPane.add(genderLabel, 0, 3);
 		
 		ComboBox<String>genderBox = new ComboBox<String>();
@@ -180,13 +211,16 @@ public class loginPage {
 		gridPane.add(genderBox, 1, 3);
 		
 		Label ageLabel = new Label("Age: ");
+		ageLabel.setStyle(textStyle);
 		gridPane.add(ageLabel, 0, 4);
 		
 		TextField age = new TextField();
+		age.setPrefHeight(40);
 		gridPane.add(age, 1, 4);
 		
 				
 		Label userWeightLabel = new Label("Weight(lbs): ");
+		userWeightLabel.setStyle(textStyle);
 		gridPane.add(userWeightLabel, 0, 5);
 		
 		TextField userWeight = new TextField();
@@ -195,6 +229,7 @@ public class loginPage {
 		
 		Button backButton = new Button("Back");
 		backButton.setPrefHeight(40);
+		backButton.setStyle(buttonStyle);
 		backButton.setDefaultButton(true);
 		backButton.setPrefWidth(100);
 
@@ -205,6 +240,7 @@ public class loginPage {
 		});
 
 		Button submitButton = new Button("Submit");
+		submitButton.setStyle(buttonStyle);
 		submitButton.setPrefHeight(40);
 		submitButton.setDefaultButton(true);
 		submitButton.setPrefWidth(100);
