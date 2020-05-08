@@ -30,7 +30,7 @@ public class homePage  {
 		window.setTitle("Make a selection");
 		window.centerOnScreen();
 		layout = createHomePage();
-		page = new Scene(layout, 200, 315);
+		page = new Scene(layout, 220, 315);
 		window.setScene(page);
 		window.show();
 		
@@ -41,9 +41,18 @@ public class homePage  {
 		pane.setAlignment(Pos.CENTER);
 		pane.setPadding(new Insets(20, 0, 20, 0));
 		pane.setVgap(5);
-		//pane.setGridLinesVisible(true);
+		
+		String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+						"    -fx-padding: 10;\n" +
+						"    -fx-text-fill:  #c6f5f9 ;\n";
+		
+		String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+				+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
+		
+		pane.setStyle(style);
 		//The loginButton will take the user to the login page
 		loginButton = new Button("Login");
+		loginButton.setStyle(buttonStyle);
 		loginButton.setPrefSize(200, 70);
 		pane.add(loginButton, 0, 0);
 		loginButton.setOnAction(e -> {
@@ -54,6 +63,7 @@ public class homePage  {
 		
 		accountButton = new Button("Account Information");
 		accountButton.setPrefSize(200, 70);
+		accountButton.setStyle(buttonStyle);
 		pane.add(accountButton, 0, 1);
 		accountButton.setOnAction(e -> {
 			if(!Account.isLoggedIn()) {
@@ -69,6 +79,7 @@ public class homePage  {
 
 		beginButton = new Button("Start Workout");
 		beginButton.setPrefSize(200, 70);
+		beginButton.setStyle(buttonStyle);
 		pane.add(beginButton, 0, 2);
 		GridPane.setHalignment(beginButton, HPos.CENTER);
 		beginButton.setOnAction(e -> {
@@ -83,6 +94,7 @@ public class homePage  {
 		});
 
 		workoutsButton = new Button("View Completed Workouts");
+		workoutsButton.setStyle(buttonStyle);
 		workoutsButton.setPrefSize(200, 70);
 		pane.add(workoutsButton, 0, 3);
 		workoutsButton.setOnAction(e -> {
@@ -99,6 +111,7 @@ public class homePage  {
 		
 		
 		exercisesButton = new Button("View Exercises");
+		exercisesButton.setStyle(buttonStyle);
 		exercisesButton.setPrefSize(200, 70);
 		pane.add(exercisesButton, 0, 4);
 		exercisesButton.setOnAction(e -> {
@@ -114,6 +127,7 @@ public class homePage  {
 		GridPane.setHalignment(exercisesButton, HPos.CENTER);
 
 		foodPlanButton = new Button("Meal Plans");
+		foodPlanButton.setStyle(buttonStyle);
 		foodPlanButton.setPrefSize(200, 70);
 		pane.add(foodPlanButton, 0, 5);
 		foodPlanButton.setOnAction(e -> {

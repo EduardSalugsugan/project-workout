@@ -30,6 +30,14 @@ public class createMealPlan{
     private static myMeal meal;
 	private static File mealFile = new File("mealPlan.txt");
 	private static Scanner scan;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
+	private static String labelStyle = "-fx-text-fill: #c6f5f9;";
+	private static String textStyle = "-fx-fill: #c6f5f9;";
 	
 	public static void display() {
 		setCreatePlanWindow();
@@ -47,11 +55,13 @@ public class createMealPlan{
 
 	private static GridPane createFoodPlanPage() {
 		GridPane pane = new GridPane();
+		pane.setStyle(style);
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.setPadding(new Insets(50, 20, 20, 20));
 		pane.setVgap(25);
 		
 		Label nameLabel = new Label("Create Meal Plan");
+		nameLabel.setStyle(labelStyle);
 		nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		pane.add(nameLabel, 0, 0);
 		GridPane.setHalignment(nameLabel, HPos.CENTER);
@@ -63,40 +73,50 @@ public class createMealPlan{
 		create.setSpacing(15);
 
 		Text insText = new Text("Type none if you choose to not eat on that \ncertain meal and use + to separate food");
+		insText.setStyle(textStyle);
 		insText.setFont(Font.font("Arial"));
 
         Label breakfast = new Label("Breakfast");
+        breakfast.setStyle(labelStyle);
 		TextField breakfastTextField = new TextField();
         breakfastTextField.setPrefHeight(40);
         
         Label snack1 = new Label("Snack 1");
+        snack1.setStyle(labelStyle);
 		TextField snack1TextField = new TextField();
         snack1TextField.setPrefHeight(40);
 
         Label lunch = new Label("Lunch");
+        lunch.setStyle(labelStyle);
 		TextField lunchTextField = new TextField();
         lunchTextField.setPrefHeight(40);
 
         Label snack2 = new Label("Snack 2");
+        snack2.setStyle(textStyle);
 		TextField snack2TextField = new TextField();
         snack2TextField.setPrefHeight(40);
 
         Label dinner = new Label("Dinner");
+        dinner.setStyle(labelStyle);
 		TextField dinnerTextField = new TextField();
         dinnerTextField.setPrefHeight(40);
 
         Label snack3= new Label("Snack 3");
+        snack3.setStyle(labelStyle);
 		TextField snack3TextField = new TextField();
         snack3TextField.setPrefHeight(40);
 
         Label notes = new Label("Notes");
+        notes.setStyle(labelStyle);
 		TextField notesTextField = new TextField();
         notesTextField.setPrefHeight(40);
 
         Button submitButton = new Button("Submit");
+        submitButton.setStyle(buttonStyle);
         submitButton.setPrefSize(80,20);
         
         Button back = new Button("Back");
+        back.setStyle(buttonStyle);
 		back.setPrefSize(80,20);
 		back.setOnAction(e -> {
 			window.close();

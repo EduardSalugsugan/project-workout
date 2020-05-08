@@ -39,6 +39,12 @@ public class workoutTrackingPage {
 	private static TextField resistanceLog;
 	private static Label distanceLabel;
 	private static TextField distanceLog;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
 	//private static ScrollPane layout;
 	
 	
@@ -64,8 +70,10 @@ public class workoutTrackingPage {
 	
 	public static GridPane createWorkoutTrackerPage() {
 		GridPane pane = new GridPane();
+		pane.setStyle(style);
 		ScrollPane scroll = new ScrollPane();
 		scroll.setFitToWidth(true);
+		scroll.setFitToHeight(true);
 		
 		pane.setPadding(new Insets(20,0,20,0));
 		pane.setAlignment(Pos.TOP_CENTER);
@@ -80,15 +88,14 @@ public class workoutTrackingPage {
 		workoutName.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 32));
 		workoutName.setAlignment(Pos.TOP_CENTER);
 		workoutName.setPrefSize(400, 100);
-		workoutName.setStyle("-fx-padding: 5;" + "-fx-border-style: solid;"
-        + "-fx-border-width: 8;" + "-fx-border-insets: 5;"
-        + "-fx-border-radius: 10;" + "-fx-border-color: black;");
+		workoutName.setStyle(textStyle);
 		
 		GridPane.setHalignment(workoutName, HPos.CENTER);
 		
 		pane.add(workoutName, 0, 0);
 		
 		Label description = new Label("Exercises to complete:");
+		description.setStyle(textStyle);
 		description.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 		VBox exerciseNameBox = new VBox();
 		exerciseNameBox.setAlignment(Pos.CENTER);
@@ -97,6 +104,7 @@ public class workoutTrackingPage {
 		
 		for(int i = 0; i < thisWorkout.length(); i++) {
 			Button exerciseName = new Button(thisWorkout.getExercise(i).getName());
+			exerciseName.setStyle(buttonStyle);
 			int index = i;
 			exerciseName.setOnAction(e ->{
 				if(thisWorkout.getExercise(index).getType().equals("Strength")) {
@@ -114,6 +122,7 @@ public class workoutTrackingPage {
 		}
 		
 		Button beginWorkout = new Button("Begin Workout");
+		beginWorkout.setStyle(buttonStyle);
 		pane.add(exerciseNameBox, 0, 1);
 		beginWorkout.setAlignment(Pos.BOTTOM_CENTER);
 		GridPane.setHalignment(beginWorkout, HPos.CENTER);
@@ -121,9 +130,6 @@ public class workoutTrackingPage {
 
 		scroll.setContent(exerciseNameBox);
 		scroll.setPrefHeight(500);
-		scroll.setStyle("-fx-padding: 5;" + "-fx-border-style: solid;"
-        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        + "-fx-border-radius: 5;" + "-fx-border-color: black;");
 		pane.add(scroll, 0, 1);
 		
 		beginWorkout.setOnAction(e -> {
@@ -151,12 +157,15 @@ public class workoutTrackingPage {
 		window.centerOnScreen();
 
 		pane.setAlignment(Pos.TOP_CENTER);
+		pane.setStyle(style);
 		Label name = new Label("Exercise name");
+		name.setStyle(style);
 		name.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 
 
 		if(index >= numberOfExercisesInWorkout) {
 			Button finishWorkout = new Button("Finish Workout");
+			finishWorkout.setStyle(style);
 			finishWorkout.setOnAction(e ->{
 				try {
 					completedWorkout.saveCompletedWorkout();
@@ -175,6 +184,7 @@ public class workoutTrackingPage {
 		
 		currentExercise = thisWorkout.getExercise(index);
 		nameLabel = new Label(currentExercise.getName());
+		nameLabel.setStyle(textStyle);
 		nameLabel.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 20));
 		
 		
@@ -189,6 +199,7 @@ public class workoutTrackingPage {
 			if(currentStrength.getWeightType().equalsIgnoreCase("Free Weights") || currentStrength.getWeightType().equalsIgnoreCase("Machine Resistance")) {
 				
 				Label weightUsed = new Label("Weight(lbs):");
+				weightUsed.setStyle(textStyle);
 				weightUsed.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 				resistanceLog = new TextField();
 				resistanceLog.setPrefWidth(50);
@@ -197,6 +208,7 @@ public class workoutTrackingPage {
 				
 				
 				Label repLabel = new Label("Reps:");
+				repLabel.setStyle(textStyle);
 				repLabel.setFont(Font.font("Arial", FontWeight.BOLD,14));
 				TextField repLog = new TextField();
 				repLog.setPrefWidth(50);
@@ -205,6 +217,7 @@ public class workoutTrackingPage {
 				
 				
 				Label setLabel = new Label("Sets:");
+				setLabel.setStyle(textStyle);
 				setLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 				TextField setField = new TextField();
 				setField.setPrefWidth(50);
@@ -213,6 +226,7 @@ public class workoutTrackingPage {
 				
 				
 				exerciseComplete = new Button("Exercise Complete");
+				exerciseComplete.setStyle(buttonStyle);
 				pane.add(nameLabel, 0, index + 1);
 				pane.add(exerciseComplete, 7, index + 1);
 				
@@ -240,6 +254,7 @@ public class workoutTrackingPage {
 			
 			if(currentStrength.getWeightType().equalsIgnoreCase("Body weight")) {
 				Label repLabel = new Label("Reps:");
+				repLabel.setStyle(textStyle);
 				repLabel.setFont(Font.font("Arial", FontWeight.BOLD,14));
 				TextField repLog = new TextField();
 				repLog.setPrefWidth(50);
@@ -247,6 +262,7 @@ public class workoutTrackingPage {
 				pane.add(repLog, 2, index + 1);
 				
 				Label setLabel = new Label("Sets:");
+				setLabel.setStyle(textStyle);
 				setLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 				TextField setField = new TextField();
 				setField.setPrefWidth(50);
@@ -255,6 +271,7 @@ public class workoutTrackingPage {
 				pane.add(setField, 4, index + 1);
 				
 				exerciseComplete = new Button("Exercise Complete");
+				exerciseComplete.setStyle(buttonStyle);
 				pane.add(nameLabel, 0, index + 1);
 				pane.add(exerciseComplete, 7, index + 1);
 				
@@ -382,7 +399,7 @@ public class workoutTrackingPage {
 					distanceLog.setDisable(true);
 					hasDistance.setDisable(true);
 				}
-				
+				exerciseComplete.setStyle(buttonStyle);
 				exerciseComplete.setText("Completed");
 				exerciseComplete.setDisable(true);
 				completedWorkout.addExercise(currentCardio);

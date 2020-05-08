@@ -17,6 +17,12 @@ public class foodPlanPage{
 	private static Stage window = new Stage();
 	private static GridPane layout;
 	private static Scene foodplan;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
 	
 	public static void display() {
 		setFoodPlanWindow();

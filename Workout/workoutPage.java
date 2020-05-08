@@ -22,6 +22,18 @@ public class workoutPage{
 	
 	private static Stage window = new Stage();
 	private static ObservableList<String> viewableWorkouts;
+	private static String style = "    -fx-background-color: radial-gradient(center 50% 50% , radius 80% , #69696b ,   #3a3a3a);" + 
+			"    -fx-padding: 10;\n" +
+			"    -fx-text-fill:  #c6f5f9 ;\n";
+
+	private static String buttonStyle = " -fx-background-color: rgba(3, 252, 248, 0.4);"
+	+ " -fx-background-radius: 10; -fx-text-fill: #c6f5f9; -fx-font: 14px Arial; -fx-font-weight: Bold;";
+	private static String textStyle = "-fx-text-fill: #c6f5f9;";
+	private static String listStyle = "-fx-control-inner-background: grey; "
+			+ "-fx-control-inner-background-alt: derive(-fx-control-inner-background, 20%);" +
+			"-fx-font: 13px Arial; -fx-font-weight: Bold;";
+
+
 	
 	public static void display(){
 		window.setOnCloseRequest(e -> closeWindow());
@@ -34,7 +46,7 @@ public class workoutPage{
 		window.setTitle("Workouts");
 		window.centerOnScreen();
 		GridPane layout = createWorkoutPage();
-		Scene page = new Scene(layout, 425, 300);
+		Scene page = new Scene(layout, 460, 300);
 		window.setScene(page);  
 		window.show();
 	}
@@ -46,7 +58,7 @@ public class workoutPage{
 		
 		
 		GridPane gridPane = new GridPane();
-		//gridPane.setGridLinesVisible(true);
+		gridPane.setStyle(style);
 		gridPane.setPadding(new Insets(20, 40, 0, 40));
 		gridPane.setVgap(10);
 		gridPane.setHgap(10);
@@ -57,12 +69,13 @@ public class workoutPage{
 		ListView<String> workoutListView = new ListView<String>();
 		viewableWorkouts = Workout.loadCompletedWorkouts();
 		workoutListView.setItems(viewableWorkouts);
+		workoutListView.setStyle(listStyle);
 
 		
 		
 		GridPane.setHalignment(workoutListView, HPos.CENTER);
 		gridPane.add(workoutListView, 0, 0);
-		ColumnConstraints column0 = new ColumnConstraints(370);
+		ColumnConstraints column0 = new ColumnConstraints(400);
 		RowConstraints row0 = new RowConstraints(200); 
 		column0.setHalignment(HPos.CENTER);
 		gridPane.getColumnConstraints().add(column0);
@@ -70,14 +83,17 @@ public class workoutPage{
 		
 
 
-		Button view = new Button("View workout stats");
+		Button view = new Button("View Workout Stats");
+		view.setStyle(buttonStyle);
 		view.setOnAction(e -> {
+			window.close();
 			ArrayList<Workout> completedWorkouts = Workout.getCompletedWorkouts();
 			Workout selectedCompletedWorkout = completedWorkouts.get(workoutListView.getSelectionModel().getSelectedIndex());
 			completedWorkoutWindowSetup(selectedCompletedWorkout);
 		});
 		
-		Button createWorkout = new Button("Create new workout");
+		Button createWorkout = new Button("Create Workout");
+		createWorkout.setStyle(buttonStyle);
 		GridPane.setHalignment(createWorkout, HPos.LEFT);
 		createWorkout.setOnAction(e -> {
 			window.close();
@@ -85,11 +101,12 @@ public class workoutPage{
 		});
 		
 		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
 		goBack.setOnAction(e -> {
 			window.close();
 			homePage.display();
 		});
-		int prefWidth = 150;
+		int prefWidth = 170;
 		int prefHeight = 40;
 		view.setPrefSize(prefWidth, prefHeight);
 		createWorkout.setPrefSize(prefWidth, prefHeight);
@@ -122,10 +139,12 @@ public class workoutPage{
 	private static GridPane showCompletedWorkout(Workout completed) {
 		
 		GridPane pane = new GridPane();
+		pane.setStyle(style);
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.setVgap(10);
 		pane.setPadding(new Insets(20, 0, 20, 0));
 		Label name = new Label(completed.getWorkoutName());
+		name.setStyle(textStyle);
 		GridPane.setHalignment(name, HPos.CENTER);
 		name.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 28));
 		pane.add(name, 0, 0);
@@ -135,6 +154,7 @@ public class workoutPage{
 		for(int i = 0; i < completed.length(); i++) {
 			HBox fullInfoBox = new HBox();
 			Button exerciseName = new Button(completed.getExercise(i).getName());
+			exerciseName.setStyle(buttonStyle);
 			exerciseName.setPrefSize(220, height);
 			exerciseName.setFont(Font.font("Arial", FontWeight.BLACK, 14));
 			final int index = i;
@@ -153,22 +173,34 @@ public class workoutPage{
 				
 				if(strength.getWeightType().equalsIgnoreCase("Free Weights") || strength.getWeightType().equalsIgnoreCase("Machine Resistance")) {
 					Label weightUsed = new Label("Weight used: " + strength.getWeightUsed());
+					weightUsed.setStyle(textStyle);
 					weightUsed.setPrefHeight(height);
 					fullInfoBox.getChildren().add(weightUsed);
 				}
 				Label reps = new Label("Reps Completed: " + strength.getRepitions());
+				reps.setStyle(textStyle);
 				Label sets = new Label("Sets Completed: " + strength.getSets());
+				sets.setStyle(textStyle);
 				reps.setPrefHeight(height);
 				sets.setPrefHeight(height);
 				fullInfoBox.getChildren().addAll(reps, sets);
 			}
 			fullInfoBox.setSpacing(10);
-			fullInfoBox.setStyle("-fx-padding: 5;" + "-fx-border-style: solid;"
-        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        + "-fx-border-radius: 5;" + "-fx-border-color: black;");
+			fullInfoBox.setStyle(style);
+//			fullInfoBox.setStyle("-fx-padding: 5;" + "-fx-border-style: solid;"
+//        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+//        + "-fx-border-radius: 5;" + "-fx-border-color: black;");
 			exerciseBox.setSpacing(10);
 			exerciseBox.getChildren().add(fullInfoBox);
 		}
+		Button goBack = new Button("Back");
+		goBack.setStyle(buttonStyle);
+		goBack.setPrefSize(100, 40);
+		goBack.setOnAction(e ->{
+			window.close();
+			display();
+		});
+		exerciseBox.getChildren().add(goBack);
 		exerciseBox.setAlignment(Pos.CENTER);
 		pane.add(exerciseBox, 0, 2);
 		return pane;
